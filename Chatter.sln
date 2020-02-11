@@ -3,9 +3,60 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{C15AEE0F-D044-4371-8CDB-8B89924558B0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8D399433-F1ED-4177-93F3-C4AF4411493E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{BBBEB3F1-7C92-4278-9933-BF4325CDBE5D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{02166881-6FE2-4694-A32E-C395AE02B414}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{C7CA732F-7302-41B7-B4CA-77CBFB30BE24}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebUI", "WebUI", "{96F21164-093A-4EEC-B996-0B256819BCCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatter.Application", "Src\Core\Chatter.Application\Chatter.Application.csproj", "{C3709506-9C58-47B0-B6F9-6C5388EF3E24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatter.Domain", "Src\Core\Chatter.Domain\Chatter.Domain.csproj", "{8842354E-327B-4E49-95FE-F34AF3FCBDD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatter.Infrastructure", "Src\Infrastructure\Chatter.Infrastructure\Chatter.Infrastructure.csproj", "{D26A8A20-FD1F-43D4-8539-E9664D8058A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatter.WebUI", "Src\WebUI\Chatter.WebUI\Chatter.WebUI.csproj", "{C8D1DA17-0FB8-4E4B-B6FE-97DFA4F6038E}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C3709506-9C58-47B0-B6F9-6C5388EF3E24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3709506-9C58-47B0-B6F9-6C5388EF3E24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3709506-9C58-47B0-B6F9-6C5388EF3E24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3709506-9C58-47B0-B6F9-6C5388EF3E24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8842354E-327B-4E49-95FE-F34AF3FCBDD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8842354E-327B-4E49-95FE-F34AF3FCBDD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8842354E-327B-4E49-95FE-F34AF3FCBDD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8842354E-327B-4E49-95FE-F34AF3FCBDD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D26A8A20-FD1F-43D4-8539-E9664D8058A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D26A8A20-FD1F-43D4-8539-E9664D8058A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D26A8A20-FD1F-43D4-8539-E9664D8058A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D26A8A20-FD1F-43D4-8539-E9664D8058A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8D1DA17-0FB8-4E4B-B6FE-97DFA4F6038E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8D1DA17-0FB8-4E4B-B6FE-97DFA4F6038E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8D1DA17-0FB8-4E4B-B6FE-97DFA4F6038E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8D1DA17-0FB8-4E4B-B6FE-97DFA4F6038E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{02166881-6FE2-4694-A32E-C395AE02B414} = {C15AEE0F-D044-4371-8CDB-8B89924558B0}
+		{C7CA732F-7302-41B7-B4CA-77CBFB30BE24} = {C15AEE0F-D044-4371-8CDB-8B89924558B0}
+		{96F21164-093A-4EEC-B996-0B256819BCCC} = {C15AEE0F-D044-4371-8CDB-8B89924558B0}
+		{C3709506-9C58-47B0-B6F9-6C5388EF3E24} = {02166881-6FE2-4694-A32E-C395AE02B414}
+		{8842354E-327B-4E49-95FE-F34AF3FCBDD5} = {02166881-6FE2-4694-A32E-C395AE02B414}
+		{D26A8A20-FD1F-43D4-8539-E9664D8058A4} = {C7CA732F-7302-41B7-B4CA-77CBFB30BE24}
+		{C8D1DA17-0FB8-4E4B-B6FE-97DFA4F6038E} = {96F21164-093A-4EEC-B996-0B256819BCCC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FB96B7A8-C897-44EE-8395-54592E4FF56B}
