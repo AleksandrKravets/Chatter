@@ -1,0 +1,39 @@
+<style>
+    .container{
+        max-width: 30%;
+    }
+
+    .form {
+        margin-top: 40%;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .create-chat-btn {
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        color: white;
+    }
+
+    label {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="form col-12">
+            <form>
+                <div class="form-group">
+                  <label>Chat name</label>
+                  <input #chatNameInput type="text" class="form-control" placeholder="Chat name">
+                </div>
+                <button class="create-chat-btn button" routerLink="/">Cancel</button>
+                <button class="create-chat-btn button" (click)="createChat(chatNameInput.value)">Create</button>
+            </form>
+        </div>
+    </div>
+</div>

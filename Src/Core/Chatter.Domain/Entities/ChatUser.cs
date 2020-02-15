@@ -8,6 +8,6 @@
         public User User { get; set; }
         public Chat Chat { get; set; }
 
-        public UserRole Role { get; set; }
+        //public UserRole Role { get; set; }
     }
 }

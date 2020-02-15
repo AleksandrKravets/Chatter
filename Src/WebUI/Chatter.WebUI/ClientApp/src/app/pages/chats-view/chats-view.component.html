@@ -1,0 +1,74 @@
+<style>
+    .container {
+        max-width: 65%;
+    }
+    .content {
+        margin-top: 13%;
+        height: 550px;
+    }
+
+    .sidebar {
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        background-color: white;
+    }  
+
+    .chat {
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        background-color: #f7f5f5;
+    }   
+    
+    .chat-menu-item {
+        padding: 7px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .sidebar-title {
+        font-size: 24px;
+        font-weight: 600;
+        padding-left: 35%;
+        padding-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .chat-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        padding-top: 15px;
+        padding-left: 5%;
+    }
+</style>
+
+<div class="container">
+    <div class="content row">
+
+        <div class="sidebar col-3">
+            <div class="sidebar-title title">
+                Chats
+            </div>
+            <!--[routerLink]="['/chats', list._id]" routerLinkActive="is-active"-->
+            <div class="chat-menu-item" *ngFor="let chat of chats">
+                {{chat.name}}
+            </div>
+            
+            <button class="btn-btn-primary" routerLink="/new-chat">+ New Chat</button>
+        </div>
+
+        <div class="chat col-9">
+            <div class="chat-title title">
+                Chat Title
+            </div>
+
+            <div class="message" *ngFor="let message of messages">
+                <div class="task-text">
+                  {{message}}
+                </div>
+            </div>
+      
+        </div>
+    </div>
+</div>
+
