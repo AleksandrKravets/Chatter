@@ -5084,7 +5084,8 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://tfs.cyberianconcepts.com/tfs/DefaultCollection/_packaging/NuGetFeed/nuget/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp3.1": {
