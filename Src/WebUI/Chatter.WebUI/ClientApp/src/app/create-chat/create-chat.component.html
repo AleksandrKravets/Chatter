@@ -1,0 +1,18 @@
+
+<style>
+
+</style>
+<div class="container page">
+    <div class="row content">
+        <h2 class="title col-12">
+            Create a new chat
+        </h2>
+        <div class="col-12">
+            <input #chatTitleInput class="input form-control" type="text" placeholder="Enter chat name...">
+        </div>
+        <div class="buttons col-12">
+            <button class="btn btn-cancel" routerLink="/">Cancel</button>
+            <button class="btn" (click)="createChat(chatTitleInput.value)">Create</button>
+        </div>
+    </div>
+</div>

@@ -37,7 +37,8 @@ namespace Chatter.WebUI
             //    .AddEntityFrameworkStores<ApplicationDbContext>()
             //    .AddDefaultTokenProviders();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson();
 
             services.AddSignalR();
 

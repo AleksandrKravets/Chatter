@@ -25,12 +25,12 @@ namespace Chatter.WebUI.Controllers
             _chat = chat;
         }
 
-        [HttpPost]
-        public IActionResult Do()
-        {
-            _chat.Clients.All.SendAsync("ReceiveMessage", "Hi everyone");
-            return Ok();
-        }
+        //[HttpPost]
+        //public IActionResult Do()
+        //{
+        //    _chat.Clients.All.SendAsync("ReceiveMessage", "Hi everyone");
+        //    return Ok();
+        //}
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
@@ -45,7 +45,7 @@ namespace Chatter.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var chats = await _context.Chats.ToListAsync();
+            var chats = await _context.Chats.Include(c => c.Messages).ToListAsync();
             return Ok(chats);
         }
 
@@ -68,7 +68,7 @@ namespace Chatter.WebUI.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return Ok(chat);
         }
 
         [HttpDelete("{id}")]

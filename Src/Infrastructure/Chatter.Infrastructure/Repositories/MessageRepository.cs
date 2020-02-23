@@ -3,6 +3,7 @@ using Chatter.Domain.Entities;
 using Chatter.Infrastructure.Contracts.Contexts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Chatter.Infrastructure.Repositories
@@ -29,7 +30,7 @@ namespace Chatter.Infrastructure.Repositories
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<Message> Get()
+        public IQueryable<Message> Get()
         {
             throw new System.NotImplementedException();
         }

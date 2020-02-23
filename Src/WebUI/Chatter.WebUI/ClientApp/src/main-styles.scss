@@ -5,24 +5,21 @@ $green: #27d7a1;
 $light-green: #45f69e; 
 $dark-green: rgb(0, 100, 80);
 $light: #f8f8f8;
-$family-sans-serif: "Nunito", sans-serif;
-$primary: $green;
-$link: $turquoise;
+
 
 html {
     height: 100%;
-    overflow: hidden;
+    overflow:  hidden; 
 }
 
 body {
-    background: linear-gradient(to right top, $turquoise, $green);
+    padding-top: 100px;
     height: 100%;
+    background: linear-gradient(to right top, $turquoise, $green);
 }
 
-.title {
+.label {
+    font-size: 20px;
     color: $green;
-}
-
-.button {
-    background-color: $green;
+    font-weight: 600;
 }

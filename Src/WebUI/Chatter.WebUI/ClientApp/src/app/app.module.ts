@@ -1,18 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
-import { LoginPageComponent } from './pages/login-page/login-page.component';
-import { ChatsViewComponent } from './pages/chats-view/chats-view.component';
-import { CreateChatComponent } from './pages/create-chat/create-chat.component';
+import { ChatsComponent } from './chats/chats.component';
+import { ChatComponent } from './chats/chat/chat.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MessageComponent } from './chats/chat/message/message.component';
+import { CreateChatComponent } from './create-chat/create-chat.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ChatsViewComponent,
-    LoginPageComponent,
+    ChatsComponent,
+    ChatComponent,
+    MessageComponent,
     CreateChatComponent
   ],
   imports: [

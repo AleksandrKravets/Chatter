@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ChatService } from 'src/app/services/chat.service';
+import { ChatService } from '../services/chat.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -8,19 +8,20 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./create-chat.component.scss']
 })
 export class CreateChatComponent implements OnInit {
-  listId: string;
 
   constructor(
-    private chatService: ChatService,
-    private route: ActivatedRoute, 
+    private chatService: ChatService, 
     private router: Router) { }
+
   
   ngOnInit() {
   }
 
   createChat(title: string) {
-    this.chatService.createChat(title).subscribe((obj) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
+    // при создании чата будет приходить его ид 
+    // и нужно будет перейти в этот чат
+    this.chatService.createChat(title).subscribe((res) => {
+      this.router.navigate(['/']);
     })
   }
 

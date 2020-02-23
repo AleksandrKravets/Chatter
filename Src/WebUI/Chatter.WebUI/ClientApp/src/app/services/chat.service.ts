@@ -5,26 +5,28 @@ import { WebRequestService } from './web-request.service';
   providedIn: 'root'
 })
 export class ChatService {
+  chats = [
+  ]
 
-  constructor(private service: WebRequestService) { }
-
-  getChats() {
-    return this.service.get('api/chat/getall')
-  }
+  constructor(private webReqService: WebRequestService) { }
 
   getChat(id: number) {
-    return this.service.get(`api/chat/get/${id}`)
+    return this.webReqService.get(`api/chats/get/${id}`)
   }
 
-  createChat(chatName: string) {
-    return this.service.post('api/chat/create', { name: chatName })
+  getChats() {
+    return this.webReqService.get('api/chats/getall');
+  }
+
+  createChat(title: string) {
+    return this.webReqService.post('api/chats/create', { title });
+  }
+
+  updateChat(id: number, title: string) {
+    return this.webReqService.patch(`api/chats/update/${id}`, { title });
   }
 
   deleteChat(id: number) {
-    return this.service.delete(`api/chat/delete/${id}`)
-  }
-
-  updateChat(id: string, title: string) {
-    return this.service.patch(`api/chat/update`, { id, title })
+    return this.webReqService.delete(`api/chats/delete/${id}`);
   }
 }

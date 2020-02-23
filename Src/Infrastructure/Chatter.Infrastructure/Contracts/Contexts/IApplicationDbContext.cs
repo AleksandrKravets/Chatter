@@ -8,8 +8,8 @@ namespace Chatter.Infrastructure.Contracts.Contexts
     {
         DbSet<Chat> Chats { get; set; }
         DbSet<Message> Messages { get; set; }
-        DbSet<ChatUser> ChatUsers { get; set; }
-        DbSet<User> Users { get; set; }
+        //DbSet<ChatUser> ChatUsers { get; set; }
+        //DbSet<User> Users { get; set; }
         Task<int> SaveChangesAsync();
     }
 }
