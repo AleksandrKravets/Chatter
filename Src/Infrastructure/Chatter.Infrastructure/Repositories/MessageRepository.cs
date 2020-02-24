@@ -2,7 +2,6 @@
 using Chatter.Domain.Entities;
 using Chatter.Infrastructure.Contracts.Contexts;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,35 +13,37 @@ namespace Chatter.Infrastructure.Repositories
 
         public MessageRepository(IApplicationDbContext context)
         {
-            if (context == null)
+            _context = context ??
                 throw new ArgumentNullException(nameof(context));
-
-            _context = context;
         }
 
-        public Task CreateAsync(Message message)
+        public async Task CreateAsync(Message message)
         {
-            throw new System.NotImplementedException();
+            message.Id = 0;
+            await _context.Messages.AddAsync(message);
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int messageId)
+        public async Task DeleteAsync(int messageId)
         {
-            throw new System.NotImplementedException();
+            _context.Messages.Remove(new Message { Id = messageId });
+            await _context.SaveChangesAsync();
         }
 
-        public IQueryable<Message> Get()
+        public IQueryable<Message> Get(int chatId)
         {
-            throw new System.NotImplementedException();
+            return _context.Messages.Where(message => message.ChatId == chatId);
         }
 
-        public Task<Message> GetAsync(int id)
+        public async Task<Message> GetAsync(int id)
         {
-            throw new System.NotImplementedException();
+            return await _context.Messages.FindAsync(id);
         }
 
-        public Task UpdateAsync(Message message)
+        public async Task UpdateAsync(Message message)
         {
-            throw new System.NotImplementedException();
+            _context.Messages.Update(message);
+            await _context.SaveChangesAsync();
         }
     }
 }

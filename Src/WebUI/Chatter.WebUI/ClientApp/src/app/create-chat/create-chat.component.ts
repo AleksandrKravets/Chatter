@@ -18,9 +18,10 @@ export class CreateChatComponent implements OnInit {
   }
 
   createChat(title: string) {
-    // при создании чата будет приходить его ид 
-    // и нужно будет перейти в этот чат
     this.chatService.createChat(title).subscribe((res) => {
+      console.log("createChat")
+      console.log(res)
+      // переходить в комнату нового чата
       this.router.navigate(['/']);
     })
   }

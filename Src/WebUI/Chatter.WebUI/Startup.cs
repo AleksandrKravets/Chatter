@@ -47,8 +47,10 @@ namespace Chatter.WebUI
                 options.AddPolicy("AllowAny", x => {
                     x.AllowAnyHeader()
                         .AllowAnyMethod()
-                        .AllowAnyOrigin();
-                        //.WithOrigins("http://localhost:4200");
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowCredentials()
+                        .WithOrigins("http://localhost:4200");
                 });
             });
 

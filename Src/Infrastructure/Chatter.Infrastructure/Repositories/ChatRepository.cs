@@ -13,35 +13,37 @@ namespace Chatter.Infrastructure.Repositories
 
         public ChatRepository(IApplicationDbContext context)
         {
-            if (context == null)
+            _context = context ??
                 throw new ArgumentNullException(nameof(context));
-
-            _context = context;
         }
 
-        public Task CreateAsync(Chat chat)
+        public async Task CreateAsync(Chat chat)
         {
-            throw new NotImplementedException();
+            chat.Id = 0;
+            await _context.Chats.AddAsync(chat); 
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int chatId)
+        public async Task DeleteAsync(int chatId)
         {
-            throw new NotImplementedException();
+            _context.Chats.Remove(new Chat { Id = chatId });
+            await _context.SaveChangesAsync();
         }
 
         public IQueryable<Chat> Get()
         {
-            throw new NotImplementedException();
+            return _context.Chats;
         }
 
-        public Task<Chat> GetAsync(int id)
+        public async Task<Chat> GetAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Chats.FindAsync(id);
         }
 
-        public Task UpdateAsync(Chat chat)
+        public async Task UpdateAsync(Chat chat)
         {
-            throw new NotImplementedException();
+            _context.Chats.Update(chat);
+            await _context.SaveChangesAsync();
         }
     }
 }

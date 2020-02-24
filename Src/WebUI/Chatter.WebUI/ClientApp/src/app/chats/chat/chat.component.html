@@ -6,7 +6,7 @@
     </div>
     <div class="messages-block">
         <div class="messages">
-            <app-message *ngFor="let message of messages" [message]="message">
+            <app-message *ngFor="let message of messages" [message]="message.text">
             </app-message>
         </div>
     </div>
@@ -14,10 +14,10 @@
     <div class="send-message-block">
         <div class="row">
             <div class="col-10" style="padding-right: 15px;">
-                <input class="message-input form-control" type="text" placeholder="Write your message here">
+                <input #messageInput class="message-input form-control" type="text" placeholder="Write your message here">
             </div>
             <div class="col-2" style="padding: 0px 0px;">
-                <button class="btn send-message-btn">Send</button>
+                <button class="btn send-message-btn" (click)="sendMessage(messageInput.value); messageInput.value = ''">Send</button>
             </div>
         </div>
     </div>

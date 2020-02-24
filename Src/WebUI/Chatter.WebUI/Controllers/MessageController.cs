@@ -24,38 +24,6 @@ namespace Chatter.WebUI.Controllers
             _chat = chat;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(CreateMessageViewModel model)
-        {
-            var Message = new Message
-            {
-                Text = model.Text,
-                TimeStamp = DateTime.Now,
-                ChatId = model.ChatId
-            };
-
-            _context.Messages.Add(Message);
-
-            await _context.SaveChangesAsync();
-
-            return Ok(Message);
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            _context.Messages.Remove(new Message { Id = id });
-            await _context.SaveChangesAsync();
-            return Ok();
-        }
-
-        [HttpGet("{chatId}")]
-        public async Task<IActionResult> GetByChatId(int chatId)
-        {
-            var messages = await _context.Messages.Where(m => m.ChatId == chatId).ToListAsync();
-            return Ok(messages);
-        }
-
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -65,26 +33,47 @@ namespace Chatter.WebUI.Controllers
             return Ok(message);
         }
 
-        //public async Task<IActionResult> SendMessage(CreateMessageViewModel model, string roomName)
-        //{
-        //    var _message = new Message
-        //    {
-        //        ChatId = model.ChatId,
-        //        Text = model.Text,
-        //        TimeStamp = DateTime.Now
-        //    };
+        [HttpGet("{chatId}")]
+        public async Task<IActionResult> GetByChatId(int chatId)
+        {
+            var messages = await _context.Messages.Where(m => m.ChatId == chatId).ToListAsync();
+            return Ok(messages);
+        }
 
-        //    _context.Messages.Add(_message);
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateMessageViewModel model)
+        {
+            var message = new Message
+            {
+                Text = model.Text,
+                TimeStamp = DateTime.Now,
+                ChatId = model.ChatId
+            };
 
-        //    await _context.SaveChangesAsync();
+            var chat = _context.Chats.FindAsync(message.ChatId);
 
-        //    await _chat.Clients.Group(roomName)
-        //        .SendAsync("ReceiveMessage", new {
-        //            Text = _message.Text,
-        //            Timestamp = _message.TimeStamp.ToString("dd/MM/yyyy hh:mm:ss")
-        //        });
+            if (chat == null)
+                return NotFound();
 
-        //    return Ok();
-        //}
+            _context.Messages.Add(message);
+
+            await _context.SaveChangesAsync();
+
+            await _chat.Clients.Group(model.ChatId.ToString())
+                .SendAsync("ReceivedMessage", new {
+                    Text = message.Text,
+                    Timestamp = message.TimeStamp.ToString("dd/MM/yyyy hh:mm:ss")
+                });
+
+            return Ok(message);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            _context.Messages.Remove(new Message { Id = id });
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

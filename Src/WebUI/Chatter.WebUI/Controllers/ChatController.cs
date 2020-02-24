@@ -5,9 +5,6 @@ using Chatter.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Chatter.WebUI.Controllers
@@ -24,13 +21,6 @@ namespace Chatter.WebUI.Controllers
             _context = context;
             _chat = chat;
         }
-
-        //[HttpPost]
-        //public IActionResult Do()
-        //{
-        //    _chat.Clients.All.SendAsync("ReceiveMessage", "Hi everyone");
-        //    return Ok();
-        //}
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
@@ -55,19 +45,22 @@ namespace Chatter.WebUI.Controllers
             var chat = new Chat
             {
                 Name = model.Name,
-                //Type = ChatType.Room
             };
-
-            //chat.Users.Add(new ChatUser
-            //{
-            //    UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value,
-            //    Role = UserRole.Admin
-            //});
-
+            
             _context.Chats.Add(chat);
 
             await _context.SaveChangesAsync();
 
+            return Ok(chat);
+        }
+
+        [HttpPatch]
+        public async Task<IActionResult> Update(UpdateChatViewModel model)
+        {
+            var chat = await _context.Chats.FindAsync(model.Id);
+            chat.Name = model.Name;
+            _context.Chats.Update(chat);
+            await _context.SaveChangesAsync();
             return Ok(chat);
         }
 
@@ -83,26 +76,17 @@ namespace Chatter.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Join(JoinChatViewModel model) 
         {
-            //var chatUser = new ChatUser
-            //{
-            //    ChatId = model.ChatId,
-            //    UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value,
-            //    //Role = UserRole.Member
-            //};
-
-            //await _context.ChatUsers.AddAsync(chatUser);
-
-            //await _context.SaveChangesAsync();
-
-            await _chat.Groups.AddToGroupAsync(model.ConnectionId, model.RoomName);
+            await _chat.Groups.AddToGroupAsync(model.ConnectionId, model.ChatId.ToString());
+            //_chat.Clients.Group(model.ChatId.ToString()).SendAsync("New user joined");
+            await _chat.Clients.Group(model.ChatId.ToString()).SendCoreAsync("New user joined", null);
             return Ok();
         }
 
         [HttpPost]
         public async Task<IActionResult> Leave(LeaveChatViewModel model)
         {
-            //удалять чат из бд
-            await _chat.Groups.RemoveFromGroupAsync(model.ConnectionId, model.RoomName);
+            await _chat.Groups.RemoveFromGroupAsync(model.ConnectionId, model.ChatId.ToString());
+            await _chat.Clients.Group(model.ChatId.ToString()).SendCoreAsync("User left the group", null);
             return Ok();
         }
     }

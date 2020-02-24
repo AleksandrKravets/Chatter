@@ -4,6 +4,7 @@ using Chatter.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Chatter.Application.Services
 {
@@ -13,35 +14,42 @@ namespace Chatter.Application.Services
 
         public MessageService(IMessageRepository messageRepository)
         {
-            if (messageRepository == null)
-                throw new ArgumentNullException(nameof(messageRepository));
-
-            _messageRepository = messageRepository;
+            _messageRepository =
+                messageRepository ?? throw new ArgumentNullException(nameof(messageRepository));
         }
 
-        public Task CreateAsync(Message message)
+        public async Task CreateAsync(Message message)
         {
-            throw new System.NotImplementedException();
+            await _messageRepository.CreateAsync(message);
         }
 
-        public Task DeleteAsync(int messageId)
+        public async Task DeleteAsync(int messageId)
         {
-            throw new System.NotImplementedException();
+            await _messageRepository.DeleteAsync(messageId);
+        }
+
+        public async Task<Message> GetAsync(int messageId)
+        {
+            return await _messageRepository.GetAsync(messageId);
+        }
+
+        public async Task UpdateAsync(Message message)
+        {
+            await _messageRepository.UpdateAsync(message);
         }
 
         public IEnumerable<Message> Get(int chatId, int pageIndex, int pageSize)
         {
-            throw new System.NotImplementedException();
+            return _messageRepository.Get(chatId)
+                .Where(message => message.ChatId == chatId)
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
         }
 
-        public Task<Message> GetAsync(int messageId)
+        public IEnumerable<Message> Get(int chatId)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public Task UpdateAsync(Message message)
-        {
-            throw new System.NotImplementedException();
+            return _messageRepository.Get(chatId).ToList();
         }
     }
 }
