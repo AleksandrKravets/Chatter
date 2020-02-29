@@ -3,7 +3,6 @@ using Chatter.Application.Contracts.Services;
 using Chatter.Domain.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Chatter.Application.Services
@@ -18,37 +17,34 @@ namespace Chatter.Application.Services
                 chatRepository ?? throw new ArgumentNullException(nameof(chatRepository));
         }
 
-        public async Task CreateAsync(Chat chat)
+        public Task CreateAsync(Chat chat)
         {
-            await _chatRepository.CreateAsync(chat);
+            return  _chatRepository.CreateAsync(chat);
         }
 
-        public async Task DeleteAsync(int chatId)
+        public Task DeleteAsync(int chatId)
         {
-            await _chatRepository.DeleteAsync(chatId);
+            return _chatRepository.DeleteAsync(chatId);
         }
 
-        public IEnumerable<Chat> Get()
+        public Task<IEnumerable<Chat>> GetAsync()
         {
-            return _chatRepository.Get().ToList();
+            return _chatRepository.GetAllAsync();
         }
 
-        public IEnumerable<Chat> Get(int pageIndex, int pageSize)
+        public Task<IEnumerable<Chat>> GetAsync(int pageIndex, int pageSize)
         {
-            return _chatRepository.Get()
-                .Skip((pageIndex - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
+            return null;
         }
 
-        public async Task<Chat> GetAsync(int chatId)
+        public Task<Chat> GetAsync(int chatId)
         {
-            return await _chatRepository.GetAsync(chatId);
+            return _chatRepository.GetAsync(chatId);
         }
 
-        public async Task UpdateAsync(Chat chat)
+        public Task UpdateAsync(Chat chat)
         {
-            await _chatRepository.UpdateAsync(chat);
+            return _chatRepository.UpdateAsync(chat);
         }
     }
 }

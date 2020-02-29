@@ -4,7 +4,6 @@ using Chatter.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace Chatter.Application.Services
 {
@@ -18,38 +17,35 @@ namespace Chatter.Application.Services
                 messageRepository ?? throw new ArgumentNullException(nameof(messageRepository));
         }
 
-        public async Task CreateAsync(Message message)
+        public Task CreateAsync(Message message)
         {
-            await _messageRepository.CreateAsync(message);
+            // Проверять на наличие чата в базе перед созданием
+            return _messageRepository.CreateAsync(message);
         }
 
-        public async Task DeleteAsync(int messageId)
+        public Task DeleteAsync(int messageId)
         {
-            await _messageRepository.DeleteAsync(messageId);
+            return _messageRepository.DeleteAsync(messageId);
         }
 
-        public async Task<Message> GetAsync(int messageId)
+        public Task<Message> GetAsync(int messageId)
         {
-            return await _messageRepository.GetAsync(messageId);
+            return _messageRepository.GetAsync(messageId);
         }
 
-        public async Task UpdateAsync(Message message)
+        public Task UpdateAsync(Message message)
         {
-            await _messageRepository.UpdateAsync(message);
+            return _messageRepository.UpdateAsync(message);
         }
 
-        public IEnumerable<Message> Get(int chatId, int pageIndex, int pageSize)
+        public Task<IEnumerable<Message>> GetAsync(int chatId, int pageIndex, int pageSize)
         {
-            return _messageRepository.Get(chatId)
-                .Where(message => message.ChatId == chatId)
-                .Skip((pageIndex - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
+            return null;
         }
 
-        public IEnumerable<Message> Get(int chatId)
+        public Task<IEnumerable<Message>> GetAllAsync(int chatId)
         {
-            return _messageRepository.Get(chatId).ToList();
+            return _messageRepository.GetAllAsync(chatId);
         }
     }
 }

@@ -1,10 +1,9 @@
-﻿using Chatter.Domain.Entities;
-using Chatter.Infrastructure.Contexts;
+﻿using Chatter.Application.Contracts.Services;
+using Chatter.Domain.Entities;
 using Chatter.WebUI.Hubs;
 using Chatter.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace Chatter.WebUI.Controllers
@@ -13,29 +12,26 @@ namespace Chatter.WebUI.Controllers
     [ApiController]
     public class ChatController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IChatService _chatService;
         private readonly IHubContext<ChatHub> _chat;
 
-        public ChatController(ApplicationDbContext context, IHubContext<ChatHub> chat)
+        public ChatController(IChatService chatService, IHubContext<ChatHub> chat)
         {
-            _context = context;
+            _chatService = chatService;
             _chat = chat;
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var chat = await _context.Chats
-                .Include(x => x.Messages)
-                .FirstOrDefaultAsync(x => x.Id == id);
-
+            var chat = await _chatService.GetAsync(id);
             return Ok(chat);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var chats = await _context.Chats.Include(c => c.Messages).ToListAsync();
+            var chats = await _chatService.GetAsync();
             return Ok(chats);
         }
 
@@ -45,11 +41,10 @@ namespace Chatter.WebUI.Controllers
             var chat = new Chat
             {
                 Name = model.Name,
+                Type = ChatType.Room
             };
-            
-            _context.Chats.Add(chat);
 
-            await _context.SaveChangesAsync();
+            await _chatService.CreateAsync(chat);
 
             return Ok(chat);
         }
@@ -57,19 +52,22 @@ namespace Chatter.WebUI.Controllers
         [HttpPatch]
         public async Task<IActionResult> Update(UpdateChatViewModel model)
         {
-            var chat = await _context.Chats.FindAsync(model.Id);
-            chat.Name = model.Name;
-            _context.Chats.Update(chat);
-            await _context.SaveChangesAsync();
+            var chat = new Chat
+            {
+                Id = model.Id,
+                Name = model.Name,
+                Type = ChatType.Room
+            };
+
+            await _chatService.UpdateAsync(chat);
+
             return Ok(chat);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            // удалять всех юзеров из чата
-            _context.Chats.Remove(new Chat { Id = id });
-            await _context.SaveChangesAsync();
+            await _chatService.DeleteAsync(id);
             return Ok();
         }
 

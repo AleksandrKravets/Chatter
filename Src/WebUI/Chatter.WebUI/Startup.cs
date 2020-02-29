@@ -1,12 +1,6 @@
-using Chatter.Domain.Entities;
-using Chatter.Infrastructure.Contexts;
 using Chatter.WebUI.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,19 +18,6 @@ namespace Chatter.WebUI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(opts => {
-                opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-            });
-
-            //services.AddIdentity<User, IdentityRole>(opts => {
-            //    opts.Password.RequireDigit = false;
-            //    opts.Password.RequireLowercase = false;
-            //    opts.Password.RequireNonAlphanumeric = false;
-            //    opts.Password.RequireUppercase = false;
-            //})
-            //    .AddEntityFrameworkStores<ApplicationDbContext>()
-            //    .AddDefaultTokenProviders();
-
             services.AddControllersWithViews()
                 .AddNewtonsoftJson();
 

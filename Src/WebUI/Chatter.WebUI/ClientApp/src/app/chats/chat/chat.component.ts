@@ -7,103 +7,135 @@ import * as signalR from '@aspnet/signalr';
 
 type Nullable<T> = T | null;
 
-
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit{
+export class ChatComponent implements OnInit, OnDestroy{
+  /* ДОБАВИТЬ БУЛЕВУЮ ПЕРЕМЕННУЮ ConnectionEstableshed
+  и окрывать чат только когда она тру */
   id: Nullable<number> = null
   name: string
-  messages: string[] = []
+  messages: any[] = []
   connectionId: string
-
+  hubConnection: signalR.HubConnection
   constructor(
     private route: ActivatedRoute, 
     private chatService: ChatService,
     private messageService: MessageService
   ) {}
 
-
   connect() {
-    const hubConnection = new signalR.HubConnectionBuilder()  
-      .configureLogging(signalR.LogLevel.Information)  
-      .withUrl("http://localhost:56650/chatHub")  
-      .build();  
-  
-    hubConnection.on("ReceivedMessage", (message) => {
-      this.messages.push(message.text)
-      console.log(this.messages)  
-      console.log("Message received312")
-      console.log("new message " + message.toString())
-      
-    });
-
-    hubConnection.start()
+    this.hubConnection.start()
       .then(() => {  
         console.log('SignalR Connected!');  
-        hubConnection.invoke('GetConnectionId')
+        this.hubConnection.invoke('GetConnectionId')
           .then(connectionId => {
               console.log("connection id " + connectionId)
               this.connectionId = connectionId
-              
-              this.joinChat(this.id)
+
+              this.route.params.subscribe((params: Params) => {
+                if(this.id !== null) {
+                  this.leaveChat(this.id)
+                }
+                this.id = +params['id']
+          
+                this.joinChat(this.id)
+
+                this.chatService.getChat(this.id).subscribe((res: any) => {
+                  console.log("getChat")
+                  this.name = res.name
+                  this.messages = res.messages
+                })
+              })
+
           })
           .catch(err => {
-            console.error(err.toString())
+            console.error("Err412")
           });
       })
       .catch(function (err) { 
         // При потере соединения переподключаемся через 3 сек
         //setTimeout(function() { this.startConnection(); }, 3000)
-        return console.error(err.toString());  
+        return console.error('Err0');  
       })
   }
 
   joinChat(chatId: number) {
-    this.chatService.joinChat({connectionId : this.connectionId, chatId: this.id})
-      .subscribe(res => {
-        console.log('joined to chat')
+    // this.chatService.joinChat({connectionId : this.connectionId, chatId: this.id})
+    //   .subscribe(res => {
+    //     console.log('joined to chat')
+    //   })
+
+    this.hubConnection.invoke('JoinGroup', chatId.toString())
+      .then((res) => {
+        
+        console.log("Res")
+      })
+      .catch(err => { 
+        console.log("Err")
       })
   }
 
   leaveChat(chatId: number) {
-    this.chatService.leaveChat({connectionId : this.connectionId, chatId: this.id})
-      .subscribe(res => {
-        console.log('leave the chat')
+    // this.chatService.leaveChat({connectionId : this.connectionId, chatId: this.id})
+    //   .subscribe(res => {
+    //     console.log('leave the chat')
+    //   })
+
+    
+    this.hubConnection.invoke('LeaveGroup', chatId.toString())
+      .then((res) => {
+        
+        console.log("ResL")
+      })
+      .catch(err => { 
+        console.log("ErrL")
       })
   }
 
   ngOnInit() {
+    this.buildHubConnection()
+    this.setUpConnection()
     this.connect()
-
-    if(this.id !== null) {
-      // Отписатся от прошлой группы
-      console.log('leave 1')
-      this.leaveChat(this.id)
-    }
-
-    this.route.params.subscribe((params: Params) => {
-
-      // изменить ид текущей группы
-      this.id = +params['id'] // chatId
-
-      this.chatService.getChat(this.id).subscribe((res: any) => {
-        console.log("getChat")
-        this.name = res.name
-        this.messages = res.messages
-      })
-    })
   }
 
   sendMessage(message: string) {
-    // при создании чата будет приходить его ид 
-    // и нужно будет перейти в этот чат
-    this.messageService.createMessage(message, this.id).subscribe((res) => {
-      console.log("createMessage")
-      console.log(res)
+    this.hubConnection.invoke('SendMessageGroup', this.id.toString(), message)
+      .then((res) => {
+          
+        console.log("Res1")
+      })
+      .catch(err => { 
+        console.log("Err1")
+      })
+    // this.messageService.createMessage(message, this.id).subscribe((res) => {
+    //   console.log("createMessage")
+    // })
+  }
+
+  buildHubConnection() {
+    this.hubConnection = new signalR.HubConnectionBuilder()
+      .configureLogging(signalR.LogLevel.Information)  
+      .withUrl("http://localhost:56650/chatHub")  
+      .build();
+  }
+
+  setUpConnection() {
+    this.hubConnection.on("ReceivedMessage", (message) => {
+      this.messages.push({ id: 12, text: message, timestamp: '12:32'})
+      //this.messages = this.messages.slice()
+      console.log(this.messages)
+      console.log("new message " + message.toString())
+    });
+
+    this.hubConnection.onclose(() => {
+      console.log("oncloseeventdisconnected")
     })
-    //this.hubConnection.invoke('NewMessage', "object or data");  
+  }
+
+  ngOnDestroy() {
+    console.log("destroyed")
   }
 }
