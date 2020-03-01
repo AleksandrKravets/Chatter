@@ -45,6 +45,7 @@ export class ChatComponent implements OnInit, OnDestroy{
 
                 this.chatService.getChat(this.id).subscribe((res: any) => {
                   console.log("getChat")
+                  console.log(res)
                   this.name = res.name
                   this.messages = res.messages
                 })
@@ -63,36 +64,36 @@ export class ChatComponent implements OnInit, OnDestroy{
   }
 
   joinChat(chatId: number) {
-    // this.chatService.joinChat({connectionId : this.connectionId, chatId: this.id})
-    //   .subscribe(res => {
-    //     console.log('joined to chat')
-    //   })
+    this.chatService.joinChat({connectionId : this.connectionId, chatId: this.id})
+      .subscribe(res => {
+        console.log('joined to chat')
+      })
 
-    this.hubConnection.invoke('JoinGroup', chatId.toString())
-      .then((res) => {
+    // this.hubConnection.invoke('JoinGroup', chatId.toString())
+    //   .then((res) => {
         
-        console.log("Res")
-      })
-      .catch(err => { 
-        console.log("Err")
-      })
+    //     console.log("Res")
+    //   })
+    //   .catch(err => { 
+    //     console.log("Err")
+    //   })
   }
 
   leaveChat(chatId: number) {
-    // this.chatService.leaveChat({connectionId : this.connectionId, chatId: this.id})
-    //   .subscribe(res => {
-    //     console.log('leave the chat')
-    //   })
+    this.chatService.leaveChat({connectionId : this.connectionId, chatId: this.id})
+      .subscribe(res => {
+        console.log('leave the chat')
+      })
 
     
-    this.hubConnection.invoke('LeaveGroup', chatId.toString())
-      .then((res) => {
+    // this.hubConnection.invoke('LeaveGroup', chatId.toString())
+    //   .then((res) => {
         
-        console.log("ResL")
-      })
-      .catch(err => { 
-        console.log("ErrL")
-      })
+    //     console.log("ResL")
+    //   })
+    //   .catch(err => { 
+    //     console.log("ErrL")
+    //   })
   }
 
   ngOnInit() {
@@ -124,10 +125,11 @@ export class ChatComponent implements OnInit, OnDestroy{
 
   setUpConnection() {
     this.hubConnection.on("ReceivedMessage", (message) => {
-      this.messages.push({ id: 12, text: message, timestamp: '12:32'})
+      // this.messages.push({ id: 12, text: message, timestamp: '12:32'})
       //this.messages = this.messages.slice()
-      console.log(this.messages)
-      console.log("new message " + message.toString())
+      console.log("new message ")
+      console.log(message)
+      
     });
 
     this.hubConnection.onclose(() => {

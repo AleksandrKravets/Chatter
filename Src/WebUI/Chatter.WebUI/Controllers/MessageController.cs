@@ -1,8 +1,11 @@
 ﻿using Chatter.Application.Contracts.Services;
+using Chatter.Domain.Entities;
 using Chatter.WebUI.Hubs;
 using Chatter.WebUI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using System;
 using System.Threading.Tasks;
 
 namespace Chatter.WebUI.Controllers
@@ -21,6 +24,7 @@ namespace Chatter.WebUI.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(int id)
         {
             var message = await _messageService.GetAsync(id);
@@ -28,6 +32,7 @@ namespace Chatter.WebUI.Controllers
         }
 
         [HttpGet("{chatId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetByChatId(int chatId)
         {
             var messages = await _messageService.GetAllAsync(chatId);
@@ -35,16 +40,17 @@ namespace Chatter.WebUI.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Create(CreateMessageViewModel model)
         {
-            //var message = new Message
-            //{
-            //    Text = model.Text,
-            //    TimeStamp = DateTime.Now,
-            //    ChatId = model.ChatId
-            //};
+            var message = new Message
+            {
+                Text = model.Text,
+                TimeStamp = DateTime.Now,
+                ChatId = model.ChatId
+            };
 
-            //await _messageService.CreateAsync(message);
+            await _messageService.CreateAsync(message);
 
             await _chat.Clients.Group(model.ChatId.ToString())
                 .SendAsync("ReceivedMessage", new {
@@ -56,6 +62,7 @@ namespace Chatter.WebUI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Delete(int id)
         {
             await _messageService.DeleteAsync(id);

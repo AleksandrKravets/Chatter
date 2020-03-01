@@ -2,6 +2,7 @@
 using Chatter.Domain.Entities;
 using Chatter.WebUI.Hubs;
 using Chatter.WebUI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
@@ -22,6 +23,8 @@ namespace Chatter.WebUI.Controllers
         }
 
         [HttpGet("{id}")]
+        // [ProducesResponseType(StatusCodes.Status200OK, Type = ...)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(int id)
         {
             var chat = await _chatService.GetAsync(id);
@@ -29,6 +32,7 @@ namespace Chatter.WebUI.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
             var chats = await _chatService.GetAsync();
@@ -36,6 +40,7 @@ namespace Chatter.WebUI.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Create(CreateChatViewModel model)
         {
             var chat = new Chat
@@ -50,6 +55,7 @@ namespace Chatter.WebUI.Controllers
         }
 
         [HttpPatch]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Update(UpdateChatViewModel model)
         {
             var chat = new Chat
@@ -65,6 +71,7 @@ namespace Chatter.WebUI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Delete(int id)
         {
             await _chatService.DeleteAsync(id);
@@ -72,6 +79,7 @@ namespace Chatter.WebUI.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Join(JoinChatViewModel model) 
         {
             await _chat.Groups.AddToGroupAsync(model.ConnectionId, model.ChatId.ToString());
@@ -81,6 +89,7 @@ namespace Chatter.WebUI.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Leave(LeaveChatViewModel model)
         {
             await _chat.Groups.RemoveFromGroupAsync(model.ConnectionId, model.ChatId.ToString());

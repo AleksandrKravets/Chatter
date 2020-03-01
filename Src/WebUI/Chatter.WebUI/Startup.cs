@@ -1,3 +1,5 @@
+using Chatter.Application;
+using Chatter.Infrastructure;
 using Chatter.WebUI.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,6 +20,10 @@ namespace Chatter.WebUI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplication();
+
+            services.AddInfrastructure();
+
             services.AddControllersWithViews()
                 .AddNewtonsoftJson();
 
