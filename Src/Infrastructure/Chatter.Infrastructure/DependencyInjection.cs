@@ -10,6 +10,7 @@ namespace Chatter.Infrastructure
         {
             services.AddTransient<IChatRepository, ChatRepository>();
             services.AddTransient<IMessageRepository, MessageRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
 
             return services;
         }

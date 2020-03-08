@@ -10,6 +10,7 @@ namespace Chatter.Application
         {
             services.AddTransient<IChatService, ChatService>();
             services.AddTransient<IMessageService, MessageService>();
+            services.AddTransient<IUserService, UserService>();
 
             return services;
         }

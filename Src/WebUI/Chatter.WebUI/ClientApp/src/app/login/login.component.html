@@ -1,0 +1,17 @@
+<div class="container page">
+    <div class="row content">
+        <h2 class="title col-12">
+            Login
+        </h2>
+        <div class="col-12">
+            <input #emailInput class="input form-control" type="email" placeholder="Enter email...">
+        </div>
+        <div class="col-12">
+            <input #passwordInput class="input form-control" type="password" placeholder="Enter password...">
+        </div>
+        <div class="buttons col-12">
+            <button class="btn btn-cancel" routerLink="/">Cancel</button>
+            <button class="btn" (click)="login(emailInput.value, passwordInput.value)">Login</button>
+        </div>
+    </div>
+</div>

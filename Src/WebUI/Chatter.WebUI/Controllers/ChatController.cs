@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 namespace Chatter.WebUI.Controllers
 {
     [Route("api/[controller]/[action]")]
-    [ApiController]
     public class ChatController : ControllerBase
     {
         private readonly IChatService _chatService;
@@ -23,7 +22,6 @@ namespace Chatter.WebUI.Controllers
         }
 
         [HttpGet("{id}")]
-        // [ProducesResponseType(StatusCodes.Status200OK, Type = ...)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(int id)
         {
@@ -84,7 +82,7 @@ namespace Chatter.WebUI.Controllers
         {
             await _chat.Groups.AddToGroupAsync(model.ConnectionId, model.ChatId.ToString());
             //_chat.Clients.Group(model.ChatId.ToString()).SendAsync("New user joined");
-            await _chat.Clients.Group(model.ChatId.ToString()).SendCoreAsync("New user joined", null);
+            // await _chat.Clients.Group(model.ChatId.ToString()).SendCoreAsync("New user joined", null);
             return Ok();
         }
 
@@ -93,7 +91,7 @@ namespace Chatter.WebUI.Controllers
         public async Task<IActionResult> Leave(LeaveChatViewModel model)
         {
             await _chat.Groups.RemoveFromGroupAsync(model.ConnectionId, model.ChatId.ToString());
-            await _chat.Clients.Group(model.ChatId.ToString()).SendCoreAsync("User left the group", null);
+            //await _chat.Clients.Group(model.ChatId.ToString()).SendCoreAsync("User left the group", null);
             return Ok();
         }
     }

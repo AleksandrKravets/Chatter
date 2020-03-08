@@ -5,21 +5,20 @@ import { MessageService } from 'src/app/services/message.service';
 import * as signalR from '@aspnet/signalr';  
 
 
-type Nullable<T> = T | null;
-
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit, OnDestroy{
-  /* ДОБАВИТЬ БУЛЕВУЮ ПЕРЕМЕННУЮ ConnectionEstableshed
-  и окрывать чат только когда она тру */
-  id: Nullable<number> = null
+
+  connectionEstablished: boolean = false
+  id: number
   name: string
   messages: any[] = []
   connectionId: string
   hubConnection: signalR.HubConnection
+
   constructor(
     private route: ActivatedRoute, 
     private chatService: ChatService,
@@ -36,9 +35,10 @@ export class ChatComponent implements OnInit, OnDestroy{
               this.connectionId = connectionId
 
               this.route.params.subscribe((params: Params) => {
-                if(this.id !== null) {
+                if(this.connectionEstablished) {
                   this.leaveChat(this.id)
                 }
+
                 this.id = +params['id']
           
                 this.joinChat(this.id)
@@ -47,7 +47,7 @@ export class ChatComponent implements OnInit, OnDestroy{
                   console.log("getChat")
                   console.log(res)
                   this.name = res.name
-                  this.messages = res.messages
+                  //this.messages = res.messages
                 })
               })
 
@@ -94,6 +94,7 @@ export class ChatComponent implements OnInit, OnDestroy{
     //   .catch(err => { 
     //     console.log("ErrL")
     //   })
+    this.connectionEstablished = false
   }
 
   ngOnInit() {
@@ -103,17 +104,18 @@ export class ChatComponent implements OnInit, OnDestroy{
   }
 
   sendMessage(message: string) {
-    this.hubConnection.invoke('SendMessageGroup', this.id.toString(), message)
-      .then((res) => {
+    this.messageService.createMessage(message, this.id).subscribe(res => {
+      console.log('Messege sending')
+      console.log(res)
+    })
+    // this.hubConnection.invoke('SendMessageGroup', this.id.toString(), message)
+    //   .then((res) => {
           
-        console.log("Res1")
-      })
-      .catch(err => { 
-        console.log("Err1")
-      })
-    // this.messageService.createMessage(message, this.id).subscribe((res) => {
-    //   console.log("createMessage")
-    // })
+    //     console.log("Res1")
+    //   })
+    //   .catch(err => { 
+    //     console.log("Err1")
+    //   })
   }
 
   buildHubConnection() {
@@ -125,11 +127,7 @@ export class ChatComponent implements OnInit, OnDestroy{
 
   setUpConnection() {
     this.hubConnection.on("ReceivedMessage", (message) => {
-      // this.messages.push({ id: 12, text: message, timestamp: '12:32'})
-      //this.messages = this.messages.slice()
-      console.log("new message ")
-      console.log(message)
-      
+      this.messages.push(message) // { id: 12, text: message.text, timestamp: '12:32'}
     });
 
     this.hubConnection.onclose(() => {

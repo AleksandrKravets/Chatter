@@ -1,9 +1,8 @@
 ﻿namespace Chatter.Domain.Entities
 {
-    public enum UserRole
+    public class UserRole
     {
-        Admin,
-        Member,
-        Guest
+        public int Id { get; set; }
+        public string RoleName { get; set; }
     }
 }

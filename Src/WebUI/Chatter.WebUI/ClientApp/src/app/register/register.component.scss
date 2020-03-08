@@ -1,0 +1,34 @@
+@import '../../main-styles.scss';
+
+.page {
+    width: 35%;
+}
+
+.content {
+    margin-top: 100px;
+    background-color: white;
+    height: 200px;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.btn {
+    background: rgba($green, 0.7);
+}
+
+.title {
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
+.input {
+    width: 100%;
+}
+.buttons {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.btn-cancel {
+    margin-right: 10px;
+}

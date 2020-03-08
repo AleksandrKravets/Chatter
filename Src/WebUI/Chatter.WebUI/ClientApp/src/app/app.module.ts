@@ -9,6 +9,8 @@ import { ChatComponent } from './chats/chat/chat.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MessageComponent } from './chats/chat/message/message.component';
 import { CreateChatComponent } from './create-chat/create-chat.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { CreateChatComponent } from './create-chat/create-chat.component';
     ChatsComponent,
     ChatComponent,
     MessageComponent,
-    CreateChatComponent
+    CreateChatComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
