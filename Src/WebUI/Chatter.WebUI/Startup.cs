@@ -1,6 +1,5 @@
 using Chatter.Application;
 using Chatter.Infrastructure;
-using Chatter.WebUI.Extensions;
 using Chatter.WebUI.Factories.Contracts;
 using Chatter.WebUI.Factories.Implementations;
 using Chatter.WebUI.Hubs;
@@ -11,9 +10,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.IO;
-using System.Reflection;
+using Microsoft.IdentityModel.Tokens;
+using System.Threading.Tasks;
 
 namespace Chatter.WebUI
 {
@@ -32,16 +30,12 @@ namespace Chatter.WebUI
 
             services.AddInfrastructure();
 
-            services.AddControllersWithViews()
+            services.AddControllers()
                 .AddNewtonsoftJson();
 
             services.AddSignalR();
 
-            services.ConfigureSetting<RequestOptions>(Configuration);
-
-            //string secretKey = KeyGenerator.GenerateKey();
-
-            services.AddSingleton<ITokenFactory, TokenFactory>(c => new TokenFactory(Constants.Secret));
+            services.AddSingleton<ITokenFactory, TokenFactory>();
 
             services.AddAuthentication(opt => {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -50,15 +44,19 @@ namespace Chatter.WebUI
                 .AddJwtBearer(tokenOpt => {
                     tokenOpt.RequireHttpsMetadata = false; // SSL не используется
                     tokenOpt.TokenValidationParameters = new JwtAuthParameters(Constants.Secret);
-                });
 
-            services.AddSwaggerGen(c => {
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
-                c.DescribeAllParametersInCamelCase();
-                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Chatter", Version = "v1", Description = "Chatter API", });
-            });
+                    tokenOpt.Events = new JwtBearerEvents
+                    {
+                        OnAuthenticationFailed = context =>
+                        {
+                            if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                            {
+                                context.Response.Headers.Add("Token-Expired", "true");
+                            }
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
 
             services.AddCors(options => options.AddPolicy("AllowAllOrigin",
                                                  builder => builder.AllowAnyHeader()
@@ -74,27 +72,12 @@ namespace Chatter.WebUI
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseSwagger();
-
-            //app.UseSwaggerUI(c => {
-            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Chatter API V1");
-            //    c.DisplayRequestDuration();
-            //    c.EnableDeepLinking();
-            //    c.DefaultModelExpandDepth(10);
-            //    c.DefaultModelsExpandDepth(-2);
-            //    c.DisplayOperationId();
-            //    c.EnableFilter();
-            //    c.MaxDisplayedTags(100);
-            //    c.ShowExtensions();
-            //    c.EnableValidator();
-            //});
-
-            app.UseCheckForHttpsAvailabilityHandler();
             app.UseCors("AllowAllOrigin");
-            //app.UseCustomExceptionHandler();
+
             app.UseRouting();
 
             // app.UseAuthentication();
+
             // app.UseAuthorization();
 
             app.UseEndpoints(endpoints => {

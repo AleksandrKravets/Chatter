@@ -1,12 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Chatter.WebUI.Models
+namespace Chatter.WebUI.Models.Auth
 {
-    public class RegisterViewModel
+    public class LoginViewModel
     {
-        [Required]
-        public string Nickname { get; set; }
-
         [Required]
         [EmailAddress]
         public string Email { get; set; }

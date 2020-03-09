@@ -1,8 +1,9 @@
-﻿namespace Chatter.Domain.Entities
+﻿using Chatter.Domain.Common;
+
+namespace Chatter.Domain.Entities
 {
-    public class UserRole
+    public class UserRole : StoredEntity<int>
     {
-        public int Id { get; set; }
         public string RoleName { get; set; }
     }
 }

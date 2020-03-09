@@ -36,18 +36,6 @@ namespace Chatter.Application.Services
             return _userRepository.GetByEmailAsync(email);
         }
 
-        public async Task<User> Login(string email, string password)
-        {
-            //var user = await _userRepository.GetByEmailAsync(email);
-
-            //if(user != null)
-            //{
-            //    // login logic
-            //}
-
-            return new User { Email = email, Nickname = "alex111", HashedPassword = "fsdfsdfsd", Id = 1 };
-        }
-
         public Task UpdateAsync(User user)
         {
             return _userRepository.UpdateAsync(user);

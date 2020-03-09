@@ -1,4 +1,4 @@
-﻿namespace Chatter.WebUI.Infrastructure
+﻿namespace Chatter.WebUI.Infrastructure.ConfigurationModels
 {
     public interface IMaxQueryTime
     {

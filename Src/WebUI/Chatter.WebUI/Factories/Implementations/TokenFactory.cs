@@ -1,61 +1,68 @@
-﻿using Chatter.Domain.Entities;
+﻿using Chatter.Domain.Dto;
+using Chatter.Domain.Entities;
 using Chatter.WebUI.Factories.Contracts;
-using Chatter.WebUI.Infrastructure;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Chatter.WebUI.Infrastructure.ConfigurationModels;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Chatter.WebUI.Factories.Implementations
 {
     public class TokenFactory : ITokenFactory
     {
-        private readonly string _secretKey;
+        private readonly JwtSettings _jwtSettings;
 
-        public TokenFactory(string secretKey)
+        public TokenFactory(IOptions<JwtSettings> jwtSettings)
         {
-            _secretKey = secretKey;
+            this._jwtSettings = jwtSettings.Value;
         }
 
-        //public TokenFactory(IOptions<JwtOptions> jwtOptions)
-        //{
-        //    this.jwtOptions = jwtOptions.Value;
-        //}
-
-        public object GetToken(User user) 
-            => new {
-                access_token = GetAccessToken(user),
-                token_type = JwtBearerDefaults.AuthenticationScheme
-            }; 
-
-        private string GetAccessToken(User user)
+        public Domain.Dto.RefreshToken GetRefreshToken(int size)
         {
-            var claims = new Claim[] 
+            var randomNumber = new byte[size];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+                return new Domain.Dto.RefreshToken 
+                { 
+                    Token = Convert.ToBase64String(randomNumber),
+                    Expires = DateTime.Now.AddMinutes(_jwtSettings.RefreshTokenLifetime)
+                };
+            }
+        }
+
+        public AccessToken GetAccessToken(User user)
+        {
+            var claims = new Claim[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new Claim("email", user.Email),
-                new Claim("nickname", user.Nickname),
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Constants.Secret));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
             var algorithm = SecurityAlgorithms.HmacSha256;
 
             var signingCredentials = new SigningCredentials(key, algorithm);
 
             var token = new JwtSecurityToken(
-                Constants.Issuer,
-                Constants.Audience,
+                _jwtSettings.Issuer,
+                _jwtSettings.Audience,
                 claims,
                 notBefore: DateTime.Now,
                 expires: DateTime.Now.AddDays(3),
                 signingCredentials
             );
 
-            var tokenJson = new JwtSecurityTokenHandler().WriteToken(token);
+            string accessToken = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return tokenJson;
+            return new AccessToken 
+            {
+                Token = accessToken,
+                Expires = DateTime.Now.AddMinutes(_jwtSettings.AccessTokenLifetime)
+            };
         }
     }
 }

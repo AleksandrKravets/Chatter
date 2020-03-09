@@ -1,6 +1,5 @@
-﻿using Chatter.WebUI.Infrastructure;
+﻿using Chatter.WebUI.Infrastructure.ConfigurationModels;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 

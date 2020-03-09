@@ -1,8 +1,9 @@
-﻿namespace Chatter.Domain.Entities
+﻿using Chatter.Domain.Common;
+
+namespace Chatter.Domain.Entities
 {
-    public class Chat
+    public class Chat : StoredEntity<int>
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public ChatType Type { get; set; }
 

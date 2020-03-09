@@ -17,6 +17,11 @@ namespace Chatter.Infrastructure.Repositories
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
+        public Task<bool> CheckIfUserExistAsync(string nickname, string email)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task CreateAsync(User user)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -89,6 +94,11 @@ namespace Chatter.Infrastructure.Repositories
             }
 
             return user;
+        }
+
+        public Task<User> GetByNicknameAsync(string nickname)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task UpdateAsync(User user)

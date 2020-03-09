@@ -1,4 +1,4 @@
-﻿namespace Chatter.WebUI.Models
+﻿namespace Chatter.WebUI.Models.Chat
 {
     public class LeaveChatViewModel
     {

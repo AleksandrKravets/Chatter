@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "CSharpFunctionalExtensions/2.3.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/CSharpFunctionalExtensions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/CSharpFunctionalExtensions.dll": {}
+        }
+      },
       "Microsoft.Extensions.Configuration.Abstractions/3.1.2": {
         "type": "package",
         "dependencies": {
@@ -165,6 +174,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "CSharpFunctionalExtensions": "2.3.0",
           "Chatter.Domain": "1.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "3.1.2"
         },
@@ -188,6 +198,26 @@
     }
   },
   "libraries": {
+    "CSharpFunctionalExtensions/2.3.0": {
+      "sha512": "hwNb8/hC0uxhbuLFaYd/TMmd9wkxw6lDdQ1Ppe9hFz2W7ixWM5CgUXWjL2jJJpxZs47HuGI/F9yPq8jmUUhrRw==",
+      "type": "package",
+      "path": "csharpfunctionalextensions/2.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "csharpfunctionalextensions.2.3.0.nupkg.sha512",
+        "csharpfunctionalextensions.nuspec",
+        "lib/net45/CSharpFunctionalExtensions.dll",
+        "lib/net45/CSharpFunctionalExtensions.pdb",
+        "lib/net45/CSharpFunctionalExtensions.xml",
+        "lib/net461/CSharpFunctionalExtensions.dll",
+        "lib/net461/CSharpFunctionalExtensions.pdb",
+        "lib/net461/CSharpFunctionalExtensions.xml",
+        "lib/netstandard2.0/CSharpFunctionalExtensions.dll",
+        "lib/netstandard2.0/CSharpFunctionalExtensions.pdb",
+        "lib/netstandard2.0/CSharpFunctionalExtensions.xml"
+      ]
+    },
     "Microsoft.Extensions.Configuration.Abstractions/3.1.2": {
       "sha512": "xmfdVdazTslWJ8od7uNS9QSPqn1wBC84RLprPrFS20EdAqd3lV0g0IZAitYbCiiICpjktnhzbUb85aLHNZ3RQw==",
       "type": "package",

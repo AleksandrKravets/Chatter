@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace Chatter.WebUI.Infrastructure
+namespace Chatter.Application.Infrastructure
 {
     public class SecurePasswordHasher
     {

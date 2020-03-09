@@ -1,4 +1,5 @@
 ﻿using Chatter.WebUI.Infrastructure;
+using Chatter.WebUI.Infrastructure.ConfigurationModels;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Linq;

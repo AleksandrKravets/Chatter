@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Chatter.WebUI.Models
+namespace Chatter.Domain.Dto
 {
-    public class LoginViewModel
+    public class LoginRequestModel
     {
         [Required]
         [EmailAddress]

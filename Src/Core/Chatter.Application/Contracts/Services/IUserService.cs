@@ -11,5 +11,6 @@ namespace Chatter.Application.Contracts.Services
         Task<User> GetAsync(int userId);
         Task<User> GetByEmailAsync(string email);
         Task<User> Login(string email, string password);
+        Task<bool> CheckPassword(User user, string password);
     }
 }
