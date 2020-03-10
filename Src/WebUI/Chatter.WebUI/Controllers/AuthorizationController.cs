@@ -1,18 +1,14 @@
-﻿using Chatter.Application.Contracts.Services;
+﻿using Chatter.Application.Contracts.Factories;
+using Chatter.Application.Contracts.Services;
+using Chatter.Application.Helpers;
+using Chatter.Common.ConfigurationModels;
 using Chatter.Domain.Dto;
-using Chatter.WebUI.Factories.Contracts;
-using Chatter.WebUI.Helpers;
-using Chatter.WebUI.Infrastructure.ConfigurationModels;
 using Chatter.WebUI.Models.Auth;
-using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Chatter.WebUI.Controllers
@@ -58,8 +54,8 @@ namespace Chatter.WebUI.Controllers
                 };
 
 
-                // заменить 2 действия на одно
-                await _tokenService.RemoveUserRefreshTokenAsync(authorizationResult.Value.Id);
+                await _tokenService.RefreshToken(authorizationResult.Value.Id);
+
 
                 await _tokenService.AddRefreshTokenAsync(new Domain.Entities.RefreshToken 
                 { 
@@ -98,6 +94,7 @@ namespace Chatter.WebUI.Controllers
                             RefreshToken = _tokenFactory.GetRefreshToken()
                         };
 
+                        // Объединить методы в RefreshToken
                         await _tokenService.RemoveRefreshTokenAsync(model.RefreshToken);
 
                         await _tokenService.AddRefreshTokenAsync(new Domain.Entities.RefreshToken

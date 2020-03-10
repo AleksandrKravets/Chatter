@@ -8,6 +8,7 @@ namespace Chatter.Application.Contracts.Services
         bool HasValidRefreshToken(int userId, string refreshToken);
         Task AddRefreshTokenAsync(RefreshToken refreshToken);
         Task RemoveRefreshTokenAsync(string refreshToken);
-        Task RemoveUserRefreshTokenAsync(int userId);
+        Task RefreshToken(int userId);
+        Task RefreshToken(string refreshToken);
     }
 }

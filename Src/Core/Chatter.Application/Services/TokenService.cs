@@ -27,7 +27,12 @@ namespace Chatter.Application.Services
             throw new NotImplementedException();
         }
 
-        public async Task RemoveUserRefreshTokenAsync(int userId)
+        public Task RefreshToken(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RefreshToken(string refreshToken)
         {
             throw new NotImplementedException();
         }

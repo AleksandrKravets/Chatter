@@ -1,7 +1,5 @@
 using Chatter.Application;
-using Chatter.Infrastructure;
-using Chatter.WebUI.Factories.Contracts;
-using Chatter.WebUI.Factories.Implementations;
+using Chatter.DAL;
 using Chatter.WebUI.Hubs;
 using Chatter.WebUI.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -35,7 +33,6 @@ namespace Chatter.WebUI
 
             services.AddSignalR();
 
-            services.AddSingleton<ITokenFactory, TokenFactory>();
 
             services.AddAuthentication(opt => {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

@@ -9,3 +9,5 @@ C:\Users\Acer\source\repos\Chatter\Src\Core\Chatter.Application\obj\Debug\netcor
 C:\Users\Acer\source\repos\Chatter\Src\Core\Chatter.Application\obj\Debug\netcoreapp3.1\Chatter.Application.csproj.CopyComplete
 C:\Users\Acer\source\repos\Chatter\Src\Core\Chatter.Application\obj\Debug\netcoreapp3.1\Chatter.Application.dll
 C:\Users\Acer\source\repos\Chatter\Src\Core\Chatter.Application\obj\Debug\netcoreapp3.1\Chatter.Application.pdb
+C:\Users\Acer\source\repos\Chatter\Src\Core\Chatter.Application\bin\Debug\netcoreapp3.1\Chatter.Common.dll
+C:\Users\Acer\source\repos\Chatter\Src\Core\Chatter.Application\bin\Debug\netcoreapp3.1\Chatter.Common.pdb

@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    ".NETCoreApp,Version=v3.1": {}
+    ".NETCoreApp,Version=v3.1": {
+      "Chatter.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/Chatter.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Chatter.Common.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Chatter.Common/1.0.0": {
+      "type": "project",
+      "path": "../../Common/Chatter.Common/Chatter.Common.csproj",
+      "msbuildProject": "../../Common/Chatter.Common/Chatter.Common.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    ".NETCoreApp,Version=v3.1": []
+    ".NETCoreApp,Version=v3.1": [
+      "Chatter.Common >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\Acer\\.nuget\\packages\\": {},
@@ -40,7 +59,11 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Common\\Chatter.Common\\Chatter.Common.csproj": {
+              "projectPath": "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Common\\Chatter.Common\\Chatter.Common.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

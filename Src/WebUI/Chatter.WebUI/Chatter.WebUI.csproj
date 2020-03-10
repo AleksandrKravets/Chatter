@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -28,9 +28,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\Chatter.Common\Chatter.Common.csproj" />
     <ProjectReference Include="..\..\Core\Chatter.Application\Chatter.Application.csproj" />
     <ProjectReference Include="..\..\Core\Chatter.Domain\Chatter.Domain.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\Chatter.Infrastructure\Chatter.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\DAL\Chatter.DAL\Chatter.DAL.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
