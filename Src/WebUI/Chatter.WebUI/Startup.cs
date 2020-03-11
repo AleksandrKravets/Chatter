@@ -1,3 +1,4 @@
+using Chatter.API;
 using Chatter.Application;
 using Chatter.DAL;
 using Chatter.WebUI.Hubs;
@@ -25,8 +26,8 @@ namespace Chatter.WebUI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplication();
-
             services.AddInfrastructure();
+            services.AddApi(Configuration);
 
             services.AddControllers()
                 .AddNewtonsoftJson();
@@ -40,7 +41,7 @@ namespace Chatter.WebUI
             })
                 .AddJwtBearer(tokenOpt => {
                     tokenOpt.RequireHttpsMetadata = false; // SSL не используется
-                    tokenOpt.TokenValidationParameters = new JwtAuthParameters(Constants.Secret);
+                    tokenOpt.TokenValidationParameters = new JwtAuthParameters(Configuration["JwtSettings:SecretKey"]);
 
                     tokenOpt.Events = new JwtBearerEvents
                     {
@@ -73,9 +74,9 @@ namespace Chatter.WebUI
 
             app.UseRouting();
 
-            // app.UseAuthentication();
+            app.UseAuthentication();
 
-            // app.UseAuthorization();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapHub<ChatHub>("/chatHub");

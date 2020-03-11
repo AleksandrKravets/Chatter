@@ -4,6 +4,6 @@ namespace Chatter.Domain.Entities
 {
     public class UserRole : StoredEntity
     {
-        public string RoleName { get; set; }
+        public string Role { get; set; }
     }
 }

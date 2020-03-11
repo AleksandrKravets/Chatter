@@ -1,8 +1,9 @@
-﻿namespace Chatter.Domain.Entities
+﻿using Chatter.Domain.Common;
+
+namespace Chatter.Domain.Entities
 {
-    public enum ChatType
+    public class ChatType : StoredEntity
     {
-        Room,
-        Private
+        public string Type { get; set; }
     }
 }

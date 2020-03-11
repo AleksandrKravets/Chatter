@@ -1,7 +1,7 @@
 ﻿using Chatter.Application.Contracts.Services;
 using Chatter.Domain.Entities;
 using Chatter.WebUI.Hubs;
-using Chatter.WebUI.Models;
+using Chatter.WebUI.Models.Message;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;

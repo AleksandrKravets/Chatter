@@ -26,7 +26,7 @@ namespace Chatter.DAL.Repositories
                 await connection.OpenAsync();
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@Name", chat.Name);
-                command.Parameters.AddWithValue("@ChatType", chat.Type);
+                //command.Parameters.AddWithValue("@ChatType", chat.Type);
                 command.ExecuteNonQuery();
             }
         }
@@ -59,7 +59,7 @@ namespace Chatter.DAL.Repositories
                     {
                         Id = Convert.ToInt32(reader["Id"]),
                         Name = reader["Name"].ToString(),
-                        Type = (ChatType)Convert.ToInt32(reader["ChatType"])
+                        //Type = (ChatType)Convert.ToInt32(reader["ChatType"])
                     };
                     chats.Add(chat);
                 }
@@ -84,7 +84,7 @@ namespace Chatter.DAL.Repositories
                 {
                     chat.Id = Convert.ToInt32(reader["Id"]);
                     chat.Name = reader["Name"].ToString();
-                    chat.Type = (ChatType)Convert.ToInt32(reader["ChatType"]);
+                    //chat.Type = Convert.ToInt32(reader["ChatType"]);
                 }
             }
 
@@ -100,7 +100,7 @@ namespace Chatter.DAL.Repositories
                 await connection.OpenAsync();
                 command.Parameters.AddWithValue("@Id", chat.Id);
                 command.Parameters.AddWithValue("@Name", chat.Name);
-                command.Parameters.AddWithValue("@ChatType", chat.Type);
+                //command.Parameters.AddWithValue("@ChatType", chat.Type);
                 command.ExecuteNonQuery();
             }
         }

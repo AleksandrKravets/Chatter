@@ -1,4 +1,4 @@
-﻿using Chatter.WebUI.Infrastructure.ConfigurationModels;
+﻿using Chatter.Common.ConfigurationModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;

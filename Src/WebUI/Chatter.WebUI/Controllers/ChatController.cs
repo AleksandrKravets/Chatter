@@ -1,7 +1,7 @@
 ﻿using Chatter.Application.Contracts.Services;
 using Chatter.Domain.Entities;
 using Chatter.WebUI.Hubs;
-using Chatter.WebUI.Models;
+using Chatter.WebUI.Models.Chat;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -44,7 +44,6 @@ namespace Chatter.WebUI.Controllers
             var chat = new Chat
             {
                 Name = model.Name,
-                Type = ChatType.Room
             };
 
             await _chatService.CreateAsync(chat);
@@ -60,7 +59,6 @@ namespace Chatter.WebUI.Controllers
             {
                 Id = model.Id,
                 Name = model.Name,
-                Type = ChatType.Room
             };
 
             await _chatService.UpdateAsync(chat);

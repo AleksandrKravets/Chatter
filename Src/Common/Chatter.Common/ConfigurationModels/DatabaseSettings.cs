@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Chatter.Common.ConfigurationModels
+﻿namespace Chatter.Common.ConfigurationModels
 {
     public class DatabaseSettings
     {

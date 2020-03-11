@@ -10,8 +10,11 @@ namespace Chatter.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
+            services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IAuthorizationService, AuthorizationService>();
             services.AddTransient<IChatService, ChatService>();
             services.AddTransient<IMessageService, MessageService>();
+            services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IUserService, UserService>();
             services.AddSingleton<ITokenFactory, TokenFactory>();
 

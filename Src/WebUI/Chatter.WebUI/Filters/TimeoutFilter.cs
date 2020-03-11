@@ -1,7 +1,5 @@
-﻿using Chatter.Common.ConfigurationModels;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Chatter.WebUI.Filters
@@ -29,9 +27,9 @@ namespace Chatter.WebUI.Filters
 
         private int GetMaxQueryTimeFromArguments(ActionExecutingContext actionContext)
         {
-            var queryModel = actionContext.ActionArguments.Values.FirstOrDefault();
-            if (queryModel != null && queryModel is IMaxQueryTime queryTime)
-                return queryTime.MaxQueryTime;
+            //var queryModel = actionContext.ActionArguments.Values.FirstOrDefault();
+            //if (queryModel != null && queryModel is MaxQueryTime queryTime)
+            //    return queryTime.MaxQueryTime;
 
             return 0;
         }

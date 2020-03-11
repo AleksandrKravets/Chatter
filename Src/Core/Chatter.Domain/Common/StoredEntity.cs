@@ -1,7 +1,7 @@
 ﻿namespace Chatter.Domain.Common
 {
-    public abstract class StoredEntity<T>
+    public abstract class StoredEntity
     {
-        public T Id { get; set; }
+        public int Id { get; set; }
     }
 }

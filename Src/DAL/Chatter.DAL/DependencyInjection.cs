@@ -11,6 +11,7 @@ namespace Chatter.DAL
             services.AddTransient<IChatRepository, ChatRepository>();
             services.AddTransient<IMessageRepository, MessageRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ITokenRepository, TokenRepository>();
 
             return services;
         }

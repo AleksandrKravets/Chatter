@@ -17,15 +17,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chatter.Application", "Src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chatter.Domain", "Src\Core\Chatter.Domain\Chatter.Domain.csproj", "{8842354E-327B-4E49-95FE-F34AF3FCBDD5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chatter.WebUI", "Src\WebUI\Chatter.WebUI\Chatter.WebUI.csproj", "{C8D1DA17-0FB8-4E4B-B6FE-97DFA4F6038E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chatter.API", "Src\WebUI\Chatter.WebUI\Chatter.API.csproj", "{C8D1DA17-0FB8-4E4B-B6FE-97DFA4F6038E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{260844B5-5FCB-4FA7-AA23-6BF9E8A80681}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{3BB60D4E-6564-424F-AD87-877068147895}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatter.DAL", "Src\DAL\Chatter.DAL\Chatter.DAL.csproj", "{700B143D-F5BF-459C-9FBC-B6F39560AAD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chatter.DAL", "Src\DAL\Chatter.DAL\Chatter.DAL.csproj", "{700B143D-F5BF-459C-9FBC-B6F39560AAD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatter.Common", "Src\Common\Chatter.Common\Chatter.Common.csproj", "{8B8E02EB-4463-441F-97A4-EDC8EC35C4BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chatter.Common", "Src\Common\Chatter.Common\Chatter.Common.csproj", "{8B8E02EB-4463-441F-97A4-EDC8EC35C4BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

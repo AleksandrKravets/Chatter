@@ -2,11 +2,10 @@
 
 namespace Chatter.Domain.Entities
 {
-    public class Chat : StoredEntity<int>
+    public class Chat : StoredEntity
     {
         public string Name { get; set; }
-        public ChatType Type { get; set; }
 
-        //public ICollection<ChatUser> Users { get; set; }
+        public int ChatTypeId { get; set; }
     }
 }
