@@ -7,6 +7,6 @@ namespace Chatter.Application.Contracts.Services
 {
     public interface IAuthorizationService
     {
-        Task<Result<User>> AuthorizeAsync(LoginRequestModel model);
+        Task<Result<TokensResponseModel>> AuthorizeAsync(LoginRequestModel model);
     }
 }

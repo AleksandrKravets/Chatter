@@ -1,14 +1,13 @@
-﻿using Chatter.Domain.Entities;
+﻿using Chatter.Domain.Dto;
+using Chatter.Domain.Entities;
+using CSharpFunctionalExtensions;
 using System.Threading.Tasks;
 
 namespace Chatter.Application.Contracts.Services
 {
     public interface ITokenService
     {
-        bool HasValidRefreshToken(int userId, string refreshToken);
-        Task AddRefreshTokenAsync(RefreshToken refreshToken);
-        Task RemoveRefreshTokenAsync(string refreshToken);
-        Task RefreshToken(int userId);
-        Task RefreshToken(string refreshToken);
+        Task<TokensResponseModel> GetTokensAsync(User user);
+        Task<Result<TokensResponseModel>> RefreshTokenAsync(string refreshToken, string accessToken);
     }
 }

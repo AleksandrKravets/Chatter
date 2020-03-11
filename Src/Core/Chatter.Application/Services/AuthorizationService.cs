@@ -2,7 +2,6 @@
 using Chatter.Application.Contracts.Services;
 using Chatter.Application.Infrastructure;
 using Chatter.Domain.Dto;
-using Chatter.Domain.Entities;
 using CSharpFunctionalExtensions;
 using System.Threading.Tasks;
 
@@ -11,25 +10,28 @@ namespace Chatter.Application.Services
     public class AuthorizationService : IAuthorizationService
     {
         private readonly IUserRepository _userRepository;
+        private readonly ITokenService _tokenService;
 
-        public AuthorizationService(IUserRepository userRepository)
+        public AuthorizationService(IUserRepository userRepository, ITokenService tokenService)
         {
+            _tokenService = tokenService;
             _userRepository = userRepository;
         }
 
-        public async Task<Result<User>> AuthorizeAsync(LoginRequestModel model)
+        public async Task<Result<TokensResponseModel>> AuthorizeAsync(LoginRequestModel model)
         {
             var user = await _userRepository.GetByEmailAsync(model.Email);
 
-            if (user != null)
+            if(user != null)
             {
                 if (SecurePasswordHasher.Verify(model.Password, user.HashedPassword))
                 {
-                    return Result.Ok(user);
+                    var response = await _tokenService.GetTokensAsync(user);
+                    return Result.Ok(response);
                 }
             }
 
-            return Result.Failure<User>("User with such email does not exist");
+            return Result.Failure<TokensResponseModel>("Authorization error.");
         }
     }
 }
