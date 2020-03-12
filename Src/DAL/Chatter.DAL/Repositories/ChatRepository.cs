@@ -1,108 +1,57 @@
 ﻿using Chatter.Application.Contracts.Repositories;
+using Chatter.DAL.Infrastructure;
+using Chatter.DAL.StoredProcedures.Chats;
 using Chatter.Domain.Entities;
-using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace Chatter.DAL.Repositories
 {
     public class ChatRepository : IChatRepository
     {
-        private readonly string _connectionString;
+        private readonly StoredProcedureExecutor _procedureExecutor;
 
-        public ChatRepository(IConfiguration configuration)
+        public ChatRepository(StoredProcedureExecutor procedureExecutor)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _procedureExecutor = procedureExecutor;
         }
 
-        public async Task CreateAsync(Chat chat)
+        public Task CreateAsync(Chat chat)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            return _procedureExecutor.ExecuteAsync(new AddChatSP
             {
-                var command = new SqlCommand("SP_AddChat", connection);
-                await connection.OpenAsync();
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@Name", chat.Name);
-                //command.Parameters.AddWithValue("@ChatType", chat.Type);
-                command.ExecuteNonQuery();
-            }
+                Name = chat.Name
+            });
         }
 
-        public async Task DeleteAsync(int chatId)
+        public Task DeleteAsync(int chatId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            return _procedureExecutor.ExecuteAsync(new DeleteChatSP
             {
-                var command = new SqlCommand("SP_DeleteChat", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                await connection.OpenAsync();
-                command.Parameters.AddWithValue("@Id", chatId);
-                command.ExecuteNonQuery();
-            }
+                Id = chatId
+            });
         }
 
-        public async Task<IEnumerable<Chat>> GetAllAsync()
+        public  Task<IEnumerable<Chat>> GetAllAsync()
         {
-            List<Chat> chats = new List<Chat>();
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                SqlCommand command = new SqlCommand("SP_GetChats", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                await connection.OpenAsync();
-                SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    var chat = new Chat()
-                    {
-                        Id = Convert.ToInt32(reader["Id"]),
-                        Name = reader["Name"].ToString(),
-                        //Type = (ChatType)Convert.ToInt32(reader["ChatType"])
-                    };
-                    chats.Add(chat);
-                }
-            }
-
-            return chats;
+            return _procedureExecutor.ExecuteListAsync<Chat>(new GetChatsSP());
         }
 
-        public async Task<Chat> GetAsync(int id)
+        public Task<Chat> GetAsync(int id)
         {
-            Chat chat = new Chat();
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                SqlCommand command = new SqlCommand("SP_GetChatById", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@ChatId", id);
-                await connection.OpenAsync();
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    chat.Id = Convert.ToInt32(reader["Id"]);
-                    chat.Name = reader["Name"].ToString();
-                    //chat.Type = Convert.ToInt32(reader["ChatType"]);
-                }
-            }
-
-            return chat;
+            return _procedureExecutor.ExecuteOneAsync<Chat>(new GetChatByIdSP 
+            { 
+                ChatId = id 
+            });
         }
 
-        public async Task UpdateAsync(Chat chat)
+        public Task UpdateAsync(Chat chat)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            return _procedureExecutor.ExecuteAsync(new UpdateChatSP
             {
-                var command = new SqlCommand("SP_UpdateChat", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                await connection.OpenAsync();
-                command.Parameters.AddWithValue("@Id", chat.Id);
-                command.Parameters.AddWithValue("@Name", chat.Name);
-                //command.Parameters.AddWithValue("@ChatType", chat.Type);
-                command.ExecuteNonQuery();
-            }
+                Id = chat.Id,
+                Name = chat.Name
+            });
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Chatter.WebUI.Controllers
 {
+    // Попробовать сделать общий возвращаемый тип для всего
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class AuthorizationController : Controller
@@ -34,7 +35,6 @@ namespace Chatter.WebUI.Controllers
             return BadRequest(model);
         }
 
-        // Если сервер возвращает 401 -> токен протух
         [HttpPost]
         [BadRequestFilter]
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequestModel model)
