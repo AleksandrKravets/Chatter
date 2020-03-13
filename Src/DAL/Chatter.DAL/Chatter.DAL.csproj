@@ -14,8 +14,4 @@
     <ProjectReference Include="..\..\Core\Chatter.Domain\Chatter.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Infrastructure\" />
-  </ItemGroup>
-
 </Project>

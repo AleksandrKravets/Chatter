@@ -1,4 +1,5 @@
 ﻿using Chatter.Application.Contracts.Repositories;
+using Chatter.DAL.Infrastructure;
 using Chatter.DAL.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +13,8 @@ namespace Chatter.DAL
             services.AddTransient<IMessageRepository, MessageRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ITokenRepository, TokenRepository>();
+            services.AddTransient<IChatTypeRepository, ChatTypeRepository>();
+            services.AddTransient<StoredProcedureExecutor>();
 
             return services;
         }

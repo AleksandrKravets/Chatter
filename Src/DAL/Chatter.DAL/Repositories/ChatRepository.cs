@@ -32,7 +32,7 @@ namespace Chatter.DAL.Repositories
             });
         }
 
-        public  Task<IEnumerable<Chat>> GetAllAsync()
+        public Task<IEnumerable<Chat>> GetAllAsync()
         {
             return _procedureExecutor.ExecuteListAsync<Chat>(new GetChatsSP());
         }

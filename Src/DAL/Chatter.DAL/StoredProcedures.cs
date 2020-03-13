@@ -35,4 +35,42 @@ namespace Chatter.DAL.StoredProcedures
             [InParameter] public string Name;
         }
     }
+
+    namespace Messages
+    {
+        [ProcedureName("SP_CreateMessage")]
+        public class CreateMessageSP : StoredProcedure
+        {
+            [InParameter] public string Text;
+            [InParameter] public DateTime TimeStamp;
+            [InParameter] public int ChatId;
+        }
+
+        [ProcedureName("SP_GetMessageById")]
+        public class GetMessageByIdSP : StoredProcedure
+        {
+            [InParameter] public int MessageId;
+        }
+
+        [ProcedureName("SP_UpdateMessage")]
+        public class UpdateMessageSP : StoredProcedure
+        {
+            [InParameter] public int Id;
+            [InParameter] public string Text;
+            [InParameter] public DateTime TimeStamp;
+            [InParameter] public int ChatId;
+        }
+
+        [ProcedureName("SP_DeleteMessage")]
+        public class DeleteMessageSP : StoredProcedure
+        {
+            [InParameter] public int Id;
+        }
+
+        [ProcedureName("SP_GetMessagesByChatId")]
+        public class GetMessagesByChatIdSP : StoredProcedure
+        {
+            [InParameter] public int ChatId;
+        }
+    }
 }
