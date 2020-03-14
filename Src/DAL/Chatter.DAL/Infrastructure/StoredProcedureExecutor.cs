@@ -66,12 +66,15 @@ namespace Chatter.DAL.Infrastructure
 
                 await connection.OpenAsync();
 
-                SqlDataReader reader = await command.ExecuteReaderAsync();
-
-                while (reader.Read())
+                using(var reader = await command.ExecuteReaderAsync())
                 {
-                    var instance = reader.ReadObject<T>();
-                    result.Add(instance);
+                    while (reader.Read())
+                    {
+                        var instance = reader.ReadObject<T>();
+                        result.Add(instance);
+                    }
+
+                    reader.Close();
                 }
             }
 
@@ -84,8 +87,8 @@ namespace Chatter.DAL.Infrastructure
 
             using (SqlConnection connection = new SqlConnection(_settings.ConnectionString))
             {
-                SqlCommand command = CreateSqlCommand(storedProcedure, connection, fields);
                 await connection.OpenAsync();
+                SqlCommand command = CreateSqlCommand(storedProcedure, connection, fields);
                 await command.ExecuteNonQueryAsync();
             }
         }
@@ -101,11 +104,14 @@ namespace Chatter.DAL.Infrastructure
 
                 await connection.OpenAsync();
 
-                SqlDataReader reader = await command.ExecuteReaderAsync();
-
-                while (reader.Read())
+                using(var reader = await command.ExecuteReaderAsync())
                 {
-                    result = reader.ReadObject<T>();
+                    while (reader.Read())
+                    {
+                        result = reader.ReadObject<T>();
+                    }
+
+                    reader.Close();
                 }
             }
 
