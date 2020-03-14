@@ -8,6 +8,6 @@ namespace Chatter.Application.Contracts.Repositories
         Task CreateAsync(RefreshToken token);
         Task DeleteRefreshTokenAsync(string refreshToken);
         Task DeleteUserTokenIfExistsAsync(int userId);
-        // Task<bool> CheckIfUserTokenValidAsync(int userId, string refreshToken); перенести в сервис
+        Task<RefreshToken> GetTokenAsync(int userId);
     }
 }

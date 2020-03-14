@@ -11,6 +11,7 @@ namespace Chatter.DAL.StoredProcedures
         {
             [InParameter] public string Name;
             [InParameter] public int ChatTypeId;
+            [InParameter] public int CreatorId;
         }
 
         [ProcedureName("SP_DeleteChat")]
@@ -97,6 +98,12 @@ namespace Chatter.DAL.StoredProcedures
 
         [ProcedureName("SP_DeleteTokenByUserId")]
         public class DeleteTokenByUserIdSP : StoredProcedure
+        {
+            [InParameter] public int UserId;
+        }
+
+        [ProcedureName("SP_GetTokenByUserId")]
+        public class GetTokenByUserIdSP : StoredProcedure
         {
             [InParameter] public int UserId;
         }

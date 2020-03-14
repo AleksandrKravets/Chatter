@@ -1,5 +1,6 @@
 ﻿using Chatter.Application.Contracts.Services;
 using Chatter.Domain.Dto;
+using Chatter.WebUI.Filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -18,16 +19,11 @@ namespace Chatter.WebUI.Controllers
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [BadRequestFilter]
         [HttpPost]
         public async Task<IActionResult> Register([FromBody]RegisterRequestModel model)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            if((await _accountService.RegisterAsync(model)).IsSuccess)
-                return Ok();
-
-            return BadRequest(model);
+            return Ok(await _accountService.RegisterAsync(model));
         }    
     }
 }

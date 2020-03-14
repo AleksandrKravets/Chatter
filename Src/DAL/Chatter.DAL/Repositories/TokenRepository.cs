@@ -40,5 +40,13 @@ namespace Chatter.DAL.Repositories
                 UserId = userId
             });
         }
+
+        public Task<RefreshToken> GetTokenAsync(int userId)
+        {
+            return _procedureExecutor.ExecuteOneAsync<RefreshToken>(new GetTokenByUserIdSP 
+            { 
+                UserId = userId 
+            });
+        }
     }
 }

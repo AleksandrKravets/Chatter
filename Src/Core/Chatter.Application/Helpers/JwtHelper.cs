@@ -20,7 +20,7 @@ namespace Chatter.Application.Helpers
                 ValidateLifetime = true,
                 RequireExpirationTime = true, 
                 ClockSkew = TimeSpan.Zero
-        };
+            };
 
             var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -32,7 +32,7 @@ namespace Chatter.Application.Helpers
 
 
             if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
-                return Result.Failure<ClaimsPrincipal>("Invalid token");
+                return Result.Failure<ClaimsPrincipal>(null);
 
             return Result.Ok(principal);
         }

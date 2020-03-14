@@ -7,5 +7,6 @@ namespace Chatter.Domain.Entities
         public string Name { get; set; }
 
         public int ChatTypeId { get; set; }
+        public int CreatorId { get; set; }
     }
 }

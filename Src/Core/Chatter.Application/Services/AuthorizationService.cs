@@ -2,7 +2,6 @@
 using Chatter.Application.Contracts.Services;
 using Chatter.Application.Infrastructure;
 using Chatter.Domain.Dto;
-using CSharpFunctionalExtensions;
 using System.Threading.Tasks;
 
 namespace Chatter.Application.Services
@@ -18,7 +17,7 @@ namespace Chatter.Application.Services
             _userRepository = userRepository;
         }
 
-        public async Task<Result<TokensResponseModel>> AuthorizeAsync(LoginRequestModel model)
+        public async Task<ResponseObject> AuthorizeAsync(LoginRequestModel model)
         {
             var user = await _userRepository.GetByEmailAsync(model.Email);
 
@@ -26,12 +25,21 @@ namespace Chatter.Application.Services
             {
                 if (SecurePasswordHasher.Verify(model.Password, user.HashedPassword))
                 {
-                    var response = await _tokenService.GetTokensAsync(user);
-                    return Result.Ok(response);
+                    var tokens = await _tokenService.GetTokensAsync(user);
+
+                    return new ResponseObject 
+                    { 
+                        Result = tokens,
+                        Status = ResponseStatus.Success 
+                    };
                 }
             }
 
-            return Result.Failure<TokensResponseModel>("Authorization error.");
+            return new ResponseObject 
+            { 
+                Result = null,
+                Status = ResponseStatus.Failure 
+            };
         }
     }
 }

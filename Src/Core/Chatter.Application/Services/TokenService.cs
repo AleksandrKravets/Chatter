@@ -1,10 +1,11 @@
 ﻿using Chatter.Application.Contracts.Factories;
+using Chatter.Application.Contracts.Repositories;
 using Chatter.Application.Contracts.Services;
 using Chatter.Application.Helpers;
+using Chatter.Application.Infrastructure;
 using Chatter.Common.ConfigurationModels;
 using Chatter.Domain.Dto;
 using Chatter.Domain.Entities;
-using CSharpFunctionalExtensions;
 using Microsoft.Extensions.Options;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -19,12 +20,15 @@ namespace Chatter.Application.Services
         private readonly JwtSettings _jwtSettings;
         private readonly IUserService _userService;
         private readonly ITokenFactory _tokenFactory;
+        private readonly ITokenRepository _tokenRepository;
 
         public TokenService(
             ITokenFactory tokenFactory,
             IUserService userService,
+            ITokenRepository tokenRepository,
             IOptions<JwtSettings> jwtSettings)
         {
+            _tokenRepository = tokenRepository;
             _tokenFactory = tokenFactory;
             _userService = userService;
             _jwtSettings = jwtSettings.Value;
@@ -45,58 +49,74 @@ namespace Chatter.Application.Services
             return response;
         }
 
-        public async Task<Result<TokensResponseModel>> RefreshTokenAsync(string refreshToken, string accessToken)
+        public async Task<ResponseObject> RefreshTokenAsync(string refreshToken, string accessToken)
         {
             var principalResult = JwtHelper.GetPrincipalFromExpiredToken(accessToken, _jwtSettings.SecretKey);
 
             if (principalResult.IsSuccess)
             {
-                var userId = principalResult.Value.Claims.First(c => c.Type == JwtRegisteredClaimNames.Sub);
+                var userId = principalResult.Value.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub);
 
-                var user = await _userService.GetAsync(Convert.ToInt32(userId.Value));
-
-                if (user != null)
+                if (userId != null)
                 {
-                    if (await HasValidRefreshTokenAsync(user.Id, refreshToken))
+                    var user = await _userService.GetAsync(Convert.ToInt32(userId.Value));
+
+                    if (user != null)
                     {
-                        await RemoveRefreshTokenAsync(refreshToken);
-
-                        var response = new TokensResponseModel
+                        if (await CheckIfUserTokenValidAsync(user.Id, refreshToken))
                         {
-                            AccessToken = _tokenFactory.GetAccessToken(user),
-                            RefreshToken = _tokenFactory.GetRefreshToken()
-                        };
+                            await RemoveRefreshTokenAsync(refreshToken);
 
-                        await AddRefreshTokenAsync(response.RefreshToken.Token, response.RefreshToken.Expires, user.Id);
+                            var result = new TokensResponseModel
+                            {
+                                AccessToken = _tokenFactory.GetAccessToken(user),
+                                RefreshToken = _tokenFactory.GetRefreshToken()
+                            };
 
-                        return Result.Ok(response);
+                            await AddRefreshTokenAsync(result.RefreshToken.Token, result.RefreshToken.Expires, user.Id);
+
+                            return new ResponseObject
+                            {
+                                Result = result,
+                                Status = ResponseStatus.Success
+                            };
+                        }
                     }
+
                 }
             }
 
-            return Result.Failure<TokensResponseModel>("Refresh token error.");
+            return new ResponseObject
+            {
+                Result = null,
+                Status = ResponseStatus.Failure
+            };
         }
 
         private Task RemoveUserTokenIfExistsAsync(int userId)
         {
-            throw new NotImplementedException();
+            return _tokenRepository.DeleteUserTokenIfExistsAsync(userId);
         }
 
-        private async Task RemoveRefreshTokenAsync(string refreshToken)
+        private Task RemoveRefreshTokenAsync(string refreshToken)
         {
-            throw new NotImplementedException();
+            return _tokenRepository.DeleteRefreshTokenAsync(refreshToken);
         }
 
-        private async Task AddRefreshTokenAsync(string refreshToken, DateTime expires, int userId)
+        private Task AddRefreshTokenAsync(string refreshToken, DateTime expires, int userId)
         {
-            throw new NotImplementedException();
+            return _tokenRepository.CreateAsync(new Domain.Entities.RefreshToken 
+            { 
+                Token = refreshToken, 
+                Expires = expires, 
+                UserId = userId 
+            });
         }
 
-        private async Task<bool> HasValidRefreshTokenAsync(int userId, string refreshToken)
+        private async Task<bool> CheckIfUserTokenValidAsync(int userId, string refreshToken)
         {
-            // Check if user has valid refresh token (user.Token == refreshToken && rt.Active)
-            // проверить есть ли в наличии в бд старый токен
-            return true;
+            var token = await _tokenRepository.GetTokenAsync(userId);
+            return token.Active && token.Token == refreshToken;
         }
     }
 }

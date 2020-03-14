@@ -21,7 +21,8 @@ namespace Chatter.DAL.Repositories
             return _procedureExecutor.ExecuteAsync(new CreateChatSP
             {
                 Name = chat.Name, 
-                ChatTypeId = chat.ChatTypeId
+                ChatTypeId = chat.ChatTypeId,
+                CreatorId = chat.CreatorId
             });
         }
 

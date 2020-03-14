@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Chatter.WebUI.Controllers
 {
-    // Попробовать сделать общий возвращаемый тип для всего
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class AuthorizationController : Controller
@@ -27,24 +26,14 @@ namespace Chatter.WebUI.Controllers
         [BadRequestFilter]
         public async Task<IActionResult> Login([FromBody]LoginRequestModel model)
         {
-            var response = await _authorizationService.AuthorizeAsync(model);
-
-            if(response.IsSuccess)
-                return Ok(response.Value);
-
-            return BadRequest(model);
+            return Ok(await _authorizationService.AuthorizeAsync(model));
         }
 
         [HttpPost]
         [BadRequestFilter]
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequestModel model)
         {
-            var result = await _tokenService.RefreshTokenAsync(model.RefreshToken, model.AccessToken);
-
-            if (result.IsSuccess)
-                return Ok(result.Value);
-
-            return BadRequest(result.Error);
+            return Ok(await _tokenService.RefreshTokenAsync(model.RefreshToken, model.AccessToken));
         }
     }
 }
