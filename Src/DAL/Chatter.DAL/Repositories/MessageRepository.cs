@@ -22,7 +22,8 @@ namespace Chatter.DAL.Repositories
             {
                 Text = message.Text, 
                 TimeStamp = message.TimeStamp, 
-                ChatId = message.ChatId
+                ChatId = message.ChatId, 
+                SenderId = message.SenderId
             });
         }
 
@@ -44,9 +45,9 @@ namespace Chatter.DAL.Repositories
 
         public Task<Message> GetAsync(int id)
         {
-            return _procedureExecutor.ExecuteOneAsync<Message>(new GetMessageByIdSP 
+            return _procedureExecutor.ExecuteOneAsync<Message>(new GetMessageSP 
             { 
-                MessageId = id 
+                Id = id 
             });
         }
 
@@ -57,7 +58,8 @@ namespace Chatter.DAL.Repositories
                 Id = message.Id,
                 Text = message.Text,
                 TimeStamp = message.TimeStamp,
-                ChatId = message.ChatId
+                ChatId = message.ChatId,
+                SenderId = message.SenderId
             });
         }
     }

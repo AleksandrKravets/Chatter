@@ -1,118 +1,80 @@
 ﻿using Chatter.Application.Contracts.Repositories;
+using Chatter.DAL.Infrastructure;
+using Chatter.DAL.StoredProcedures.Users;
 using Chatter.Domain.Entities;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace Chatter.DAL.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly string _connectionString;
+        private readonly StoredProcedureExecutor _procedureExecutor;
 
-        public UserRepository(IConfiguration configuration)
+        public UserRepository(StoredProcedureExecutor procedureExecutor)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _procedureExecutor = procedureExecutor;
         }
 
-        public Task<bool> CheckIfUserExistAsync(string nickname, string email)
+        public Task<User> GetAsync(string nickname, string email)
         {
-            throw new NotImplementedException();
+            return _procedureExecutor.ExecuteOneAsync<User>(new GetUserByEmailAndNicknameSP 
+            { 
+                Email = email, 
+                Nickname = nickname 
+            });
         }
 
-        public async Task CreateAsync(User user)
+        public Task CreateAsync(User user)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                var command = new SqlCommand("SP_CreateUser", connection);
-                await connection.OpenAsync();
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@Nickname", user.Nickname);
-                command.Parameters.AddWithValue("@Email", user.Email);
-                command.Parameters.AddWithValue("@HashedPassword", user.HashedPassword);
-                await command.ExecuteNonQueryAsync();
-            }
+            return _procedureExecutor.ExecuteAsync(new CreateUserSP 
+            { 
+                Email = user.Email, 
+                Nickname = user.Nickname, 
+                HashedPassword = user.HashedPassword 
+            });
         }
 
-        public async Task DeleteAsync(int userId)
+        public Task DeleteAsync(int userId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                var command = new SqlCommand("SP_DeleteUser", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                await connection.OpenAsync();
-                command.Parameters.AddWithValue("@Id", userId);
-                await command.ExecuteNonQueryAsync();
-            }
+            return _procedureExecutor.ExecuteAsync(new DeleteUserSP 
+            { 
+                Id = userId 
+            });
         }
 
-        public async Task<User> GetAsync(int userId)
+        public Task<User> GetAsync(int userId)
         {
-            User user = new User();
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                SqlCommand command = new SqlCommand("SP_GetUserById", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@UserId", userId);
-                await connection.OpenAsync();
-                SqlDataReader reader = await command.ExecuteReaderAsync();
-
-                while (reader.Read())
-                {
-                    user.Id = Convert.ToInt32(reader["Id"]);
-                    user.Nickname = reader["Nickname"].ToString();
-                    user.HashedPassword = reader["HashedPassword"].ToString();
-                    user.Email = reader["Email"].ToString();
-                }
-            }
-
-            return user;
+            return _procedureExecutor.ExecuteOneAsync<User>(new GetUserSP 
+            { 
+                Id = userId 
+            });
         }
 
-        public async Task<User> GetByEmailAsync(string email)
+        public Task<User> GetByEmailAsync(string email)
         {
-            User user = new User();
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                SqlCommand command = new SqlCommand("SP_GetUserByEmail", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@Email", email);
-                await connection.OpenAsync();
-                SqlDataReader reader = await command.ExecuteReaderAsync();
-
-                while (reader.Read())
-                {
-                    user.Id = Convert.ToInt32(reader["Id"]);
-                    user.Nickname = reader["Nickname"].ToString();
-                    user.HashedPassword = reader["HashedPassword"].ToString();
-                    user.Email = reader["Email"].ToString();
-                }
-            }
-
-            return user;
+            return _procedureExecutor.ExecuteOneAsync<User>(new GetUserByEmailSP 
+            { 
+                Email = email 
+            });
         }
 
         public Task<User> GetByNicknameAsync(string nickname)
         {
-            throw new NotImplementedException();
+            return _procedureExecutor.ExecuteOneAsync<User>(new GetUserByNicknameSP 
+            { 
+                Nickname = nickname 
+            });
         }
 
-        public async Task UpdateAsync(User user)
+        public Task UpdateAsync(User user)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                var command = new SqlCommand("SP_UpdateUserAccount", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                await connection.OpenAsync();
-                command.Parameters.AddWithValue("@Id", user.Id);
-                command.Parameters.AddWithValue("@Nickname", user.Nickname);
-                command.Parameters.AddWithValue("@Email", user.Email);
-                await command.ExecuteNonQueryAsync();
-            }
+            return _procedureExecutor.ExecuteAsync(new UpdateUserSP 
+            { 
+                Id = user.Id, 
+                Email = user.Email, 
+                Nickname = user.Nickname, 
+                HashedPassword = user.HashedPassword 
+            });
         }
     }
 }

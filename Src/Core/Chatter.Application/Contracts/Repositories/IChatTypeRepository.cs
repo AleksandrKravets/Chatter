@@ -9,7 +9,6 @@ namespace Chatter.Application.Contracts.Repositories
         Task<ChatType> GetAsync(int id);
         Task<IEnumerable<ChatType>> GetAllAsync();
         Task CreateAsync(ChatType chatType);
-        Task UpdateAsync(ChatType chatType);
         Task DeleteAsync(int chatTypeId);
     }
 }

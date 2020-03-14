@@ -1,7 +1,7 @@
 ﻿using Chatter.Application.Contracts.Repositories;
 using Chatter.DAL.Infrastructure;
+using Chatter.DAL.StoredProcedures.ChatTypes;
 using Chatter.Domain.Entities;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -18,27 +18,31 @@ namespace Chatter.DAL.Repositories
 
         public Task CreateAsync(ChatType chatType)
         {
-            throw new NotImplementedException();
+            return _procedureExecutor.ExecuteAsync(new CreateChatTypeSP
+            {
+                Type = chatType.Type
+            });
         }
 
         public Task DeleteAsync(int chatTypeId)
         {
-            throw new NotImplementedException();
+            return _procedureExecutor.ExecuteAsync(new DeleteChatTypeSP 
+            { 
+                Id = chatTypeId 
+            });
         }
 
         public Task<IEnumerable<ChatType>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return _procedureExecutor.ExecuteListAsync<ChatType>(new GetChatTypesSP());
         }
 
         public Task<ChatType> GetAsync(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(ChatType chatType)
-        {
-            throw new NotImplementedException();
+            return _procedureExecutor.ExecuteOneAsync<ChatType>(new GetChatTypeSP 
+            { 
+                Id = id 
+            });
         }
     }
 }

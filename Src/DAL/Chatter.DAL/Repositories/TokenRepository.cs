@@ -1,38 +1,44 @@
 ﻿using Chatter.Application.Contracts.Repositories;
+using Chatter.DAL.Infrastructure;
+using Chatter.DAL.StoredProcedures.Tokens;
 using Chatter.Domain.Entities;
-using Microsoft.Extensions.Configuration;
-using System;
 using System.Threading.Tasks;
 
 namespace Chatter.DAL.Repositories
 {
     public class TokenRepository : ITokenRepository
     {
-        private readonly string _connectionString;
+        private readonly StoredProcedureExecutor _procedureExecutor;
 
-        public TokenRepository(IConfiguration configuration)
+        public TokenRepository(StoredProcedureExecutor procedureExecutor)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _procedureExecutor = procedureExecutor;
         }
 
-        public Task<bool> CheckIfUserTokenValidAsync(int userId, string refreshToken)
+        public Task CreateAsync(RefreshToken token)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task CreateAsync(RefreshToken chat)
-        {
-            throw new NotImplementedException();
+            return _procedureExecutor.ExecuteAsync(new CreateTokenSP 
+            { 
+                Expires = token.Expires,
+                Token = token.Token, 
+                UserId = token.UserId 
+            });
         }
 
         public Task DeleteRefreshTokenAsync(string refreshToken)
         {
-            throw new NotImplementedException();
+            return _procedureExecutor.ExecuteAsync(new DeleteTokenSP 
+            { 
+                Token = refreshToken 
+            });
         }
 
         public Task DeleteUserTokenIfExistsAsync(int userId)
         {
-            throw new NotImplementedException();
+            return _procedureExecutor.ExecuteAsync(new DeleteTokenByUserIdSP 
+            { 
+                UserId = userId
+            });
         }
     }
 }

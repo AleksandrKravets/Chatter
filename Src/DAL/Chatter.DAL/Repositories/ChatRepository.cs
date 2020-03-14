@@ -18,9 +18,10 @@ namespace Chatter.DAL.Repositories
 
         public Task CreateAsync(Chat chat)
         {
-            return _procedureExecutor.ExecuteAsync(new AddChatSP
+            return _procedureExecutor.ExecuteAsync(new CreateChatSP
             {
-                Name = chat.Name
+                Name = chat.Name, 
+                ChatTypeId = chat.ChatTypeId
             });
         }
 
@@ -39,9 +40,9 @@ namespace Chatter.DAL.Repositories
 
         public Task<Chat> GetAsync(int id)
         {
-            return _procedureExecutor.ExecuteOneAsync<Chat>(new GetChatByIdSP 
+            return _procedureExecutor.ExecuteOneAsync<Chat>(new GetChatSP 
             { 
-                ChatId = id 
+                Id = id 
             });
         }
 
@@ -50,7 +51,8 @@ namespace Chatter.DAL.Repositories
             return _procedureExecutor.ExecuteAsync(new UpdateChatSP
             {
                 Id = chat.Id,
-                Name = chat.Name
+                Name = chat.Name, 
+                ChatTypeId = chat.ChatTypeId
             });
         }
     }

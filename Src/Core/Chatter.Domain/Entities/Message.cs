@@ -9,5 +9,6 @@ namespace Chatter.Domain.Entities
         public DateTime TimeStamp { get; set; }
 
         public int ChatId { get; set; }
+        public int SenderId { get; set; }
     }
 }

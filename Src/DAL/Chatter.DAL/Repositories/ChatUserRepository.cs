@@ -1,7 +1,7 @@
 ﻿using Chatter.Application.Contracts.Repositories;
 using Chatter.DAL.Infrastructure;
+using Chatter.DAL.StoredProcedures.ChatUsers;
 using Chatter.Domain.Entities;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -18,32 +18,63 @@ namespace Chatter.DAL.Repositories
 
         public Task CreateAsync(ChatUser chatUser)
         {
-            throw new NotImplementedException();
+            return _procedureExecutor.ExecuteAsync(new CreateChatUserSP 
+            { 
+                ChatId = chatUser.ChatId, 
+                RoleId = chatUser.RoleId, 
+                UserId = chatUser.UserId 
+            });
         }
 
         public Task DeleteAsync(int chatUserId)
         {
-            throw new NotImplementedException();
+            return _procedureExecutor.ExecuteAsync(new DeleteChatUserSP 
+            { 
+                Id = chatUserId 
+            });
         }
 
         public Task<ChatUser> GetAsync(int id)
         {
-            throw new NotImplementedException();
+            return _procedureExecutor.ExecuteOneAsync<ChatUser>(new GetChatUserSP 
+            { 
+                Id = id 
+            });
         }
 
-        public Task<IEnumerable<ChatUser>> GetByChatIdAsync(int chatId)
+        public Task<UserRole> GetChatUserRoleAsync(int chatId, int userId)
         {
-            throw new NotImplementedException();
+            return _procedureExecutor.ExecuteOneAsync<UserRole>(new GetChatUserRoleSP
+            { 
+                ChatId = chatId, 
+                UserId = userId 
+            });
         }
 
-        public Task<IEnumerable<ChatUser>> GetByUserIdAsync(int userId)
+        public Task<IEnumerable<Chat>> GetUserChatsAsync(int userId)
         {
-            throw new NotImplementedException();
+            return _procedureExecutor.ExecuteListAsync<Chat>(new GetUserChatsSP 
+            { 
+                UserId = userId 
+            });
         }
 
-        public Task UpdateUserRoleAsync(int chatUserId, int newRoleId)
+        public Task<IEnumerable<User>> GetUsersByChatIdAsync(int chatId)
         {
-            throw new NotImplementedException();
+            return _procedureExecutor.ExecuteListAsync<User>(new GetUsersByChatIdSP 
+            { 
+                ChatId = chatId 
+            });
+        }
+
+        public Task UpdateUserRoleAsync(int chatId, int userId, int newRoleId)
+        {
+            return _procedureExecutor.ExecuteAsync(new UpdateChatUserRoleSP 
+            { 
+                ChatId = chatId, 
+                UserId = userId, 
+                RoleId = newRoleId 
+            });
         }
     }
 }

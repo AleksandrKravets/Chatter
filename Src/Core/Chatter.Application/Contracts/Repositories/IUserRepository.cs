@@ -11,6 +11,6 @@ namespace Chatter.Application.Contracts.Repositories
         Task CreateAsync(User user);
         Task UpdateAsync(User user);
         Task DeleteAsync(int userId);
-        Task<bool> CheckIfUserExistAsync(string nickname, string email);
+        Task<User> GetAsync(string nickname, string email);
     }
 }

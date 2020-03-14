@@ -7,10 +7,11 @@ namespace Chatter.Application.Contracts.Repositories
     public interface IChatUserRepository
     {
         Task<ChatUser> GetAsync(int id);
-        Task<IEnumerable<ChatUser>> GetByChatIdAsync(int chatId);
-        Task<IEnumerable<ChatUser>> GetByUserIdAsync(int userId);
+        Task<IEnumerable<User>> GetUsersByChatIdAsync(int chatId);
+        Task<IEnumerable<Chat>> GetUserChatsAsync(int userId);
+        Task<UserRole> GetChatUserRoleAsync(int chatId, int userId);
         Task CreateAsync(ChatUser chatUser);
-        Task UpdateUserRoleAsync(int chatUserId, int newRoleId);
+        Task UpdateUserRoleAsync(int chatId, int userId, int newRoleId);
         Task DeleteAsync(int chatUserId);
     }
 }
