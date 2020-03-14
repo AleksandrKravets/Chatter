@@ -2,6 +2,7 @@
 using Chatter.Domain.Dto;
 using Chatter.WebUI.Filters;
 using Chatter.WebUI.Models.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -11,11 +12,11 @@ namespace Chatter.WebUI.Controllers
     [ApiController]
     public class AuthorizationController : Controller
     {
-        private readonly IAuthorizationService _authorizationService;
+        private readonly Application.Contracts.Services.IAuthorizationService _authorizationService;
         private readonly ITokenService _tokenService;
 
         public AuthorizationController(
-            IAuthorizationService authorizationService,
+            Application.Contracts.Services.IAuthorizationService authorizationService,
             ITokenService tokenService)
         {
             _authorizationService = authorizationService;
@@ -34,6 +35,13 @@ namespace Chatter.WebUI.Controllers
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequestModel model)
         {
             return Ok(await _tokenService.RefreshTokenAsync(model.RefreshToken, model.AccessToken));
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Secret()
+        {
+            return Ok();
         }
     }
 }

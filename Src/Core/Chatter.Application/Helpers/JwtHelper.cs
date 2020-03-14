@@ -1,4 +1,5 @@
-﻿using CSharpFunctionalExtensions;
+﻿using Chatter.Common.ConfigurationModels;
+using CSharpFunctionalExtensions;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -7,16 +8,18 @@ using System.Text;
 
 namespace Chatter.Application.Helpers
 {
-    public class JwtHelper
+    public static class JwtHelper
     {
-        public static Result<ClaimsPrincipal> GetPrincipalFromExpiredToken(string token, string signingKey)
+        public static Result<ClaimsPrincipal> GetPrincipalFromExpiredToken(string token, JwtSettings jwtSettings)
         {
             var validationParameters = new TokenValidationParameters
             {
                 ValidateAudience = true,
+                ValidAudience = jwtSettings.Audience,
                 ValidateIssuer = true,
+                ValidIssuer = jwtSettings.Issuer,
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey)),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
                 ValidateLifetime = true,
                 RequireExpirationTime = true, 
                 ClockSkew = TimeSpan.Zero

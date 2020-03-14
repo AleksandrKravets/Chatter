@@ -41,7 +41,7 @@ namespace Chatter.WebUI
             })
                 .AddJwtBearer(tokenOpt => {
                     tokenOpt.RequireHttpsMetadata = false; // SSL не используется
-                    tokenOpt.TokenValidationParameters = new JwtAuthParameters(Configuration["JwtSettings:SecretKey"]);
+                    tokenOpt.TokenValidationParameters = new JwtAuthParameters(Configuration);
 
                     tokenOpt.Events = new JwtBearerEvents
                     {

@@ -51,7 +51,7 @@ namespace Chatter.Application.Services
 
         public async Task<IResponse> RefreshTokenAsync(string refreshToken, string accessToken)
         {
-            var principalResult = JwtHelper.GetPrincipalFromExpiredToken(accessToken, _jwtSettings.SecretKey);
+            var principalResult = JwtHelper.GetPrincipalFromExpiredToken(accessToken, _jwtSettings);
 
             if (principalResult.IsSuccess)
             {

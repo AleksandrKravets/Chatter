@@ -105,11 +105,10 @@ namespace Chatter.DAL.Infrastructure
 
                 using(var reader = await command.ExecuteReaderAsync())
                 {
-                    var entityExists = reader.Read();
-
-                    if (!entityExists)
+                    if (!reader.HasRows)
                         return null;
 
+                    reader.Read();
                     var result = reader.ReadObject<T>();
 
                     reader.Close();

@@ -49,12 +49,12 @@ namespace Chatter.Application.Factories
             var signingCredentials = new SigningCredentials(key, algorithm);
 
             var token = new JwtSecurityToken(
-                _jwtSettings.Issuer,
-                _jwtSettings.Audience,
-                claims,
+                issuer: _jwtSettings.Issuer,
+                audience: _jwtSettings.Audience,
+                claims: claims,
                 notBefore: DateTime.Now,
                 expires: DateTime.Now.AddDays(3),
-                signingCredentials
+                signingCredentials: signingCredentials
             );
 
             string accessToken = new JwtSecurityTokenHandler().WriteToken(token);

@@ -21,7 +21,7 @@ namespace Chatter.Application.Services
 
         public async Task<IResponse> RegisterAsync(RegisterRequestModel model)
         {
-            var user = _userRepository.GetAsync(model.Nickname, model.Email);
+            var user = await _userRepository.GetAsync(model.Nickname, model.Email);
 
             if(user == null)
             {
@@ -29,7 +29,7 @@ namespace Chatter.Application.Services
                 {
                     var hashedPassword = SecurePasswordHasher.Hash(model.Password);
 
-                    await _userRepository.CreateAsync(new User
+                    var rowsAffected = await _userRepository.CreateAsync(new User
                     {
                         Nickname = model.Nickname,
                         Email = model.Email,
@@ -38,7 +38,7 @@ namespace Chatter.Application.Services
 
                     return new BaseResponse
                     {
-                        Status = ResponseStatus.Success
+                        Status = rowsAffected > 0 ? ResponseStatus.Success : ResponseStatus.Failure
                     };
                 }
             }
