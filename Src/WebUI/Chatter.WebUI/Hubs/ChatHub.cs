@@ -21,19 +21,19 @@ namespace Chatter.WebUI.Hubs
             return Context.ConnectionId;
         }
 
-        public async Task JoinGroup(string groupName)
-        {
-            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-        }
-
-        public async Task LeaveGroup(string groupName)
-        {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
-        }
-
         public async Task SendMessageGroup(string groupName, string message)
         {
             await Clients.Group(groupName).SendAsync("ReceivedMessage", message);
+        }
+
+        public async Task JoinChat(int chatId)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, chatId.ToString());
+        }
+
+        public async Task LeaveChat(int chatId)
+        {
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatId.ToString());
         }
     }
 }

@@ -2,8 +2,14 @@
 
 namespace Chatter.Domain.Entities
 {
-    public class ChatType : StoredEntity
+    //public class ChatType : StoredEntity
+    //{
+    //    public string Type { get; set; }
+    //}
+
+    public enum ChatType
     {
-        public string Type { get; set; }
+        Private,
+        Public
     }
 }

@@ -16,17 +16,18 @@ namespace Chatter.DAL.Repositories
             _procedureExecutor = procedureExecutor;
         }
 
-        public Task CreateAsync(ChatUser chatUser)
+        public Task<int> CreateAsync(ChatUser chatUser)
         {
             return _procedureExecutor.ExecuteAsync(new CreateChatUserSP 
             { 
                 ChatId = chatUser.ChatId, 
-                RoleId = chatUser.RoleId, 
-                UserId = chatUser.UserId 
+                //RoleId = chatUser.RoleId, 
+                UserId = chatUser.UserId,
+                Role = (int)chatUser.UserRole
             });
         }
 
-        public Task DeleteAsync(int chatUserId)
+        public Task<int> DeleteAsync(int chatUserId)
         {
             return _procedureExecutor.ExecuteAsync(new DeleteChatUserSP 
             { 
@@ -42,14 +43,14 @@ namespace Chatter.DAL.Repositories
             });
         }
 
-        public Task<UserRole> GetChatUserRoleAsync(int chatId, int userId)
+        /*public Task<UserRole> GetChatUserRoleAsync(int chatId, int userId)
         {
             return _procedureExecutor.ExecuteOneAsync<UserRole>(new GetChatUserRoleSP
             { 
                 ChatId = chatId, 
                 UserId = userId 
             });
-        }
+        }*/
 
         public Task<IEnumerable<Chat>> GetUserChatsAsync(int userId)
         {
@@ -67,13 +68,32 @@ namespace Chatter.DAL.Repositories
             });
         }
 
-        public Task UpdateUserRoleAsync(int chatId, int userId, int newRoleId)
+        public Task<int> UpdateUserRoleAsync(int chatId, int userId, UserRole userRole/*, int newRoleId*/)
         {
             return _procedureExecutor.ExecuteAsync(new UpdateChatUserRoleSP 
             { 
                 ChatId = chatId, 
                 UserId = userId, 
-                RoleId = newRoleId 
+                //RoleId = newRoleId 
+                Role = (int)userRole
+            });
+        }
+
+        public Task<ChatUser> GetChatUserByKeysAsync(int chatId, int userId)
+        {
+            return _procedureExecutor.ExecuteOneAsync<ChatUser>(new GetChatUserByKeysSP 
+            { 
+                ChatId = chatId, 
+                UserId = userId
+            });
+        }
+
+        public Task<int> DeleteChatUserByChatIdAndUserIdAsync(int chatId, int userId)
+        {
+            return _procedureExecutor.ExecuteAsync(new DeleteChatUserByChatIdAndUserIdSP 
+            { 
+                ChatId = chatId,
+                UserId = userId 
             });
         }
     }

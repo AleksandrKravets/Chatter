@@ -19,7 +19,7 @@ namespace Chatter.Application.Services
             _passwordValidator = passwordValidator;
         }
 
-        public async Task<ResponseObject> RegisterAsync(RegisterRequestModel model)
+        public async Task<IResponse> RegisterAsync(RegisterRequestModel model)
         {
             var user = _userRepository.GetAsync(model.Nickname, model.Email);
 
@@ -36,17 +36,15 @@ namespace Chatter.Application.Services
                         HashedPassword = hashedPassword
                     });
 
-                    return new ResponseObject
+                    return new BaseResponse
                     {
-                        Result = true,
                         Status = ResponseStatus.Success
                     };
                 }
             }
 
-            return new ResponseObject
+            return new BaseResponse
             {
-                Result = false,
                 Status = ResponseStatus.Failure
             };
         }

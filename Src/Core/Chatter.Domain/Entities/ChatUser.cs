@@ -6,6 +6,7 @@ namespace Chatter.Domain.Entities
     {
         public int UserId { get; set; }
         public int ChatId { get; set; }
-        public int RoleId { get; set; }
+        //public int RoleId { get; set; }
+        public UserRole UserRole { get; set; }
     }
 }

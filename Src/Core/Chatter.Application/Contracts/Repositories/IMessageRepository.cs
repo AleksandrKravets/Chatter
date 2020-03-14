@@ -8,8 +8,8 @@ namespace Chatter.Application.Contracts.Repositories
     {
         Task<Message> GetAsync(int id);
         Task<IEnumerable<Message>> GetAllAsync(int chatId);
-        Task CreateAsync(Message message);
-        Task UpdateAsync(Message message);
-        Task DeleteAsync(int messageId);
+        Task<int> CreateAsync(Message message);
+        Task<int> UpdateAsync(Message message);
+        Task<int> DeleteAsync(int messageId);
     }
 }

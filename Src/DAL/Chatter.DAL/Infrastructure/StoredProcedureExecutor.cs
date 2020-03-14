@@ -55,7 +55,7 @@ namespace Chatter.DAL.Infrastructure
         }
 
 
-        public async Task<IEnumerable<T>> ExecuteListAsync<T>(StoredProcedure storedProcedure)
+        public async Task<IEnumerable<T>> ExecuteListAsync<T>(StoredProcedure storedProcedure) where T : class
         {
             var fields = GetTypeFields(storedProcedure.GetType());
             var result = new List<T>();
@@ -81,7 +81,7 @@ namespace Chatter.DAL.Infrastructure
             return result;
         }
 
-        public async Task ExecuteAsync(StoredProcedure storedProcedure)
+        public async Task<int> ExecuteAsync(StoredProcedure storedProcedure)
         {
             var fields = GetTypeFields(storedProcedure.GetType());
 
@@ -89,14 +89,13 @@ namespace Chatter.DAL.Infrastructure
             {
                 await connection.OpenAsync();
                 SqlCommand command = CreateSqlCommand(storedProcedure, connection, fields);
-                await command.ExecuteNonQueryAsync();
+                return await command.ExecuteNonQueryAsync();
             }
         }
 
-        public async Task<T> ExecuteOneAsync<T>(StoredProcedure storedProcedure)
+        public async Task<T> ExecuteOneAsync<T>(StoredProcedure storedProcedure) where T : class
         {
             var fields = GetTypeFields(storedProcedure.GetType());
-            var result = (T)Activator.CreateInstance(typeof(T));
 
             using (SqlConnection connection = new SqlConnection(_settings.ConnectionString))
             {
@@ -106,16 +105,18 @@ namespace Chatter.DAL.Infrastructure
 
                 using(var reader = await command.ExecuteReaderAsync())
                 {
-                    while (reader.Read())
-                    {
-                        result = reader.ReadObject<T>();
-                    }
+                    var entityExists = reader.Read();
+
+                    if (!entityExists)
+                        return null;
+
+                    var result = reader.ReadObject<T>();
 
                     reader.Close();
+
+                    return result;
                 }
             }
-
-            return result;
         }
     }
 }

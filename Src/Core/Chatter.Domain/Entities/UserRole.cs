@@ -2,8 +2,13 @@
 
 namespace Chatter.Domain.Entities
 {
-    public class UserRole : StoredEntity
+    //public class UserRole : StoredEntity
+    //{
+    //    public string Role { get; set; }
+    //}
+    public enum UserRole
     {
-        public string Role { get; set; }
+        Admin,
+        Member
     }
 }

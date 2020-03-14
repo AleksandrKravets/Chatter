@@ -15,7 +15,7 @@ namespace Chatter.DAL.Repositories
             _procedureExecutor = procedureExecutor;
         }
 
-        public Task CreateAsync(RefreshToken token)
+        public Task<int> CreateAsync(RefreshToken token)
         {
             return _procedureExecutor.ExecuteAsync(new CreateTokenSP 
             { 
@@ -25,7 +25,7 @@ namespace Chatter.DAL.Repositories
             });
         }
 
-        public Task DeleteRefreshTokenAsync(string refreshToken)
+        public Task<int> DeleteRefreshTokenAsync(string refreshToken)
         {
             return _procedureExecutor.ExecuteAsync(new DeleteTokenSP 
             { 
@@ -33,7 +33,7 @@ namespace Chatter.DAL.Repositories
             });
         }
 
-        public Task DeleteUserTokenIfExistsAsync(int userId)
+        public Task<int> DeleteUserTokenIfExistsAsync(int userId)
         {
             return _procedureExecutor.ExecuteAsync(new DeleteTokenByUserIdSP 
             { 

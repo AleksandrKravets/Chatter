@@ -17,7 +17,7 @@ namespace Chatter.Application.Services
             _userRepository = userRepository;
         }
 
-        public async Task<ResponseObject> AuthorizeAsync(LoginRequestModel model)
+        public async Task<IResponse> AuthorizeAsync(LoginRequestModel model)
         {
             var user = await _userRepository.GetByEmailAsync(model.Email);
 
@@ -35,9 +35,8 @@ namespace Chatter.Application.Services
                 }
             }
 
-            return new ResponseObject 
+            return new BaseResponse 
             { 
-                Result = null,
                 Status = ResponseStatus.Failure 
             };
         }

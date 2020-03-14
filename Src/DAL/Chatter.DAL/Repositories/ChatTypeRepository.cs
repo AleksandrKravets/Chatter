@@ -7,42 +7,42 @@ using System.Threading.Tasks;
 
 namespace Chatter.DAL.Repositories
 {
-    public class ChatTypeRepository : IChatTypeRepository
-    {
-        private readonly StoredProcedureExecutor _procedureExecutor;
+    //public class ChatTypeRepository : IChatTypeRepository
+    //{
+    //    private readonly StoredProcedureExecutor _procedureExecutor;
 
-        public ChatTypeRepository(StoredProcedureExecutor procedureExecutor)
-        {
-            _procedureExecutor = procedureExecutor;
-        }
+    //    public ChatTypeRepository(StoredProcedureExecutor procedureExecutor)
+    //    {
+    //        _procedureExecutor = procedureExecutor;
+    //    }
 
-        public Task CreateAsync(ChatType chatType)
-        {
-            return _procedureExecutor.ExecuteAsync(new CreateChatTypeSP
-            {
-                Type = chatType.Type
-            });
-        }
+    //    public Task<int> CreateAsync(ChatType chatType)
+    //    {
+    //        return _procedureExecutor.ExecuteAsync(new CreateChatTypeSP
+    //        {
+    //            Type = chatType.Type
+    //        });
+    //    }
 
-        public Task DeleteAsync(int chatTypeId)
-        {
-            return _procedureExecutor.ExecuteAsync(new DeleteChatTypeSP 
-            { 
-                Id = chatTypeId 
-            });
-        }
+    //    public Task<int> DeleteAsync(int chatTypeId)
+    //    {
+    //        return _procedureExecutor.ExecuteAsync(new DeleteChatTypeSP 
+    //        { 
+    //            Id = chatTypeId 
+    //        });
+    //    }
 
-        public Task<IEnumerable<ChatType>> GetAllAsync()
-        {
-            return _procedureExecutor.ExecuteListAsync<ChatType>(new GetChatTypesSP());
-        }
+    //    public Task<IEnumerable<ChatType>> GetAllAsync()
+    //    {
+    //        return _procedureExecutor.ExecuteListAsync<ChatType>(new GetChatTypesSP());
+    //    }
 
-        public Task<ChatType> GetAsync(int id)
-        {
-            return _procedureExecutor.ExecuteOneAsync<ChatType>(new GetChatTypeSP 
-            { 
-                Id = id 
-            });
-        }
-    }
+    //    public Task<ChatType> GetAsync(int id)
+    //    {
+    //        return _procedureExecutor.ExecuteOneAsync<ChatType>(new GetChatTypeSP 
+    //        { 
+    //            Id = id 
+    //        });
+    //    }
+    //}
 }

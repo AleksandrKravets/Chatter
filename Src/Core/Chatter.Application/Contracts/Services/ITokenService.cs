@@ -8,7 +8,7 @@ namespace Chatter.Application.Contracts.Services
     public interface ITokenService
     {
         Task<TokensResponseModel> GetTokensAsync(User user);
-        Task<ResponseObject> RefreshTokenAsync(string refreshToken, string accessToken);
+        Task<IResponse> RefreshTokenAsync(string refreshToken, string accessToken);
         //Task<bool> CheckIfUserTokenValidAsync(int userId, string refreshToken);
     }
 }

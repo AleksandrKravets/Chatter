@@ -10,7 +10,8 @@ namespace Chatter.DAL.StoredProcedures
         internal class CreateChatSP : StoredProcedure
         {
             [InParameter] public string Name;
-            [InParameter] public int ChatTypeId;
+            /*[InParameter] public int ChatTypeId;*/
+            [InParameter] public int ChatType;
             [InParameter] public int CreatorId;
         }
 
@@ -36,7 +37,21 @@ namespace Chatter.DAL.StoredProcedures
         {
             [InParameter] public int Id;
             [InParameter] public string Name;
-            [InParameter] public int ChatTypeId;
+            /*[InParameter] public int ChatTypeId;*/
+            [InParameter] public int ChatType;
+        }
+
+        [ProcedureName("SP_GetChatByName")]
+        internal class GetChatByNameSP : StoredProcedure
+        {
+            [InParameter] public string Name;
+        }
+
+        [ProcedureName("SP_GetPagingChats")]
+        internal class GetPagingChatsSP : StoredProcedure
+        {
+            [InParameter] public int Offset;
+            [InParameter] public int PageSize;
         }
     }
 
@@ -253,7 +268,8 @@ namespace Chatter.DAL.StoredProcedures
         {
             [InParameter] public int ChatId;
             [InParameter] public int UserId;
-            [InParameter] public int RoleId;
+            //[InParameter] public int RoleId;
+            [InParameter] public int Role;
         }
 
         [ProcedureName("SP_UpdateChatUserRole")]
@@ -261,13 +277,28 @@ namespace Chatter.DAL.StoredProcedures
         {
             [InParameter] public int ChatId;
             [InParameter] public int UserId;
-            [InParameter] public int? RoleId;
+            //[InParameter] public int? RoleId;
+            [InParameter] public int Role;
         }
 
         [ProcedureName("SP_DeleteChatUser")]
         public class DeleteChatUserSP : StoredProcedure
         {
             [InParameter] public int Id;
+        }
+
+        [ProcedureName("SP_GetChatUserByKeys")]
+        public class GetChatUserByKeysSP : StoredProcedure
+        {
+            [InParameter] public int ChatId;
+            [InParameter] public int UserId;
+        }
+
+        [ProcedureName("SP_DeleteChatUserByChatIdAndUserId")]
+        public class DeleteChatUserByChatIdAndUserIdSP : StoredProcedure
+        {
+            [InParameter] public int ChatId;
+            [InParameter] public int UserId;
         }
     }
 }

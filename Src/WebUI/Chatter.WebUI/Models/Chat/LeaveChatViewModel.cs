@@ -2,7 +2,7 @@
 {
     public class LeaveChatViewModel
     {
-        public string ConnectionId { get; set; }
+        public int UserId { get; set; }
         public int ChatId { get; set; }
     }
 }

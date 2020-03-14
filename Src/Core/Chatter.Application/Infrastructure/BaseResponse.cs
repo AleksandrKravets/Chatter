@@ -5,8 +5,8 @@ namespace Chatter.Application.Infrastructure
 {
     [DataContract]
     [Serializable]
-    public class ResponseObject : BaseResponse
+    public class BaseResponse : IResponse
     {
-        [DataMember] public object Result { get; set; }
+        [DataMember] public ResponseStatus Status { get; set; }
     }
 }

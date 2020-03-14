@@ -49,7 +49,7 @@ namespace Chatter.Application.Services
             return response;
         }
 
-        public async Task<ResponseObject> RefreshTokenAsync(string refreshToken, string accessToken)
+        public async Task<IResponse> RefreshTokenAsync(string refreshToken, string accessToken)
         {
             var principalResult = JwtHelper.GetPrincipalFromExpiredToken(accessToken, _jwtSettings.SecretKey);
 
@@ -86,9 +86,8 @@ namespace Chatter.Application.Services
                 }
             }
 
-            return new ResponseObject
+            return new BaseResponse
             {
-                Result = null,
                 Status = ResponseStatus.Failure
             };
         }

@@ -9,9 +9,11 @@ namespace Chatter.Application.Contracts.Repositories
         Task<ChatUser> GetAsync(int id);
         Task<IEnumerable<User>> GetUsersByChatIdAsync(int chatId);
         Task<IEnumerable<Chat>> GetUserChatsAsync(int userId);
-        Task<UserRole> GetChatUserRoleAsync(int chatId, int userId);
-        Task CreateAsync(ChatUser chatUser);
-        Task UpdateUserRoleAsync(int chatId, int userId, int newRoleId);
-        Task DeleteAsync(int chatUserId);
+        //Task<UserRole> GetChatUserRoleAsync(int chatId, int userId);
+        Task<int> CreateAsync(ChatUser chatUser);
+        Task<int> UpdateUserRoleAsync(int chatId, int userId, UserRole userRole/*, int newRoleId*/);
+        Task<int> DeleteAsync(int chatUserId);
+        Task<ChatUser> GetChatUserByKeysAsync(int chatId, int userId);
+        Task<int> DeleteChatUserByChatIdAndUserIdAsync(int chatId, int userId);
     }
 }

@@ -16,17 +16,18 @@ namespace Chatter.DAL.Repositories
             _procedureExecutor = procedureExecutor;
         }
 
-        public Task CreateAsync(Chat chat)
+        public Task<int> CreateAsync(Chat chat)
         {
             return _procedureExecutor.ExecuteAsync(new CreateChatSP
             {
                 Name = chat.Name, 
-                ChatTypeId = chat.ChatTypeId,
+                /*ChatTypeId = chat.ChatTypeId,*/
+                ChatType = (int)chat.ChatType,
                 CreatorId = chat.CreatorId
             });
         }
 
-        public Task DeleteAsync(int chatId)
+        public Task<int> DeleteAsync(int chatId)
         {
             return _procedureExecutor.ExecuteAsync(new DeleteChatSP
             {
@@ -47,13 +48,31 @@ namespace Chatter.DAL.Repositories
             });
         }
 
-        public Task UpdateAsync(Chat chat)
+        public Task<Chat> GetChatByNameAsync(string name)
+        {
+            return _procedureExecutor.ExecuteOneAsync<Chat>(new GetChatByNameSP 
+            { 
+                Name = name 
+            });
+        }
+
+        public Task<IEnumerable<Chat>> GetChatsAsync(int offset, int pageSize)
+        {
+            return _procedureExecutor.ExecuteListAsync<Chat>(new GetPagingChatsSP 
+            { 
+                Offset = offset, 
+                PageSize = pageSize 
+            });
+        }
+
+        public Task<int> UpdateAsync(Chat chat)
         {
             return _procedureExecutor.ExecuteAsync(new UpdateChatSP
             {
                 Id = chat.Id,
                 Name = chat.Name, 
-                ChatTypeId = chat.ChatTypeId
+                /*ChatTypeId = chat.ChatTypeId*/
+                ChatType = (int)chat.ChatType
             });
         }
     }

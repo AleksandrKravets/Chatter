@@ -24,7 +24,7 @@ namespace Chatter.DAL.Repositories
             });
         }
 
-        public Task CreateAsync(User user)
+        public Task<int> CreateAsync(User user)
         {
             return _procedureExecutor.ExecuteAsync(new CreateUserSP 
             { 
@@ -34,7 +34,7 @@ namespace Chatter.DAL.Repositories
             });
         }
 
-        public Task DeleteAsync(int userId)
+        public Task<int> DeleteAsync(int userId)
         {
             return _procedureExecutor.ExecuteAsync(new DeleteUserSP 
             { 
@@ -66,7 +66,7 @@ namespace Chatter.DAL.Repositories
             });
         }
 
-        public Task UpdateAsync(User user)
+        public Task<int> UpdateAsync(User user)
         {
             return _procedureExecutor.ExecuteAsync(new UpdateUserSP 
             { 

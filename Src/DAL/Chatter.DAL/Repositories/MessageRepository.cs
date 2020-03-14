@@ -16,7 +16,7 @@ namespace Chatter.DAL.Repositories
             _procedureExecutor = procedureExecutor;
         }
 
-        public Task CreateAsync(Message message)
+        public Task<int> CreateAsync(Message message)
         {
             return _procedureExecutor.ExecuteAsync(new CreateMessageSP
             {
@@ -27,7 +27,7 @@ namespace Chatter.DAL.Repositories
             });
         }
 
-        public Task DeleteAsync(int messageId)
+        public Task<int> DeleteAsync(int messageId)
         {
             return _procedureExecutor.ExecuteAsync(new DeleteMessageSP
             {
@@ -51,7 +51,7 @@ namespace Chatter.DAL.Repositories
             });
         }
 
-        public Task UpdateAsync(Message message)
+        public Task<int> UpdateAsync(Message message)
         {
             return _procedureExecutor.ExecuteAsync(new UpdateMessageSP 
             {
