@@ -1,4 +1,5 @@
 ﻿using Chatter.Application.Contracts.Factories;
+using Chatter.Application.Infrastructure;
 using Chatter.Common.ConfigurationModels;
 using Chatter.Domain.Dto;
 using Chatter.Domain.Entities;
@@ -40,7 +41,7 @@ namespace Chatter.Application.Factories
         {
             var claims = new Claim[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(Constants.CustomClaims.UserIdentifier, user.Id.ToString()),
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));

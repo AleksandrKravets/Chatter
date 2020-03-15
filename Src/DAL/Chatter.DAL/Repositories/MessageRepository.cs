@@ -51,6 +51,11 @@ namespace Chatter.DAL.Repositories
             });
         }
 
+        public Task<IEnumerable<Message>> GetMessagesAsync(int chatId, int offset, int pageSize)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Task<int> UpdateAsync(Message message)
         {
             return _procedureExecutor.ExecuteAsync(new UpdateMessageSP 

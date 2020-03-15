@@ -12,6 +12,7 @@ namespace Chatter.API
             services.ConfigureSetting<DatabaseSettings>(configuration);
             services.ConfigureSetting<RequestOptions>(configuration);
             services.ConfigureSetting<JwtSettings>(configuration);
+            services.ConfigureSetting<PasswordSettings>(configuration);
 
             return services;
         }

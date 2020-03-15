@@ -19,14 +19,14 @@ namespace Chatter.WebUI.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Get([FromQuery]int id)
+        public async Task<IActionResult> Get(int id)
         {
             return Ok(await _chatService.GetAsync(id));
         }
 
         [HttpGet("{pageIndex}/{pageSize}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Get([FromQuery]int pageIndex, [FromQuery]int pageSize)
+        public async Task<IActionResult> Get(int pageIndex, int pageSize)
         {
             return Ok(await _chatService.GetAsync(pageIndex, pageSize));
         }
@@ -67,7 +67,7 @@ namespace Chatter.WebUI.Controllers
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Delete([FromQuery]int id)
+        public async Task<IActionResult> Delete(int id)
         {
             return Ok(await _chatService.DeleteAsync(id));
         }

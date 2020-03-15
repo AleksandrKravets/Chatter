@@ -8,7 +8,6 @@ using Chatter.Domain.Dto;
 using Chatter.Domain.Entities;
 using Microsoft.Extensions.Options;
 using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -55,7 +54,7 @@ namespace Chatter.Application.Services
 
             if (principalResult.IsSuccess)
             {
-                var userId = principalResult.Value.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub);
+                var userId = principalResult.Value.Claims.FirstOrDefault(c => c.Type == Constants.CustomClaims.UserIdentifier);
 
                 if (userId != null)
                 {
@@ -92,17 +91,17 @@ namespace Chatter.Application.Services
             };
         }
 
-        private Task RemoveUserTokenIfExistsAsync(int userId)
+        private Task<int> RemoveUserTokenIfExistsAsync(int userId)
         {
             return _tokenRepository.DeleteUserTokenIfExistsAsync(userId);
         }
 
-        private Task RemoveRefreshTokenAsync(string refreshToken)
+        private Task<int> RemoveRefreshTokenAsync(string refreshToken)
         {
             return _tokenRepository.DeleteRefreshTokenAsync(refreshToken);
         }
 
-        private Task AddRefreshTokenAsync(string refreshToken, DateTime expires, int userId)
+        private Task<int> AddRefreshTokenAsync(string refreshToken, DateTime expires, int userId)
         {
             return _tokenRepository.CreateAsync(new Domain.Entities.RefreshToken 
             { 
@@ -115,7 +114,7 @@ namespace Chatter.Application.Services
         private async Task<bool> CheckIfUserTokenValidAsync(int userId, string refreshToken)
         {
             var token = await _tokenRepository.GetTokenAsync(userId);
-            return token.Active && token.Token == refreshToken;
+            return token.IsActive() && token.Token == refreshToken;
         }
     }
 }

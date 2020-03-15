@@ -43,7 +43,7 @@ namespace Chatter.Application.Services
                     {
                         UserId = user.Id,
                         ChatId = createdChat.Id,
-                        UserRole = UserRole.Admin
+                        Role = UserRole.Admin
                     });
 
                     return new BaseResponse
@@ -146,7 +146,7 @@ namespace Chatter.Application.Services
                         {
                             ChatId = chatId,
                             UserId = userId,
-                            UserRole = UserRole.Member
+                            Role = UserRole.Member
                         });
 
                         return new BaseResponse { Status = rowsAffected > 0 ? ResponseStatus.Success : ResponseStatus.Failure };

@@ -11,6 +11,18 @@ namespace Chatter.DAL.Infrastructure
 
             foreach (var instanceProperty in instance.GetType().GetProperties())
             {
+                if(instanceProperty.PropertyType.IsEnum)
+                {
+                    instanceProperty.SetValue(
+                        instance, 
+                        Enum.Parse(
+                            instanceProperty.PropertyType, 
+                            Enum.GetName(instanceProperty.PropertyType, /*(int)*/reader[instanceProperty.Name])
+                        )
+                    );
+                    continue;
+                }
+
                 instanceProperty.SetValue(instance, Convert.ChangeType(reader[instanceProperty.Name], instanceProperty.PropertyType));
             }
 

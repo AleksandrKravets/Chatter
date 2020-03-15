@@ -23,7 +23,7 @@ namespace Chatter.DAL.Repositories
                 ChatId = chatUser.ChatId, 
                 //RoleId = chatUser.RoleId, 
                 UserId = chatUser.UserId,
-                Role = (int)chatUser.UserRole
+                Role = (int)chatUser.Role
             });
         }
 

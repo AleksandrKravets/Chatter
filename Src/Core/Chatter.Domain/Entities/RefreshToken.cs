@@ -7,8 +7,8 @@ namespace Chatter.Domain.Entities
     {
         public string Token { get; set; }
         public DateTime Expires { get; set; }
-        public bool Active => DateTime.UtcNow <= Expires;
-
         public int UserId { get; set; }
+
+        public bool IsActive() => DateTime.UtcNow <= Expires;
     }
 }
