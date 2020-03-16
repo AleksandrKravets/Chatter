@@ -10,7 +10,7 @@ namespace Chatter.Application.Helpers
 {
     public static class JwtHelper
     {
-        public static Result<ClaimsPrincipal> GetPrincipalFromExpiredToken(string token, JwtSettings jwtSettings)
+        public static Maybe<ClaimsPrincipal> GetPrincipalFromExpiredToken(string token, JwtSettings jwtSettings)
         {
             var validationParameters = new TokenValidationParameters
             {
@@ -28,16 +28,15 @@ namespace Chatter.Application.Helpers
             var tokenHandler = new JwtSecurityTokenHandler();
 
             SecurityToken securityToken;
-
+            
             var principal = tokenHandler.ValidateToken(token, validationParameters, out securityToken);
 
             var jwtSecurityToken = securityToken as JwtSecurityToken;
 
-
             if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
-                return Result.Failure<ClaimsPrincipal>(null);
+                return Maybe<ClaimsPrincipal>.None;
 
-            return Result.Ok(principal);
+            return principal;
         }
     }
 }

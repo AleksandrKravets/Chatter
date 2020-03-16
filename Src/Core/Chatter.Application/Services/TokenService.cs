@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 
 namespace Chatter.Application.Services
 {
-
     public class TokenService : ITokenService
     {
         private readonly JwtSettings _jwtSettings;
@@ -52,7 +51,7 @@ namespace Chatter.Application.Services
         {
             var principalResult = JwtHelper.GetPrincipalFromExpiredToken(accessToken, _jwtSettings);
 
-            if (principalResult.IsSuccess)
+            if (principalResult.HasValue)
             {
                 var userId = principalResult.Value.Claims.FirstOrDefault(c => c.Type == Constants.CustomClaims.UserIdentifier);
 

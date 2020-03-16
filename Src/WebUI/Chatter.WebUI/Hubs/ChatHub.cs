@@ -23,7 +23,17 @@ namespace Chatter.WebUI.Hubs
 
         public async Task SendMessageGroup(string groupName, string message)
         {
-            await Clients.Group(groupName).SendAsync("ReceivedMessage", message);
+            await Clients.Group(groupName).SendAsync("MessageReceived", message);
+        }
+
+        public async Task DeleteMessageGroup(string groupName, string message)
+        {
+            await Clients.Group(groupName).SendAsync("MessageDeleted", message);
+        }
+
+        public async Task UpdateMessageGroup(string groupName, string message)
+        {
+            await Clients.Group(groupName).SendAsync("MessageUpdated", message);
         }
 
         public async Task JoinChat(int chatId)

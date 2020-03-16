@@ -76,7 +76,7 @@ namespace Chatter.WebUI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Update([FromBody]UpdateMessageRequestModel model)
         {
-            // Отправлять SignalR запрос на удаление сообщения 
+            // Отправлять SignalR запрос на обновление сообщения 
 
             return Ok(await _messageService.UpdateAsync(new Message
             {
