@@ -1,4 +1,5 @@
-﻿using Chatter.Application.Contracts.Services;
+﻿using Chatter.API.Models.Message;
+using Chatter.Application.Contracts.Services;
 using Chatter.Domain.Entities;
 using Chatter.WebUI.Hubs;
 using Chatter.WebUI.Models.Message;
@@ -53,8 +54,6 @@ namespace Chatter.WebUI.Controllers
                 SenderId = model.SenderId
             };
 
-            
-
             /*await _chat.Clients.Group(model.ChatId.ToString())
                 .SendAsync("ReceivedMessage", new {
                     Text = model.Text,
@@ -93,12 +92,5 @@ namespace Chatter.WebUI.Controllers
         {
             return Ok(await _messageService.GetAsync(chatId, pageIndex, pageSize));
         }
-    }
-
-    public class UpdateMessageRequestModel 
-    {
-        public int MessageId { get; set; }
-        public string Text { get; set; }
-        public int SenderId { get; set; }
     }
 }
