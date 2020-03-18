@@ -1,6 +1,6 @@
 ﻿using Chatter.Application.Contracts.Services;
+using Chatter.Domain.Dto;
 using Chatter.Domain.Entities;
-using Chatter.WebUI.Models.Chat;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -40,29 +40,16 @@ namespace Chatter.WebUI.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Create([FromBody]CreateChatViewModel model)
+        public async Task<IActionResult> Create([FromBody]CreateChatRequestModel model)
         {
-            return Ok(await _chatService.CreateAsync(new Chat
-            {
-                Name = model.Name,
-                /*ChatTypeId = model.ChatTypeId,*/
-                ChatType = (ChatType)model.ChatType,
-                CreatorId = model.CreatorId
-            }));
+            return Ok(await _chatService.CreateAsync(model));
         }
 
         [HttpPatch]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Update([FromBody]UpdateChatViewModel model)
+        public async Task<IActionResult> Update([FromBody]UpdateChatRequestModel model)
         {
-            return Ok(await _chatService.UpdateAsync(new Chat
-            {
-                Id = model.Id,
-                Name = model.Name,
-                CreatorId = model.CreatorId,
-                //ChatTypeId = model.ChatTypeId
-                ChatType = (ChatType)model.ChatType
-            }));
+            return Ok(await _chatService.UpdateAsync(model));
         }
 
         [HttpDelete("{id}")]
@@ -74,16 +61,16 @@ namespace Chatter.WebUI.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Join([FromBody]JoinChatViewModel model) 
+        public async Task<IActionResult> Join([FromBody]JoinChatRequestModel model) 
         {
-            return Ok(await _chatService.JoinChatAsync(model.ChatId, model.UserId));
+            return Ok(await _chatService.JoinChatAsync(model));
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Leave([FromBody]LeaveChatViewModel model)
+        public async Task<IActionResult> Leave([FromBody]LeaveChatRequestModel model)
         {
-            return Ok(await _chatService.LeaveChatAsync(model.ChatId, model.UserId));
+            return Ok(await _chatService.LeaveChatAsync(model));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Chatter.Application.Contracts.Repositories;
 using Chatter.Application.Contracts.Services;
 using Chatter.Application.Infrastructure;
+using Chatter.Domain.Dto;
 using Chatter.Domain.Entities;
 using System;
 using System.Threading.Tasks;
@@ -26,21 +27,28 @@ namespace Chatter.Application.Services
             _userRepository = userRepository;
         }
 
-        public async Task<IResponse> CreateAsync(Message message)
+        public async Task<IResponse> CreateAsync(CreateMessageRequestModel model)
         {
             // create message text validator
 
-            if(message.Text.Length > 0)
+            if(model.Text.Length > 0)
             {
-                var chat = await _chatRepository.GetAsync(message.ChatId);
+                var chat = await _chatRepository.GetAsync(model.ChatId);
 
                 if (chat != null)
                 {
-                    var chatUser = await _chatUserRepository.GetChatUserByKeysAsync(message.ChatId, message.SenderId);
+                    var chatUser = await _chatUserRepository.GetChatUserByKeysAsync(model.ChatId, model.SenderId);
 
                     if (chatUser != null)
                     {
-                        var rowsAffected = await _messageRepository.CreateAsync(message);
+                        var rowsAffected = await _messageRepository.CreateAsync(new Message 
+                        { 
+                            Id = 0,
+                            ChatId = model.ChatId,
+                            SenderId = model.SenderId,
+                            Text = model.Text,
+                            TimeStamp = DateTime.Now 
+                        });
 
                         return new BaseResponse 
                         { 
@@ -83,19 +91,26 @@ namespace Chatter.Application.Services
             };
         }
 
-        public async Task<IResponse> UpdateAsync(Message message)
+        public async Task<IResponse> UpdateAsync(UpdateMessageRequestModel model)
         {
-            var storedMessage = await _messageRepository.GetAsync(message.Id);
+            var storedMessage = await _messageRepository.GetAsync(model.Id);
 
             if(storedMessage != null)
             {
-                if(message.ChatId == storedMessage.ChatId && message.SenderId == storedMessage.SenderId)
+                if(model.ChatId == storedMessage.ChatId && model.SenderId == storedMessage.SenderId)
                 {
-                    var chatUser = await _chatUserRepository.GetChatUserByKeysAsync(message.ChatId, message.SenderId);
+                    var chatUser = await _chatUserRepository.GetChatUserByKeysAsync(model.ChatId, model.SenderId);
 
                     if (chatUser != null)
                     {
-                        var rowsAffected = await _messageRepository.UpdateAsync(message);
+                        var rowsAffected = await _messageRepository.UpdateAsync(new Message 
+                        { 
+                            Id = model.Id,
+                            ChatId = model.ChatId,
+                            Text = model.Text,
+                            SenderId = model.SenderId,
+                            TimeStamp = DateTime.Now
+                        });
 
                         return new BaseResponse
                         {

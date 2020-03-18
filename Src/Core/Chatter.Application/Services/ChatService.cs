@@ -1,8 +1,8 @@
 ﻿using Chatter.Application.Contracts.Repositories;
 using Chatter.Application.Contracts.Services;
 using Chatter.Application.Infrastructure;
+using Chatter.Domain.Dto;
 using Chatter.Domain.Entities;
-using System;
 using System.Threading.Tasks;
 
 namespace Chatter.Application.Services
@@ -18,26 +18,29 @@ namespace Chatter.Application.Services
             IUserRepository userRepository/*, IUserRoleRepository userRoleRepository*/)
         {
             //_userRoleRepository =
-                //userRoleRepository ?? throw new ArgumentNullException(nameof(userRoleRepository));
-            _userRepository = 
-                userRepository ?? throw new ArgumentNullException(nameof(userRepository));
-            _chatUserRepository =
-                chatUserRepository ?? throw new ArgumentNullException(nameof(chatUserRepository));
-            _chatRepository = 
-                chatRepository ?? throw new ArgumentNullException(nameof(chatRepository));
+            //userRoleRepository ?? throw new ArgumentNullException(nameof(userRoleRepository));
+            _userRepository = userRepository;
+            _chatUserRepository = chatUserRepository;
+            _chatRepository = chatRepository;
         }
 
-        public async Task<IResponse> CreateAsync(Chat chat)
+        public async Task<IResponse> CreateAsync(CreateChatRequestModel model)
         {
-            if (!await CheckIfChatExists(chat.Name))
+            if (!await CheckIfChatExists(model.Name))
             {
-                var user = await _userRepository.GetAsync(chat.CreatorId);
+                var user = await _userRepository.GetAsync(model.CreatorId);
 
                 if (user != null)
                 {
-                    var result = await _chatRepository.CreateAsync(chat);
+                    var result = await _chatRepository.CreateAsync(new Chat 
+                    { 
+                        Id = 0,
+                        ChatType = (ChatType)model.ChatType,
+                        Name = model.Name, 
+                        CreatorId = model.CreatorId 
+                    });
 
-                    var createdChat = await _chatRepository.GetChatByNameAsync(chat.Name);
+                    var createdChat = await _chatRepository.GetChatByNameAsync(model.Name);
 
                     await _chatUserRepository.CreateAsync(new ChatUser
                     {
@@ -111,13 +114,13 @@ namespace Chatter.Application.Services
             };
         }
 
-        public async Task<IResponse> JoinChatAsync(int chatId, int userId)
+        public async Task<IResponse> JoinChatAsync(JoinChatRequestModel model)
         {
-            var chat = await _chatRepository.GetAsync(chatId);
+            var chat = await _chatRepository.GetAsync(model.ChatId);
 
             if(chat != null)
             {
-                var user = await _userRepository.GetAsync(userId);
+                var user = await _userRepository.GetAsync(model.UserId);
 
                 if(user != null)
                 {
@@ -138,14 +141,14 @@ namespace Chatter.Application.Services
                         }
                     }*/
 
-                    var chatUser = await _chatUserRepository.GetChatUserByKeysAsync(chatId, userId);
+                    var chatUser = await _chatUserRepository.GetChatUserByKeysAsync(model.ChatId, model.UserId);
 
                     if(chatUser == null)
                     {
                         var rowsAffected = await _chatUserRepository.CreateAsync(new ChatUser
                         {
-                            ChatId = chatId,
-                            UserId = userId,
+                            ChatId = model.ChatId,
+                            UserId = model.UserId,
                             Role = UserRole.Member
                         });
 
@@ -157,17 +160,17 @@ namespace Chatter.Application.Services
             return new BaseResponse { Status = ResponseStatus.Failure };
         }
 
-        public async Task<IResponse> LeaveChatAsync(int chatId, int userId)
+        public async Task<IResponse> LeaveChatAsync(LeaveChatRequestModel model)
         {
-            var chat = await _chatRepository.GetAsync(chatId);
+            var chat = await _chatRepository.GetAsync(model.ChatId);
 
             if (chat != null)
             {
-                var user = await _userRepository.GetAsync(userId);
+                var user = await _userRepository.GetAsync(model.UserId);
 
                 if (user != null)
                 {
-                    var rowsAffected = await _chatUserRepository.DeleteChatUserByChatIdAndUserIdAsync(chatId, userId);
+                    var rowsAffected = await _chatUserRepository.DeleteChatUserByChatIdAndUserIdAsync(model.ChatId, model.UserId);
                     
                     return new BaseResponse 
                     { 
@@ -179,9 +182,15 @@ namespace Chatter.Application.Services
             return new BaseResponse { Status = ResponseStatus.Failure };
         }
 
-        public async Task<IResponse> UpdateAsync(Chat chat)
+        public async Task<IResponse> UpdateAsync(UpdateChatRequestModel model)
         {
-            var result = await _chatRepository.UpdateAsync(chat);
+            var result = await _chatRepository.UpdateAsync(new Chat 
+            { 
+                Id = model.Id, 
+                ChatType = (ChatType)model.ChatType, 
+                CreatorId = model.CreatorId,
+                Name = model.Name 
+            });
 
             return new BaseResponse
             {

@@ -1,6 +1,6 @@
 ﻿namespace Chatter.WebUI.Models.Chat
 {
-    public class JoinChatViewModel
+    public class JoinChatRequestModel
     {
         public int UserId { get; set; }
         public int ChatId { get; set; }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CSharpFunctionalExtensions;
+using System.Collections.Generic;
 using System.Security.Claims;
 
 namespace Chatter.API.Infrastructure.Contracts
@@ -6,6 +7,6 @@ namespace Chatter.API.Infrastructure.Contracts
     public interface IIdentityHelper
     {
         IEnumerable<Claim> GetUserClaims(ClaimsPrincipal user);
-        int GetUserIdentifier(ClaimsPrincipal user); 
+        Maybe<int> GetUserIdentifier(ClaimsPrincipal user); 
     }
 }

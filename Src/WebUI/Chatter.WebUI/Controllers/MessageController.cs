@@ -1,12 +1,9 @@
-﻿using Chatter.API.Models.Message;
-using Chatter.Application.Contracts.Services;
-using Chatter.Domain.Entities;
+﻿using Chatter.Application.Contracts.Services;
+using Chatter.Domain.Dto;
 using Chatter.WebUI.Hubs;
-using Chatter.WebUI.Models.Message;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using System;
 using System.Threading.Tasks;
 
 namespace Chatter.WebUI.Controllers
@@ -44,23 +41,15 @@ namespace Chatter.WebUI.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Create(CreateMessageViewModel model)
+        public async Task<IActionResult> Create(CreateMessageRequestModel model)
         {
-            var message = new Message
-            {
-                Text = model.Text,
-                TimeStamp = DateTime.Now,
-                ChatId = model.ChatId, 
-                SenderId = model.SenderId
-            };
-
             /*await _chat.Clients.Group(model.ChatId.ToString())
                 .SendAsync("ReceivedMessage", new {
                     Text = model.Text,
                     //Timestamp = model.TimeStamp.ToString("dd/MM/yyyy hh:mm:ss")
                 });*/
 
-            return Ok(await _messageService.CreateAsync(message));
+            return Ok(await _messageService.CreateAsync(model));
         }
 
         [HttpDelete("{id}")]
@@ -77,13 +66,7 @@ namespace Chatter.WebUI.Controllers
         {
             // Отправлять SignalR запрос на обновление сообщения 
 
-            return Ok(await _messageService.UpdateAsync(new Message
-            {
-                Id = model.MessageId,
-                Text = model.Text,
-                TimeStamp = DateTime.Now,
-                SenderId = model.SenderId
-            }));
+            return Ok(await _messageService.UpdateAsync(model));
         }
 
         [HttpGet("{chatId}/{pageIndex}/{pageSize}")]

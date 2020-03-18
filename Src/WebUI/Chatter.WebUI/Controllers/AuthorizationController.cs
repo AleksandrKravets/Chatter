@@ -1,7 +1,6 @@
 ﻿using Chatter.Application.Contracts.Services;
 using Chatter.Domain.Dto;
 using Chatter.WebUI.Filters;
-using Chatter.WebUI.Models.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -32,7 +31,7 @@ namespace Chatter.WebUI.Controllers
 
         [HttpPost]
         [BadRequestFilter]
-        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequestModel model)
+        public async Task<IActionResult> RefreshToken([FromBody]RefreshTokenRequestModel model)
         {
             return Ok(await _tokenService.RefreshTokenAsync(model.RefreshToken, model.AccessToken));
         }

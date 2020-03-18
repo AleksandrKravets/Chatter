@@ -1,6 +1,6 @@
-﻿namespace Chatter.WebUI.Models.Chat
+﻿namespace Chatter.Domain.Dto
 {
-    public class CreateChatViewModel
+    public class CreateChatRequestModel
     {
         public string Name { get; set; }
         /*public int ChatTypeId { get; set; }*/
