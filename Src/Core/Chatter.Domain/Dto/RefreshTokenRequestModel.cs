@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Chatter.WebUI.Models.Auth
+namespace Chatter.Domain.Dto
 {
     public class RefreshTokenRequestModel
     {

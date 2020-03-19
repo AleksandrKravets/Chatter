@@ -1,7 +1,6 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Chatter.WebUI.Models.Message
+namespace Chatter.Domain.Dto
 {
     public class CreateMessageRequestModel
     {

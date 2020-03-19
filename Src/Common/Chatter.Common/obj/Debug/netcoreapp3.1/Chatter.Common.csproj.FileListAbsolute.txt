@@ -1,8 +1,0 @@
-C:\Users\Acer\source\repos\Chatter\Src\Common\Chatter.Common\bin\Debug\netcoreapp3.1\Chatter.Common.deps.json
-C:\Users\Acer\source\repos\Chatter\Src\Common\Chatter.Common\bin\Debug\netcoreapp3.1\Chatter.Common.dll
-C:\Users\Acer\source\repos\Chatter\Src\Common\Chatter.Common\bin\Debug\netcoreapp3.1\Chatter.Common.pdb
-C:\Users\Acer\source\repos\Chatter\Src\Common\Chatter.Common\obj\Debug\netcoreapp3.1\Chatter.Common.csprojAssemblyReference.cache
-C:\Users\Acer\source\repos\Chatter\Src\Common\Chatter.Common\obj\Debug\netcoreapp3.1\Chatter.Common.AssemblyInfoInputs.cache
-C:\Users\Acer\source\repos\Chatter\Src\Common\Chatter.Common\obj\Debug\netcoreapp3.1\Chatter.Common.AssemblyInfo.cs
-C:\Users\Acer\source\repos\Chatter\Src\Common\Chatter.Common\obj\Debug\netcoreapp3.1\Chatter.Common.dll
-C:\Users\Acer\source\repos\Chatter\Src\Common\Chatter.Common\obj\Debug\netcoreapp3.1\Chatter.Common.pdb

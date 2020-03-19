@@ -1,4 +1,4 @@
-﻿namespace Chatter.WebUI.Models.Chat
+﻿namespace Chatter.Domain.Dto
 {
     public class LeaveChatRequestModel
     {
