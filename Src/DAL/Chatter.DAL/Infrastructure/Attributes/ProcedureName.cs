@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace Chatter.DAL.Infrastructure.Attributes
+namespace Quantum.DAL.Infrastructure.Attributes
 {
-    [AttributeUsage(AttributeTargets.Class)]
-    public class ProcedureName : Attribute
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+    internal class ProcedureName : Attribute
     {
         public string Name { get; set; }
 

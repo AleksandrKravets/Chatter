@@ -1,34 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Core\\Chatter.Application\\Chatter.Application.csproj": {}
+    "D:\\projects\\Chatter\\Src\\Core\\Chatter.Application\\Chatter.Application.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Common\\Chatter.Common\\Chatter.Common.csproj": {
+    "D:\\projects\\Chatter\\Src\\Common\\Chatter.Common\\Chatter.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Common\\Chatter.Common\\Chatter.Common.csproj",
+        "projectUniqueName": "D:\\projects\\Chatter\\Src\\Common\\Chatter.Common\\Chatter.Common.csproj",
         "projectName": "Chatter.Common",
-        "projectPath": "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Common\\Chatter.Common\\Chatter.Common.csproj",
-        "packagesPath": "C:\\Users\\Acer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Common\\Chatter.Common\\obj\\",
+        "projectPath": "D:\\projects\\Chatter\\Src\\Common\\Chatter.Common\\Chatter.Common.csproj",
+        "packagesPath": "C:\\Users\\nitro\\.nuget\\packages\\",
+        "outputPath": "D:\\projects\\Chatter\\Src\\Common\\Chatter.Common\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "D:\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Acer\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\nitro\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://tfs.cyberianconcepts.com/tfs/DefaultCollection/_packaging/NuGetFeed/nuget/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
@@ -58,44 +52,38 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Core\\Chatter.Application\\Chatter.Application.csproj": {
+    "D:\\projects\\Chatter\\Src\\Core\\Chatter.Application\\Chatter.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Core\\Chatter.Application\\Chatter.Application.csproj",
+        "projectUniqueName": "D:\\projects\\Chatter\\Src\\Core\\Chatter.Application\\Chatter.Application.csproj",
         "projectName": "Chatter.Application",
-        "projectPath": "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Core\\Chatter.Application\\Chatter.Application.csproj",
-        "packagesPath": "C:\\Users\\Acer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Core\\Chatter.Application\\obj\\",
+        "projectPath": "D:\\projects\\Chatter\\Src\\Core\\Chatter.Application\\Chatter.Application.csproj",
+        "packagesPath": "C:\\Users\\nitro\\.nuget\\packages\\",
+        "outputPath": "D:\\projects\\Chatter\\Src\\Core\\Chatter.Application\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "D:\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Acer\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\nitro\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://tfs.cyberianconcepts.com/tfs/DefaultCollection/_packaging/NuGetFeed/nuget/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Common\\Chatter.Common\\Chatter.Common.csproj": {
-                "projectPath": "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Common\\Chatter.Common\\Chatter.Common.csproj"
+              "D:\\projects\\Chatter\\Src\\Common\\Chatter.Common\\Chatter.Common.csproj": {
+                "projectPath": "D:\\projects\\Chatter\\Src\\Common\\Chatter.Common\\Chatter.Common.csproj"
               },
-              "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Core\\Chatter.Domain\\Chatter.Domain.csproj": {
-                "projectPath": "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Core\\Chatter.Domain\\Chatter.Domain.csproj"
+              "D:\\projects\\Chatter\\Src\\Core\\Chatter.Domain\\Chatter.Domain.csproj": {
+                "projectPath": "D:\\projects\\Chatter\\Src\\Core\\Chatter.Domain\\Chatter.Domain.csproj"
               }
             }
           }
@@ -133,45 +121,42 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Core\\Chatter.Domain\\Chatter.Domain.csproj": {
+    "D:\\projects\\Chatter\\Src\\Core\\Chatter.Domain\\Chatter.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Core\\Chatter.Domain\\Chatter.Domain.csproj",
+        "projectUniqueName": "D:\\projects\\Chatter\\Src\\Core\\Chatter.Domain\\Chatter.Domain.csproj",
         "projectName": "Chatter.Domain",
-        "projectPath": "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Core\\Chatter.Domain\\Chatter.Domain.csproj",
-        "packagesPath": "C:\\Users\\Acer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Core\\Chatter.Domain\\obj\\",
+        "projectPath": "D:\\projects\\Chatter\\Src\\Core\\Chatter.Domain\\Chatter.Domain.csproj",
+        "packagesPath": "C:\\Users\\nitro\\.nuget\\packages\\",
+        "outputPath": "D:\\projects\\Chatter\\Src\\Core\\Chatter.Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "D:\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Acer\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\nitro\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://tfs.cyberianconcepts.com/tfs/DefaultCollection/_packaging/NuGetFeed/nuget/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Common\\Chatter.Common\\Chatter.Common.csproj": {
-                "projectPath": "C:\\Users\\Acer\\source\\repos\\Chatter\\Src\\Common\\Chatter.Common\\Chatter.Common.csproj"
+              "D:\\projects\\Chatter\\Src\\Common\\Chatter.Common\\Chatter.Common.csproj": {
+                "projectPath": "D:\\projects\\Chatter\\Src\\Common\\Chatter.Common\\Chatter.Common.csproj"
               }
             }
           }
@@ -199,7 +184,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
         }
       }
     }

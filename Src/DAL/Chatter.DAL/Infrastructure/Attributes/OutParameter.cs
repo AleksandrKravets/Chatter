@@ -1,9 +1,6 @@
-﻿using System;
-
-namespace Chatter.DAL.Infrastructure.Attributes
+﻿namespace Quantum.DAL.Infrastructure.Attributes
 {
-    [AttributeUsage(AttributeTargets.Field)]
-    public class OutParameter : Attribute
+    internal class OutParameter : ProcedureParameter
     {
     }
 }

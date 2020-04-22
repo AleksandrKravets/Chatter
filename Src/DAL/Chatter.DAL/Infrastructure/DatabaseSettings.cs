@@ -1,4 +1,4 @@
-﻿namespace Chatter.Common.ConfigurationModels
+﻿namespace Quantum.DAL.Infrastructure
 {
     public class DatabaseSettings
     {

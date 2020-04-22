@@ -1,18 +1,18 @@
-﻿using Chatter.Application.Infrastructure;
-using Chatter.Domain.Dto;
+﻿using Chatter.Application.DataTransferObjects.Chats;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Chatter.Application.Contracts.Services
 {
     public interface IChatService
     {
-        Task<IResponse> CreateAsync(CreateChatRequestModel chat);
-        Task<IResponse> UpdateAsync(UpdateChatRequestModel chat);
-        Task<IResponse> DeleteAsync(int chatId);
-        Task<IResponse> GetAsync(int chatId);
-        Task<IResponse> GetAsync();
-        Task<IResponse> GetAsync(int pageIndex, int pageSize);
-        Task<IResponse> JoinChatAsync(JoinChatRequestModel model);
-        Task<IResponse> LeaveChatAsync(LeaveChatRequestModel model);
+        Task CreateAsync(CreateChatModel chat);
+        Task UpdateAsync(int id, UpdateChatModel chat);
+        Task DeleteAsync(int chatId);
+        Task<ChatModel> GetAsync(int chatId);
+        Task<List<ChatModel>> GetAsync();
+        Task<List<ChatModel>> GetAsync(int pageIndex, int pageSize);
+        Task JoinChatAsync(int chatId, int userId);
+        Task LeaveChatAsync(int chatId, int userId);
     }
 }

@@ -19,7 +19,7 @@ namespace Chatter.WebUI.Controllers
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [BadRequestFilter]
+        [Validation]
         [HttpPost]
         public async Task<IActionResult> Register([FromBody]RegisterRequestModel model)
         {

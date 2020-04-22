@@ -1,121 +1,32 @@
-﻿using Chatter.Common.ConfigurationModels;
-using Chatter.DAL.Infrastructure.Attributes;
-using Microsoft.Extensions.Options;
-using System;
+﻿using Microsoft.Extensions.Options;
+using Quantum.DAL.Infrastructure.Commands;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Chatter.DAL.Infrastructure
+namespace Quantum.DAL.Infrastructure
 {
-    public class StoredProcedureExecutor
+    internal class StoredProcedureExecutor
     {
-        private readonly DatabaseSettings _settings;
+        private readonly string _connectionString;
 
-        public StoredProcedureExecutor(IOptions<DatabaseSettings> options)
+        public StoredProcedureExecutor(IOptions<DatabaseSettings> settings)
         {
-            _settings = options.Value;
+            _connectionString = settings.Value.ConnectionString;
         }
 
-        private string GetStoredProcedureName(StoredProcedure storedProcedure)
+        public Task<ICollection<TResponse>> ExecuteWithListResponseAsync<TResponse>(StoredProcedure storedProcedure) where TResponse : class
         {
-            var nameAttribute = (ProcedureName)storedProcedure.GetType().GetCustomAttributes(typeof(ProcedureName)).FirstOrDefault();
-
-            if (nameAttribute == null)
-                return storedProcedure.GetType().Name;
-
-            return nameAttribute.Name;
+            return new ExecuteWithListResponseCommand<TResponse>(storedProcedure, _connectionString).ExecuteAsync();
         }
 
-        private IEnumerable<FieldInfo> GetTypeFields(Type type)
+        public Task<TResponse> ExecuteWithObjectResponseAsync<TResponse>(StoredProcedure storedProcedure) where TResponse : class
         {
-            return type.GetFields(BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.SetField |
-                BindingFlags.GetField | BindingFlags.Instance)
-                .Where(p => p.CustomAttributes.Any(a => a.AttributeType == typeof(InParameter)));
+            return new ExecuteWithObjectResponseCommand<TResponse>(storedProcedure, _connectionString).ExecuteAsync();
         }
 
-        private void AddParametersToCommand(SqlCommand command, IEnumerable<FieldInfo> fields, StoredProcedure storedProcedure)
+        public Task<int> ExecuteAsync(StoredProcedure storedProcedure)
         {
-            foreach (var property in fields)
-            {
-                command.Parameters.AddWithValue($"@{property.Name}", property.GetValue(storedProcedure));
-            }
-        }
-
-        private SqlCommand CreateSqlCommand(StoredProcedure storedProcedure, SqlConnection connection, IEnumerable<FieldInfo> fields)
-        {
-            var storedProcedureName = GetStoredProcedureName(storedProcedure);
-            var command = new SqlCommand(storedProcedureName, connection);
-            command.CommandType = CommandType.StoredProcedure;
-            AddParametersToCommand(command, fields, storedProcedure);
-            return command;
-        }
-
-
-        public async Task<IEnumerable<T>> ExecuteListAsync<T>(StoredProcedure storedProcedure) where T : class
-        {
-            var fields = GetTypeFields(storedProcedure.GetType());
-            var result = new List<T>();
-
-            using (SqlConnection connection = new SqlConnection(_settings.ConnectionString))
-            {
-                SqlCommand command = CreateSqlCommand(storedProcedure, connection, fields);
-
-                await connection.OpenAsync();
-
-                using(var reader = await command.ExecuteReaderAsync())
-                {
-                    while (reader.Read())
-                    {
-                        var instance = reader.ReadObject<T>();
-                        result.Add(instance);
-                    }
-
-                    reader.Close();
-                }
-            }
-
-            return result;
-        }
-
-        public async Task<int> ExecuteAsync(StoredProcedure storedProcedure)
-        {
-            var fields = GetTypeFields(storedProcedure.GetType());
-
-            using (SqlConnection connection = new SqlConnection(_settings.ConnectionString))
-            {
-                await connection.OpenAsync();
-                SqlCommand command = CreateSqlCommand(storedProcedure, connection, fields);
-                return await command.ExecuteNonQueryAsync();
-            }
-        }
-
-        public async Task<T> ExecuteOneAsync<T>(StoredProcedure storedProcedure) where T : class
-        {
-            var fields = GetTypeFields(storedProcedure.GetType());
-
-            using (SqlConnection connection = new SqlConnection(_settings.ConnectionString))
-            {
-                SqlCommand command = CreateSqlCommand(storedProcedure, connection, fields);
-
-                await connection.OpenAsync();
-
-                using(var reader = await command.ExecuteReaderAsync())
-                {
-                    if (!reader.HasRows)
-                        return null;
-
-                    reader.Read();
-                    var result = reader.ReadObject<T>();
-
-                    reader.Close();
-
-                    return result;
-                }
-            }
+            return new ExecuteWithReturnValueCommand(storedProcedure, _connectionString).ExecuteAsync();
         }
     }
 }

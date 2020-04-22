@@ -4,7 +4,7 @@ using System;
 
 namespace Chatter.WebUI.Filters
 {
-    public class BadRequestFilter : Attribute, IActionFilter
+    public class Validation : Attribute, IActionFilter
     {
         public void OnActionExecuting(ActionExecutingContext context)
         {

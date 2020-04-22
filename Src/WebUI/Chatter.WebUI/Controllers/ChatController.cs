@@ -1,14 +1,13 @@
 ﻿using Chatter.Application.Contracts.Services;
-using Chatter.Domain.Dto;
-using Chatter.Domain.Entities;
+using Chatter.Application.DataTransferObjects.Chats;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Chatter.WebUI.Controllers
 {
-    [Route("api/[controller]/[action]")]
-    public class ChatController : ControllerBase
+    [Route("api/chats")]
+    public class ChatController : Controller
     {
         private readonly IChatService _chatService;
 
@@ -17,60 +16,74 @@ namespace Chatter.WebUI.Controllers
             _chatService = chatService;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(int id)
         {
-            return Ok(await _chatService.GetAsync(id));
+            var result = await _chatService.GetAsync(id);
+            return Ok(result);
         }
 
-        [HttpGet("{pageIndex}/{pageSize}")]
+        [HttpGet]
+        [Route("{pageIndex}/{pageSize}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(int pageIndex, int pageSize)
         {
-            return Ok(await _chatService.GetAsync(pageIndex, pageSize));
+            var result = await _chatService.GetAsync(pageIndex, pageSize);
+            return Ok(result);
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _chatService.GetAsync());
+            var result = await _chatService.GetAsync();
+            return Ok(result);
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Create([FromBody]CreateChatRequestModel model)
+        public async Task<IActionResult> Create([FromBody]CreateChatModel model)
         {
-            return Ok(await _chatService.CreateAsync(model));
+            await _chatService.CreateAsync(model);
+            return Ok();
         }
 
-        [HttpPatch]
+        [HttpPut]
+        [Route("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Update([FromBody]UpdateChatRequestModel model)
+        public async Task<IActionResult> Update(int id, [FromBody]UpdateChatModel model)
         {
-            return Ok(await _chatService.UpdateAsync(model));
+            await _chatService.UpdateAsync(id, model);
+            return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
+        [Route("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Delete(int id)
         {
-            return Ok(await _chatService.DeleteAsync(id));
+            await _chatService.DeleteAsync(id);
+            return Ok();
         }
 
         [HttpPost]
+        [Route("{chatId}/join/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Join([FromBody]JoinChatRequestModel model) 
+        public async Task<IActionResult> Join(int chatId, int userId) 
         {
-            return Ok(await _chatService.JoinChatAsync(model));
+            await _chatService.JoinChatAsync(chatId, userId);
+            return Ok();
         }
 
         [HttpPost]
+        [Route("{chatId}/leave/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Leave([FromBody]LeaveChatRequestModel model)
+        public async Task<IActionResult> Leave(int chatId, int userId)
         {
-            return Ok(await _chatService.LeaveChatAsync(model));
+            await _chatService.LeaveChatAsync(chatId, userId);
+            return Ok();
         }
     }
 }

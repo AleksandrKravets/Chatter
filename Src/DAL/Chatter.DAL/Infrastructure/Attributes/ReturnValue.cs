@@ -1,6 +1,6 @@
 ﻿namespace Quantum.DAL.Infrastructure.Attributes
 {
-    internal class InParameter : ProcedureParameter
+    internal class ReturnValue : ProcedureParameter
     {
     }
 }

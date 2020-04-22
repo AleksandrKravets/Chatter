@@ -1,6 +1,6 @@
-﻿namespace Chatter.Domain.Dto
+﻿namespace Chatter.Application.DataTransferObjects.Messages
 {
-    public class UpdateMessageRequestModel
+    public class UpdateMessageModel
     {
         public int Id { get; set; }
         public string Text { get; set; }
