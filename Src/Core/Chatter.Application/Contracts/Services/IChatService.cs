@@ -10,8 +10,8 @@ namespace Chatter.Application.Contracts.Services
         Task UpdateAsync(int id, UpdateChatModel chat);
         Task DeleteAsync(int chatId);
         Task<ChatModel> GetAsync(int chatId);
-        Task<List<ChatModel>> GetAsync();
-        Task<List<ChatModel>> GetAsync(int pageIndex, int pageSize);
+        Task<ICollection<ChatModel>> GetAsync();
+        Task<ICollection<ChatModel>> GetAsync(int pageIndex, int pageSize);
         Task JoinChatAsync(int chatId, int userId);
         Task LeaveChatAsync(int chatId, int userId);
     }
