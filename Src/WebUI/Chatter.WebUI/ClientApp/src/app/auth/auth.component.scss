@@ -1,0 +1,36 @@
+.auth-comtainer {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  padding-top: 5%;
+}
+
+.auth-header {
+  text-align: center;
+  color: #c28aff;
+}
+
+.form-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 15px;
+  width: 30%;
+}
+
+.gradient-logo {
+  background: linear-gradient(45deg,);
+}
+
+.form-error {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 15px;
+  color: #ff3e3b;
+}
+
+.gradient-logo {
+  background: linear-gradient(#dbbdfd, #b256fd);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+

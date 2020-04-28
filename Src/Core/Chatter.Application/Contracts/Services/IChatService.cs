@@ -7,12 +7,11 @@ namespace Chatter.Application.Contracts.Services
     public interface IChatService
     {
         Task CreateAsync(CreateChatModel chat);
-        Task UpdateAsync(int id, UpdateChatModel chat);
-        Task DeleteAsync(int chatId);
-        Task<ChatModel> GetAsync(int chatId);
+        Task UpdateAsync(long id, UpdateChatModel chat);
+        Task DeleteAsync(long chatId);
+        Task<ChatModel> GetAsync(long chatId);
         Task<ICollection<ChatModel>> GetAsync();
-        Task<ICollection<ChatModel>> GetAsync(int pageIndex, int pageSize);
-        Task JoinChatAsync(int chatId, int userId);
-        Task LeaveChatAsync(int chatId, int userId);
+        Task JoinChatAsync(long chatId, long userId);
+        Task LeaveChatAsync(long chatId, long userId);
     }
 }

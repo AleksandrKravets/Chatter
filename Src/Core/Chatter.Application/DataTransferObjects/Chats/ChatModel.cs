@@ -2,9 +2,9 @@
 {
     public class ChatModel
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
-        public int ChatType { get; set; }
-        public int CreatorId { get; set; }
+        public long ChatTypeId { get; set; }
+        public long CreatorId { get; set; }
     }
 }

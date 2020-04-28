@@ -1,16 +1,16 @@
 ﻿using Chatter.Application.Contracts.Services;
-using Chatter.Domain.Dto;
+using Chatter.Application.DataTransferObjects.Messages;
 using Chatter.WebUI.Hubs;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 
 namespace Chatter.WebUI.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/messages")]
     [ApiController]
-    public class MessageController : ControllerBase
+    public class MessageController : Controller
     {
         private readonly IMessageService _messageService;
         private readonly IHubContext<ChatHub> _chat;
@@ -21,59 +21,52 @@ namespace Chatter.WebUI.Controllers
             _chat = chat;
         }
 
-        // надо передавать юзера чтобы проверить состоит ли он в чате ()
-        [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Get(int id)
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> Get(long id)
         {
             var response = await _messageService.GetAsync(id);
             return Ok(response);
         }
 
-        // надо передавать юзера чтобы проверить состоит ли он в чате ()
-        [HttpGet("{chatId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetByChatId(int chatId)
+        [HttpGet]
+        [Route("~/api/chats/{id:int}/messages")]
+        public async Task<IActionResult> GetAll(long chatId)
         {
             var response = await _messageService.GetAllAsync(chatId);
             return Ok(response);
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Create(CreateMessageRequestModel model)
+        [Route("~/api/chats/{id:int}/messages")]
+        public async Task<IActionResult> Create(long id, CreateMessageModel model)
         {
-            /*await _chat.Clients.Group(model.ChatId.ToString())
-                .SendAsync("ReceivedMessage", new {
-                    Text = model.Text,
-                    //Timestamp = model.TimeStamp.ToString("dd/MM/yyyy hh:mm:ss")
-                });*/
+            if (!ModelState.IsValid || model == null)
+                return BadRequest();
 
-            return Ok(await _messageService.CreateAsync(model));
+            await _messageService.CreateAsync(id, model);
+
+            return Ok();
         }
 
-        [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete(long id)
         {
-            // Отправлять SignalR запрос на удаление сообщения 
-            return Ok(await _messageService.DeleteAsync(id));
+            await _messageService.DeleteAsync(id);
+            return Ok();
         }
 
-        [HttpPatch]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Update([FromBody]UpdateMessageRequestModel model)
-        {
-            // Отправлять SignalR запрос на обновление сообщения 
 
-            return Ok(await _messageService.UpdateAsync(model));
-        }
-
-        [HttpGet("{chatId}/{pageIndex}/{pageSize}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Get(int chatId, int pageIndex, int pageSize)
+        [HttpPut]
+        [Route("{id:int}")]
+        public async Task<IActionResult> Update(long id, [FromBody]UpdateMessageModel model)
         {
-            return Ok(await _messageService.GetAsync(chatId, pageIndex, pageSize));
+            if (!ModelState.IsValid || model == null)
+                return BadRequest();
+
+            await _messageService.UpdateAsync(id, model);
+            return Ok();
         }
     }
 }

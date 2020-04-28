@@ -1,9 +1,9 @@
 ﻿using Chatter.Application.Contracts.Repositories;
 using Chatter.Application.Contracts.Services;
 using Chatter.Application.Contracts.Validators;
+using Chatter.Application.DataTransferObjects.Account;
+using Chatter.Application.DataTransferObjects.Users;
 using Chatter.Application.Infrastructure;
-using Chatter.Domain.Dto;
-using Chatter.Domain.Entities;
 using System.Threading.Tasks;
 
 namespace Chatter.Application.Services
@@ -19,34 +19,22 @@ namespace Chatter.Application.Services
             _passwordValidator = passwordValidator;
         }
 
-        public async Task<IResponse> RegisterAsync(RegisterRequestModel model)
+        public Task RegisterAsync(RegistrationModel model)
         {
-            var user = await _userRepository.GetAsync(model.Nickname, model.Email);
+            // Check if user with such email and nickname doesnt exist
+            // validate password using password validator
+            // Hash user password
+            // Create user
+            // Return response model
 
-            if(user == null)
+            var hashedPassword = SecurePasswordHasher.Hash(model.Password);
+
+            return _userRepository.CreateAsync(new CreateUserDto
             {
-                if (_passwordValidator.ValidatePassword(model.Password))
-                {
-                    var hashedPassword = SecurePasswordHasher.Hash(model.Password);
-
-                    var rowsAffected = await _userRepository.CreateAsync(new User
-                    {
-                        Nickname = model.Nickname,
-                        Email = model.Email,
-                        HashedPassword = hashedPassword
-                    });
-
-                    return new BaseResponse
-                    {
-                        Status = rowsAffected > 0 ? ResponseStatus.Success : ResponseStatus.Failure
-                    };
-                }
-            }
-
-            return new BaseResponse
-            {
-                Status = ResponseStatus.Failure
-            };
+                Nickname = model.Nickname,
+                Email = model.Email,
+                HashedPassword = hashedPassword
+            });
         }
     }
 }

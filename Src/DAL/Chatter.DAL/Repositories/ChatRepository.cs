@@ -26,7 +26,7 @@ namespace Chatter.DAL.Repositories
             });
         }
 
-        public Task<int> DeleteAsync(int chatId)
+        public Task<int> DeleteAsync(long chatId)
         {
             return _procedureExecutor.ExecuteAsync(new SPDeleteChat 
             { 
@@ -34,7 +34,7 @@ namespace Chatter.DAL.Repositories
             });
         }
 
-        public Task<ChatModel> GetAsync(int chatId)
+        public Task<ChatModel> GetAsync(long chatId)
         {
             return _procedureExecutor.ExecuteWithObjectResponseAsync<ChatModel>(new SPGetChatById 
             { 
@@ -47,11 +47,6 @@ namespace Chatter.DAL.Repositories
             return _procedureExecutor.ExecuteWithListResponseAsync<ChatModel>(new SPGetChats());
         }
 
-        public Task<ICollection<ChatModel>> GetAsync(int pageIndex, int pageSize)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public Task<ChatModel> GetChatByNameAsync(string name)
         {
             return _procedureExecutor.ExecuteWithObjectResponseAsync<ChatModel>(new SPGetChatByName 
@@ -60,12 +55,13 @@ namespace Chatter.DAL.Repositories
             });
         }
 
-        public Task<int> UpdateAsync(int id, UpdateChatModel model)
+        public Task<int> UpdateAsync(long id, UpdateChatModel model)
         {
             return _procedureExecutor.ExecuteAsync(new SPUpdateChat 
             { 
                 Id = id, 
-                Name = model.Name 
+                Name = model.Name, 
+                ChatTypeId = model.ChatTypeId
             });
         }
     }

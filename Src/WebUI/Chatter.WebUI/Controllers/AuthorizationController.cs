@@ -3,15 +3,12 @@ using Chatter.Application.Contracts.Services;
 using Chatter.Domain.Dto;
 using Chatter.Domain.Dto.Requests;
 using Chatter.Domain.Dto.Responses;
-using Chatter.Domain.Entities;
-using Chatter.WebUI.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -20,15 +17,15 @@ using System.Threading.Tasks;
 
 namespace Chatter.WebUI.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/authorization/")]
     [ApiController]
     public class AuthorizationController : Controller
     {
-        private readonly Application.Contracts.Services.IAuthorizationService _authorizationService;
+        private readonly IAuthorizationService _authorizationService;
         private readonly ITokenService _tokenService;
 
         public AuthorizationController(
-            Application.Contracts.Services.IAuthorizationService authorizationService,
+            IAuthorizationService authorizationService,
             ITokenService tokenService)
         {
             _authorizationService = authorizationService;
@@ -36,14 +33,12 @@ namespace Chatter.WebUI.Controllers
         }
 
         [HttpPost]
-        [Validation]
         public async Task<IActionResult> Login([FromBody]LoginRequestModel model)
         {
             return Ok(await _authorizationService.AuthorizeAsync(model));
         }
 
         [HttpPost]
-        [Validation]
         public async Task<IActionResult> RefreshToken([FromBody]RefreshTokenRequestModel model)
         {
             return Ok(await _tokenService.RefreshTokenAsync(model.RefreshToken, model.AccessToken));

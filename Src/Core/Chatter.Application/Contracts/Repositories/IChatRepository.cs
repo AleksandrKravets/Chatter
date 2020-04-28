@@ -8,10 +8,9 @@ namespace Chatter.Application.Contracts.Repositories
     {
         Task<ChatModel> GetChatByNameAsync(string name);
         Task<int> CreateAsync(CreateChatModel chat);
-        Task<int> UpdateAsync(int id, UpdateChatModel chat);
-        Task<int> DeleteAsync(int chatId);
-        Task<ChatModel> GetAsync(int chatId);
+        Task<int> UpdateAsync(long id, UpdateChatModel chat);
+        Task<int> DeleteAsync(long chatId);
+        Task<ChatModel> GetAsync(long chatId);
         Task<ICollection<ChatModel>> GetAsync();
-        Task<ICollection<ChatModel>> GetAsync(int pageIndex, int pageSize);
     }
 }

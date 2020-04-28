@@ -1,11 +1,12 @@
 ﻿using Chatter.Application.Contracts.Repositories;
-using Chatter.DAL.Infrastructure;
-using Chatter.Domain.Entities;
+using Chatter.Application.DataTransferObjects.Users;
+using Chatter.DAL.StoredProcedures.Users;
+using Quantum.DAL.Infrastructure;
 using System.Threading.Tasks;
 
 namespace Chatter.DAL.Repositories
 {
-    public class UserRepository : IUserRepository
+    internal class UserRepository : IUserRepository
     {
         private readonly StoredProcedureExecutor _procedureExecutor;
 
@@ -14,33 +15,14 @@ namespace Chatter.DAL.Repositories
             _procedureExecutor = procedureExecutor;
         }
 
-        public Task<User> GetAsync(string nickname, string email)
+        public Task<int> CreateAsync(CreateUserDto model)
         {
-
-        }
-
-        public Task<int> CreateAsync(User user)
-        {
-        }
-
-        public Task<int> DeleteAsync(int userId)
-        {
-        }
-
-        public Task<User> GetAsync(int userId)
-        {
-        }
-
-        public Task<User> GetByEmailAsync(string email)
-        {
-        }
-
-        public Task<User> GetByNicknameAsync(string nickname)
-        {
-        }
-
-        public Task<int> UpdateAsync(User user)
-        {
+            return _procedureExecutor.ExecuteAsync(new SPCreateUser
+            {
+                Nickname = model.Nickname, 
+                Email = model.Email, 
+                HashedPassword = model.HashedPassword
+            });
         }
     }
 }

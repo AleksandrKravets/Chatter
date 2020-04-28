@@ -1,7 +1,6 @@
 ﻿using Chatter.Application.Contracts.Repositories;
 using Chatter.Application.Contracts.Services;
-using Chatter.Application.Infrastructure;
-using Chatter.Domain.Dto;
+using Chatter.Application.DataTransferObjects.Authorization;
 using System.Threading.Tasks;
 
 namespace Chatter.Application.Services
@@ -17,28 +16,13 @@ namespace Chatter.Application.Services
             _userRepository = userRepository;
         }
 
-        public async Task<IResponse> AuthorizeAsync(LoginRequestModel model)
+        public async Task<AuthorizationResultModel> AuthorizeAsync(LoginModel model)
         {
-            var user = await _userRepository.GetByEmailAsync(model.Email);
-
-            if(user != null)
-            {
-                if (SecurePasswordHasher.Verify(model.Password, user.HashedPassword))
-                {
-                    var tokens = await _tokenService.GetTokensAsync(user);
-
-                    return new ResponseObject 
-                    { 
-                        Result = tokens,
-                        Status = ResponseStatus.Success 
-                    };
-                }
-            }
-
-            return new BaseResponse 
-            { 
-                Status = ResponseStatus.Failure 
-            };
+            // Check if user exist
+            // verify password using password hasher
+            // Get tokens using tokens service
+            // return tokens
+            return null;
         }
     }
 }

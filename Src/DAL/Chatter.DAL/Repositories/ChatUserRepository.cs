@@ -1,13 +1,11 @@
 ﻿using Chatter.Application.Contracts.Repositories;
-using Chatter.DAL.Infrastructure;
-using Chatter.DAL.StoredProcedures.ChatUsers;
-using Chatter.Domain.Entities;
-using System.Collections.Generic;
+using Chatter.DAL.StoredProcedures.ChatsUsers;
+using Quantum.DAL.Infrastructure;
 using System.Threading.Tasks;
 
 namespace Chatter.DAL.Repositories
 {
-    public class ChatUserRepository : IChatUserRepository
+    internal class ChatUserRepository : IChatUserRepository
     {
         private readonly StoredProcedureExecutor _procedureExecutor;
 
@@ -16,36 +14,31 @@ namespace Chatter.DAL.Repositories
             _procedureExecutor = procedureExecutor;
         }
 
-        public Task<int> CreateAsync(ChatUser chatUser)
+        public Task<int> CreateAsync(long userId, long chatId, int userRoleId)
         {
+            return _procedureExecutor.ExecuteAsync(new SPCreateChatUser
+            {
+                UserId = userId,
+                ChatId = chatId,
+                RoleId = userRoleId
+            });
         }
 
-        public Task<int> DeleteAsync(int chatUserId)
+        public Task<int> DeleteAsync(long chatUserId)
         {
+            return _procedureExecutor.ExecuteAsync(new SPDeleteChatUserById
+            {
+                Id = chatUserId
+            });
         }
 
-        public Task<ChatUser> GetAsync(int id)
+        public Task<int> DeleteAsync(long userId, long chatId)
         {
-        }
-
-        public Task<IEnumerable<Chat>> GetUserChatsAsync(int userId)
-        {
-        }
-
-        public Task<IEnumerable<User>> GetUsersByChatIdAsync(int chatId)
-        {
-        }
-
-        public Task<int> UpdateUserRoleAsync(int chatId, int userId, UserRole userRole/*, int newRoleId*/)
-        {
-        }
-
-        public Task<ChatUser> GetChatUserByKeysAsync(int chatId, int userId)
-        {
-        }
-
-        public Task<int> DeleteChatUserByChatIdAndUserIdAsync(int chatId, int userId)
-        {
+            return _procedureExecutor.ExecuteAsync(new SPDeleteChatUser
+            {
+                UserId = userId, 
+                ChatId = chatId
+            });
         }
     }
 }

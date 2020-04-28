@@ -3,5 +3,6 @@
     public class UpdateChatModel
     {
         public string Name { get; set; }
+        public int ChatTypeId { get; set; }
     }
 }

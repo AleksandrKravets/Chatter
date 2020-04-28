@@ -1,0 +1,79 @@
+.content {
+  display: grid;
+  place-items: center;
+  min-height: 100%;
+}
+
+#chat-form {
+  width: 25%;
+  align-content: center;
+  align-items: center;
+  bottom: 1px solid rgba(0, 0, 0, 0.25);
+  border-top: 1px solid #eee;
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px 30px 5px 30px;
+}
+
+#chat-form input {
+    outline: none;
+    padding: 3px;
+    padding-left: 10px;
+    border: 2px solid #ddd;
+    color: #330;
+    border-radius: 6px;
+    font-size: 1.1rem;
+}
+
+#btn-create {
+  border-radius: 10px;
+  background: #27d7a1;
+  color: #fff;
+  padding: 5px 5px;
+  border: none;
+  font-size: 1.2rem;
+}
+
+#btn-cancel {
+  border-radius: 10px;
+  background: #cc6666;
+  color: #fff;
+  padding: 5px 5px;
+  border: none;
+  font-size: 1.2rem;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 40%;
+  margin-top: 30px;
+}
+
+#form-name-label {
+  color: #27d7a1;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+select#chat-type {
+   -webkit-appearance: button;
+   -webkit-border-radius: 2px;
+   -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+   -webkit-padding-end: 20px;
+   -webkit-padding-start: 2px;
+   -webkit-user-select: none;
+   background-position: 97% center;
+   background-repeat: no-repeat;
+   border: 1px solid #AAA;
+   color: #555;
+   font-size: inherit;
+   margin: 10px 0;
+   overflow: hidden;
+   padding: 5px 10px;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   width: 100%;
+}

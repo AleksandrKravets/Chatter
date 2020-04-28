@@ -1,4 +1,5 @@
 ﻿using Chatter.Application.Contracts.Services;
+using Chatter.Application.DataTransferObjects.Account;
 using Chatter.Domain.Dto;
 using Chatter.WebUI.Filters;
 using Microsoft.AspNetCore.Http;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Chatter.WebUI.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/account")]
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
@@ -17,13 +18,12 @@ namespace Chatter.WebUI.Controllers
             _accountService = accountService;
         }
 
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Validation]
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody]RegisterRequestModel model)
+        [Route("register")]
+        public async Task<IActionResult> Register([FromBody]RegistrationModel model)
         {
-            return Ok(await _accountService.RegisterAsync(model));
+            await _accountService.RegisterAsync(model);
+            return Ok();
         }    
     }
 }

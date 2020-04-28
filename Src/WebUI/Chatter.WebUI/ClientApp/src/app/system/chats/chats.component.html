@@ -1,0 +1,147 @@
+<style>
+.content {
+  display: grid;
+  place-items: center;
+  min-height: 100%;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr 10%;
+  font-weight: 700;
+  font-size: 26px;
+  text-align: center;
+  color: #27d7a1;
+  margin-bottom: 20px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.list {
+  text-align: center;
+  height: 400px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin-bottom: 20px;
+}
+
+.chat:hover {
+  font-size: 18px;
+}
+
+.chats-list {
+  padding: 10px 15px;
+  width: 500px;
+  background: #fff;
+  border-radius: 20px;
+}
+
+ul {
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+ul li {
+  display: flex;
+  background: rgb(199, 245, 234);
+  padding: 10px 20px;
+  color: rgb(77, 76, 76);
+  margin: 5px 0;
+  transition: .5s;
+  font-weight: 600;
+}
+
+ul li:hover {
+  transform: scale(1.03);
+  background: #90ecc9;
+}
+
+ul li .name {
+  width: 50%;
+  text-align: left;
+  padding-left: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+ul li .number-of-users {
+  width: 35%;
+}
+
+ul li .type {
+  width: 15%;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+  box-shadow: 0 0 2px rgba(0, 0, 0, .2) inset;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(85, 80, 80);
+  border-radius: 8px;
+  border: 1px solid grey;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(73, 71, 71);
+  transition: 2s;
+}
+
+.icon {
+  font-size: 20px;
+}
+
+#form-title {
+  text-align: left;
+  padding-left: 30px;
+}
+
+#create-link {
+  padding-right: 10px;
+  font-size: 30px;
+}
+
+#create-link > a {
+  color: #27d7a1;
+
+}
+</style>
+
+<div class="content">
+  <div class="chats-list">
+    <div class="chats-container">
+      <div class="header">
+        <div id="form-title">
+          Чаты
+        </div>
+        <div id="create-link">
+          <a href="#"><i class="fas fa-plus-circle"></i></a>
+        </div>
+      </div>
+      <div class="list">
+        <ul>
+          <a *ngFor="let chat of chats" [routerLink]="[chat.id]">
+            <li>
+              <div class="name">{{chat.name}}</div>
+              <div class="number-of-users">{{chat.numberOfUsers}}</div>
+              <div class="type" [ngSwitch]="chat.type">
+                <span *ngSwitchCase="chatType.Open"><i class="icon fas fa-unlock"></i></span>
+                <span *ngSwitchCase="chatType.Private"><i class="icon fas fa-lock"></i></span>
+                <span *ngSwitchCase="chatType.Public"></span>
+             </div>
+          </a>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+

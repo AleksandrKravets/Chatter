@@ -1,6 +1,6 @@
 ﻿using Chatter.Application.Contracts.Repositories;
 using Chatter.Application.Contracts.Services;
-using Chatter.Domain.Entities;
+using Chatter.Application.DataTransferObjects.Users;
 using System;
 using System.Threading.Tasks;
 
@@ -16,29 +16,14 @@ namespace Chatter.Application.Services
                 userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
-        public Task CreateAsync(User user)
+        public Task CreateAsync(CreateUserModel model)
         {
-            return _userRepository.CreateAsync(user);
-        }
-        
-        public Task DeleteAsync(int userId)
-        {
-            return _userRepository.DeleteAsync(userId);
-        }
-
-        public Task<User> GetAsync(int userId)
-        {
-            return _userRepository.GetAsync(userId);
-        }
-
-        public Task<User> GetByEmailAsync(string email)
-        {
-            return _userRepository.GetByEmailAsync(email);
-        }
-
-        public Task UpdateAsync(User user)
-        {
-            return _userRepository.UpdateAsync(user);
+            return _userRepository.CreateAsync(new CreateUserDto 
+            { 
+                Email = model.Email, 
+                HashedPassword = model.Password + "hash",
+                Nickname = model.Nickname 
+            });
         }
     }
 }

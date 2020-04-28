@@ -1,7 +1,4 @@
 ﻿using Chatter.Application.Contracts.Repositories;
-using Chatter.DAL.Infrastructure;
-using Chatter.DAL.StoredProcedures.Tokens;
-using Chatter.Domain.Entities;
 using System.Threading.Tasks;
 
 namespace Chatter.DAL.Repositories

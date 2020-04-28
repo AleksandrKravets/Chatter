@@ -10,12 +10,9 @@ namespace Chatter.Application.Services
     {
         private readonly IChatRepository _chatRepository;
         private readonly IChatUserRepository _chatUserRepository;
-        private readonly IUserRepository _userRepository;
 
-        public ChatService(IChatRepository chatRepository, IChatUserRepository chatUserRepository, 
-            IUserRepository userRepository)
+        public ChatService(IChatRepository chatRepository, IChatUserRepository chatUserRepository)
         {
-            _userRepository = userRepository;
             _chatUserRepository = chatUserRepository;
             _chatRepository = chatRepository;
         }
@@ -30,7 +27,7 @@ namespace Chatter.Application.Services
             return _chatRepository.CreateAsync(model);
         }
 
-        public Task DeleteAsync(int chatId)
+        public Task DeleteAsync(long chatId)
         {
             return _chatRepository.DeleteAsync(chatId);
         }
@@ -40,33 +37,29 @@ namespace Chatter.Application.Services
             return _chatRepository.GetAsync();
         }
 
-        public Task<ICollection<ChatModel>> GetAsync(int pageIndex, int pageSize)
-        {
-            return _chatRepository.GetAsync(pageIndex, pageSize);
-        }
-
-        public Task<ChatModel> GetAsync(int chatId)
+        public Task<ChatModel> GetAsync(long chatId)
         {
             return _chatRepository.GetAsync(chatId);
         }
 
-        public async Task JoinChatAsync(int chatId, int userId)
+        public Task JoinChatAsync(long chatId, long userId)
         {
             // Check if chat with such id exist
             // Check if user exist
             // Check if user with such id doesnt ieist in this chat
             // Create ChatUser
-            
+            return _chatUserRepository.CreateAsync(userId, chatId, 1);
         }
 
-        public async Task LeaveChatAsync(int chatId, int userId)
+        public Task LeaveChatAsync(long chatId, long userId)
         {
             // Check if chat with such id exist
             // Check if user exist
             // Delete chatUser by chatId and userId
+            return _chatUserRepository.DeleteAsync(userId, chatId);
         }
 
-        public Task UpdateAsync(int id, UpdateChatModel model)
+        public Task UpdateAsync(long id, UpdateChatModel model)
         {
             return _chatRepository.UpdateAsync(id, model);
         }

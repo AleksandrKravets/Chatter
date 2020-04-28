@@ -1,11 +1,10 @@
-﻿using Chatter.Application.Infrastructure;
-using Chatter.Domain.Dto;
+﻿using Chatter.Application.DataTransferObjects.Account;
 using System.Threading.Tasks;
 
 namespace Chatter.Application.Contracts.Services
 {
     public interface IAccountService
     {
-        Task<IResponse> RegisterAsync(RegisterRequestModel model);
+        Task RegisterAsync(RegistrationModel model);
     }
 }

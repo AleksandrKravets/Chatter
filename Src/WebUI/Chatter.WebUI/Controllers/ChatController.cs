@@ -1,6 +1,5 @@
 ﻿using Chatter.Application.Contracts.Services;
 using Chatter.Application.DataTransferObjects.Chats;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -18,24 +17,13 @@ namespace Chatter.WebUI.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(long id)
         {
             var result = await _chatService.GetAsync(id);
             return Ok(result);
         }
 
         [HttpGet]
-        [Route("{pageIndex}/{pageSize}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Get(int pageIndex, int pageSize)
-        {
-            var result = await _chatService.GetAsync(pageIndex, pageSize);
-            return Ok(result);
-        }
-
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
             var result = await _chatService.GetAsync();
@@ -43,26 +31,29 @@ namespace Chatter.WebUI.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Create([FromBody]CreateChatModel model)
         {
+            if (!ModelState.IsValid || model == null)
+                return BadRequest();
+
             await _chatService.CreateAsync(model);
             return Ok();
         }
 
         [HttpPut]
         [Route("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Update(int id, [FromBody]UpdateChatModel model)
+        public async Task<IActionResult> Update(long id, [FromBody]UpdateChatModel model)
         {
+            if (!ModelState.IsValid || model == null)
+                return BadRequest();
+
             await _chatService.UpdateAsync(id, model);
             return Ok();
         }
 
         [HttpDelete]
         [Route("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(long id)
         {
             await _chatService.DeleteAsync(id);
             return Ok();
@@ -70,8 +61,7 @@ namespace Chatter.WebUI.Controllers
 
         [HttpPost]
         [Route("{chatId}/join/{userId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Join(int chatId, int userId) 
+        public async Task<IActionResult> Join(long chatId, long userId) 
         {
             await _chatService.JoinChatAsync(chatId, userId);
             return Ok();
@@ -79,8 +69,7 @@ namespace Chatter.WebUI.Controllers
 
         [HttpPost]
         [Route("{chatId}/leave/{userId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Leave(int chatId, int userId)
+        public async Task<IActionResult> Leave(long chatId, long userId)
         {
             await _chatService.LeaveChatAsync(chatId, userId);
             return Ok();

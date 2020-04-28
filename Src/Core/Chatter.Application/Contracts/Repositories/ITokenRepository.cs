@@ -1,5 +1,4 @@
-﻿using Chatter.Domain.Entities;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Chatter.Application.Contracts.Repositories
 {

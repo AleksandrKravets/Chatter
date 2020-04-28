@@ -1,12 +1,14 @@
 ﻿using Chatter.Application.Contracts.Repositories;
-using Chatter.DAL.Infrastructure;
-using Chatter.Domain.Entities;
+using Chatter.Application.DataTransferObjects.Messages;
+using Chatter.DAL.StoredProcedures.Messages;
+using Quantum.DAL.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Chatter.DAL.Repositories
 {
-    public class MessageRepository : IMessageRepository
+    internal class MessageRepository : IMessageRepository
     {
         private readonly StoredProcedureExecutor _procedureExecutor;
 
@@ -15,28 +17,49 @@ namespace Chatter.DAL.Repositories
             _procedureExecutor = procedureExecutor;
         }
 
-        public Task<int> CreateAsync(Message message)
+        public Task<int> CreateAsync(long chatId, CreateMessageModel model)
         {
+            return _procedureExecutor.ExecuteAsync(new SPCreateMessage
+            {
+                ChatId = chatId,
+                CreationTime = DateTime.Now, 
+                SenderId = model.SenderId, 
+                Text = model.Text
+            });
         }
 
-        public Task<int> DeleteAsync(int messageId)
+        public Task<int> DeleteAsync(long id)
         {
+            return _procedureExecutor.ExecuteAsync(new SPDeleteMessage
+            {
+                Id = id
+            });
         }
 
-        public Task<IEnumerable<Message>> GetAllAsync(int chatId)
+        public Task<ICollection<MessageModel>> GetAllAsync(long chatId)
         {
+            return _procedureExecutor.ExecuteWithListResponseAsync<MessageModel>(new SPGetMessages
+            {
+                ChatId = chatId
+            });
         }
 
-        public Task<Message> GetAsync(int id)
+        public Task<MessageModel> GetAsync(long id)
         {
+            return _procedureExecutor.ExecuteWithObjectResponseAsync<MessageModel>(new SPGetMessage
+            {
+                Id = id
+            });
         }
 
-        public Task<IEnumerable<Message>> GetMessagesAsync(int chatId, int offset, int pageSize)
+        public Task<int> UpdateAsync(long id, UpdateMessageModel model)
         {
-        }
-
-        public Task<int> UpdateAsync(Message message)
-        {
+            return _procedureExecutor.ExecuteAsync(new SPUpdateMessage
+            {
+                Id = id, 
+                CreationTime = DateTime.Now, 
+                Text = model.Text
+            });
         }
     }
 }

@@ -1,0 +1,51 @@
+<div class="content">
+  <div id="chat-form">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div id="form-name-label">
+        <label for="chat-name">Настройки</label>
+      </div>
+
+      <div
+        class="form-group"
+        [ngClass]="{'has-error': form.get('email').invalid && form.get('email').touched}"
+      >
+        <input type="text"
+          class="form-control underlined"
+          id="chat-name"
+          placeholder="Название чата"
+          formControlName="chat-name"
+        >
+        <span
+          class="form-error"
+          *ngIf="form.get('chat-name').invalid && form.get('chat-name').touched"
+        >
+          <span *ngIf="form.get('chat-name')['errors']['required']">Это поле не может быть пустым</span>
+        </span>
+      </div>
+
+      <div class="form-group">
+        <select id="chat-type">
+          <option>Тип чата</option>
+          <option>Option 1</option>
+          <option>Option 2</option>
+        </select>
+      </div>
+
+      <div class="form-group buttons">
+        <button
+          type="submit"
+          id="btn-cancel"
+        >
+          Отменить
+        </button>
+        <button
+        type="submit"
+        [disabled]="form.invalid"
+        id="btn-create"
+      >
+        Сохранить
+      </button>
+      </div>
+    </form>
+  </div>
+</div>
