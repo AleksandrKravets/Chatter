@@ -1,7 +1,7 @@
 .content {
   display: grid;
   place-items: center;
-  min-height: 100%;
+  margin-top: 5%;
 }
 
 #chat-form {
@@ -32,6 +32,7 @@
   padding: 5px 5px;
   border: none;
   font-size: 1.2rem;
+  background: linear-gradient(#3bd8a9, #12d69b);
 }
 
 #btn-cancel {
@@ -41,6 +42,7 @@
   padding: 5px 5px;
   border: none;
   font-size: 1.2rem;
+  background: linear-gradient(#f55656, #f50505);
 }
 
 .buttons {
@@ -52,7 +54,7 @@
 
 #form-name-label {
   color: #27d7a1;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 600;
   margin-bottom: 10px;
   text-align: center;
@@ -67,13 +69,18 @@ select#chat-type {
    -webkit-user-select: none;
    background-position: 97% center;
    background-repeat: no-repeat;
-   border: 1px solid #AAA;
-   color: #555;
+   border: 2px solid #ddd;
+   color: #330;
    font-size: inherit;
-   margin: 10px 0;
    overflow: hidden;
    padding: 5px 10px;
    text-overflow: ellipsis;
    white-space: nowrap;
    width: 100%;
+}
+
+.label {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 5px;
 }

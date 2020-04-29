@@ -1,0 +1,29 @@
+#header {
+  display: grid;
+  grid-template-columns: 85% 1fr;
+  color: white;
+  padding-top: 15px;
+}
+
+#logo {
+  font-size: 1.7rem;
+  padding-left: 20px;
+  font-weight: 700;
+  background: linear-gradient(#b27dee, #9d33f3);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+#user-panel {
+  text-align: right;
+}
+
+#btn-login {
+  margin-top: 20px;
+  margin-right: 25px;
+  padding: 8px 13px;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 600;
+  background: linear-gradient(#9e4ff8, #9219f5);
+}

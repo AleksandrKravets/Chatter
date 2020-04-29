@@ -9,6 +9,7 @@
         class="form-group"
         [ngClass]="{'has-error': form.get('email').invalid && form.get('email').touched}"
       >
+        <div class="label"><span>Название чата</span></div>
         <input type="text"
           class="form-control underlined"
           id="chat-name"
@@ -24,6 +25,7 @@
       </div>
 
       <div class="form-group">
+        <div class="label"><span>Тип чата</span></div>
         <select id="chat-type">
           <option>Тип чата</option>
           <option>Option 1</option>

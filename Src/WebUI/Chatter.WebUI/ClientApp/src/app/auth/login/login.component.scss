@@ -2,7 +2,60 @@
   text-align: center;
 }
 
+.button {
+  text-align: center;
+}
+
 .btn-login {
-  margin-top: 35px;
-  margin-bottom: 20px;
+  border-radius: 10px;
+  background: #27d7a1;
+  color: #fff;
+  padding: 7px 15px;
+  border: none;
+  font-size: 1.3rem;
+  margin-top: 5px;
+}
+
+.auth-comtainer {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  padding-top: 5%;
+}
+
+.auth-header {
+  text-align: center;
+  color: #c28aff;
+}
+
+.form-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 15px;
+  width: 30%;
+}
+
+.gradient-logo {
+  background: linear-gradient(45deg,);
+}
+
+.form-error {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 15px;
+  color: #ff3e3b;
+}
+
+.gradient-logo {
+  background: linear-gradient(#dbbdfd, #b256fd);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+label {
+  font-weight: 500;
+}
+
+.form-group > .errors {
+  text-align: center;
 }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsersService } from 'src/app/shared/services/users.service';
 import { User } from 'src/app/shared/models/user.model';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -14,9 +13,7 @@ export class RegistrationComponent implements OnInit {
   form: FormGroup;
 
   constructor(
-    private usersService: UsersService,
-    private router: Router
-  ) { }
+    private usersService: UsersService) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -27,19 +24,19 @@ export class RegistrationComponent implements OnInit {
   }
 
   onSubmit() {
-    const { email, password, name } = this.form.value;
-    const user = new User(email, password, name)
+    // const { email, password, name } = this.form.value;
+    // const user = new User(email, password, name)
 
-    this.usersService.createNewUser(user)
-      .subscribe(() => {
-        this.router.navigate(['/login'], {
-          queryParams: {
-            nowCanLogin: true
-          }
-        })
-      })
+    // this.usersService.createNewUser(user)
+    //   .subscribe(() => {
+    //     this.router.navigate(['/login'], {
+    //       queryParams: {
+    //         nowCanLogin: true
+    //       }
+    //     })
+    //   })
 
-    console.log(this.form)
+    // console.log(this.form)
   }
 
   forbiddenEmails(control: FormControl): Promise<any> {

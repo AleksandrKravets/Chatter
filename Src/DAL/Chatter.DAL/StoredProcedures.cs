@@ -118,4 +118,12 @@ namespace Chatter.DAL.StoredProcedures
             [InParameter] public long ChatId;
         }
     }
+
+    namespace ChatTypes
+    {
+        [ProcedureName("GetChatTypes")]
+        internal class SPGetChatTypes : StoredProcedure
+        {
+        }
+    }
 }

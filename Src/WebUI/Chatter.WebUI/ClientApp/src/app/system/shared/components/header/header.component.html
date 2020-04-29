@@ -1,26 +1,8 @@
-<style>
-  .login {
-    margin-right: 15px;
-  }
-</style>
-<!--
-<div class="navbar">
-  <div class="account-actions">
-    <a class="login" [routerLink]="['/login']">Login</a>
-    <a class="register" [routerLink]="['/register']">Register</a>
+<nav id="header">
+  <div id="logo">
+    Chatter
   </div>
-</div> -->
-
-<!--
-
-        <span class="name">
-          Здравствуйте, Александр
-        </span>
-      </li>
-      <li class="nav-item">
-        {{date | date: 'dd.MM.yyyy'}}
-      </li>
-        <a class="nav-link" (click)="onLogout()">
-            Выйти
-        </a>
- -->
+  <div id="user-panel">
+    <a id="btn-login" (click)="onLogout()">Выйти</a>
+  </div>
+</nav>
